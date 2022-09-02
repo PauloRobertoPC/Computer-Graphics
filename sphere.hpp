@@ -7,11 +7,11 @@
 using namespace std;
 
 struct sphere{
-    vp center; double radio; px color;
+    vp center; double radio, specular; px color;
      
     sphere(){}
-    sphere(vp center, double r, px color) : center(center), radio(r), color(color){}
-    sphere(double x, double y, double z, double r, px color) : center(vp(x, y, z)), radio(r), color(color){}
+    sphere(vp center, double r, double s, px color) : center(center), radio(r), specular(s), color(color){}
+    sphere(double x, double y, double z, double r, double s, px color) : center(vp(x, y, z)), radio(r), specular(s), color(color){}
 
     //Calcula a interseção(se tiver) entre a esfera e o raio que sai de 'O' e tem direção 'D'
     tuple<double, double> intersection_with_ray(vp O, vp D){

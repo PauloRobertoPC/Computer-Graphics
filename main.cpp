@@ -15,12 +15,11 @@ int main(){
     canvas c(500, 500, vw, background_color); //Ch, Cw, viewport, background_color
 
     scene cena(O, vw, c); //cena
-
     
-    cena.add_sphere(sphere(0, -1, 3, 1, px::convert_rgb(255, 0, 0))); //esfera(x, y, z), raio, e cor da esfera
-    cena.add_sphere(sphere(2, 0, 4, 1, px::convert_rgb(0, 0, 255))); //esfera(x, y, z), raio, e cor da esfera
-    cena.add_sphere(sphere(-2, 0, 4, 1, px::convert_rgb(0, 255, 0))); //esfera(x, y, z), raio, e cor da esfera
-    cena.add_sphere(sphere(0, -5001, 0, 5000, px::convert_rgb(255, 255, 0))); //esfera(x, y, z), raio, e cor da esfera
+    cena.add_sphere(sphere(0, -1, 3, 1, 500, px::convert_rgb(255, 0, 0))); //esfera(x, y, z), raio, e cor da esfera
+    cena.add_sphere(sphere(2, 0, 4, 1, 500, px::convert_rgb(0, 0, 255))); //esfera(x, y, z), raio, e cor da esfera
+    cena.add_sphere(sphere(-2, 0, 4, 1, 10, px::convert_rgb(0, 255, 0))); //esfera(x, y, z), raio, e cor da esfera
+    cena.add_sphere(sphere(0, -5001, 0, 5000, 1000, px::convert_rgb(255, 255, 0))); //esfera(x, y, z), raio, e cor da esfera
 
     cena.add_light(light(ambient, 0.2));
     cena.add_light(light(point, 0.6, vp(2, 1, 0)));

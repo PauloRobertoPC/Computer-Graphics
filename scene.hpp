@@ -27,15 +27,22 @@ struct scene{
     void add_light(light l){ lights.push_back(l); }
     
     
-    double compute_lighting(vp P, vp N){
+    double compute_lighting(vp P, vp N, vp V, int s){
         double i = 0.0;
         for(light l:lights){
             if(l.type == ambient){
                 i += l.intensity;
             }else{
                 vp L = (l.type == point ? l.position - P : l.direction);
-                double n_dot_l = N*L;
-                if(n_dot_l > 0) i += l.intensity* n_dot_l/((~N)*(~L));
+                double ndl = N*L;
+                //Difuse
+                if(ndl > 0) i += l.intensity* ndl/((~N)*(~L));
+                //Specular
+                if(s != -1){
+                    vp R = (N*(N*L))*2 - L;
+                    double rdv = R*V;
+                    if(rdv > 0) i += l.intensity * pow((rdv/((~R)*(~V))), s);
+                }
             }
         }
         return i;
@@ -60,7 +67,7 @@ struct scene{
         if(nulo) return c.background_color;
         vp P = O + D*closest;
         vp N = (P-closest_sphere.center)/closest_sphere.radio;
-        return closest_sphere.color * compute_lighting(P, N);
+        return closest_sphere.color * compute_lighting(P, N, -D, closest_sphere.specular);
     }
     
     vp xy(int i, int j){ //Canvas to Viewport

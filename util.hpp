@@ -6,6 +6,8 @@ typedef unsigned char int8;
 
 #include <bits/stdc++.h>
 
+using namespace std;
+
 struct vp{
     double x, y, z;   
     
@@ -18,6 +20,10 @@ struct vp{
 
     vp operator-(vp v){ //subtração entre vetores
         return vp(this->x-v.x, this->y-v.y, this->z-v.z);
+    }
+    
+    vp operator-(){ //subtração entre vetores
+        return vp(-this->x, -this->y, -this->z);
     }
     
     vp operator*(double alp){ //multiplicação de vetor por um escalar
@@ -42,7 +48,7 @@ struct px{
     static const unsigned short int BITS_RED_CHANNEL = 8, BITS_GREEN_CHANNEL = 8, BITS_BLUE_CHANNEL = 8;
 
 	px(){ R = G = B = 1; } //Cor Padrão(Branca)
-	px(double r, double g, double b): R(r), G(g), B(b){}
+	px(double r, double g, double b): R(min(r, 1.0)), G(min(g, 1.0)), B(min(b, 1.0)){}
 
     px operator*(double alp){ return px(alp*this->R, alp*this->G, alp*this->B); }
     
@@ -53,4 +59,5 @@ struct px{
         return px(1.0*r/((1<<BITS_RED_CHANNEL)-1), 1.0*g/((1<<BITS_GREEN_CHANNEL)-1), 1.0*b/((1<<BITS_BLUE_CHANNEL)-1));
     }
 };
+
 #endif
