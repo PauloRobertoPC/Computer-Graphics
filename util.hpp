@@ -4,9 +4,12 @@
 
 typedef unsigned char int8;
 
+#include <bits/stdc++.h>
+
 struct vp{
     double x, y, z;   
     
+    vp() : x(0), y(0), z(0){}
     vp(double x, double y, double z) : x(x), y(y), z(z){}
 
     vp operator+(vp v){ //soma entre vetores
@@ -21,8 +24,16 @@ struct vp{
         return vp(this->x*alp, this->y*alp, this->z*alp);
     }
     
+    vp operator/(double alp){ //divisao de vetor por um escalar
+        return vp(this->x/alp, this->y/alp, this->z/alp);
+    }
+    
     double operator*(vp v){ //produto interno
         return this->x*v.x + this->y*v.y + this->z*v.z;
+    }
+
+    double operator~(){ //módulo/tamanho do vetor
+        return sqrt(this->x*this->x + this->y*this->y + this->z*this->z); 
     }
 };
 
@@ -33,6 +44,8 @@ struct px{
 	px(){ R = G = B = 1; } //Cor Padrão(Branca)
 	px(double r, double g, double b): R(r), G(g), B(b){}
 
+    px operator*(double alp){ return px(alp*this->R, alp*this->G, alp*this->B); }
+    
     unsigned int convert_red(){ return R*((1<<BITS_RED_CHANNEL)-1); }
     unsigned int convert_green(){ return G*((1<<BITS_GREEN_CHANNEL)-1); }
     unsigned int convert_blue(){ return B*((1<<BITS_BLUE_CHANNEL)-1); }
