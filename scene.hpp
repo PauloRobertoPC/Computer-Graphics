@@ -16,11 +16,16 @@ struct scene{
     canvas c;                   //canvas
     vector<sphere> spheres;     //esferas que estão no cenário
     vector<light> lights;       //luzes que estão no cenário
+    double dx, dy;              //lagura e altura de cada pixel/posição do canvas
 
-    scene(vp O, viewport vw, canvas c) : O(O), vw(vw), c(c) {}
+    scene(vp O, viewport vw, canvas c) : O(O), vw(vw), c(c) {
+        this->dx = 1.0*vw.w/c.m;
+        this->dy = 1.0*vw.h/c.n; 
+    }
     
     void add_sphere(sphere s){ spheres.push_back(s); }
     void add_light(light l){ lights.push_back(l); }
+    
     
     double compute_lighting(vp P, vp N){
         double i = 0.0;
@@ -58,10 +63,14 @@ struct scene{
         return closest_sphere.color * compute_lighting(P, N);
     }
     
+    vp xy(int i, int j){ //Canvas to Viewport
+        return vp(-vw.w/2.0 + dx/2.0 + j*dx, vw.h/2.0 - dy/2.0 - i*dy, vw.d);
+    }
+    
     void draw_scenario(){
         for(int i = 0; i < c.n; i++){
             for(int j = 0; j < c.m; j++){
-                vp D = c.xy(i, j); //Direção do raio para o mundo real que passa pelo pixel i, j do canvas
+                vp D = xy(i, j); //Direção do raio do observador para o mundo real que passa pelo pixel i, j do canvas
                 px color = trace_ray_spheres(this->O, D, 1.0, INF);
                 c.to_color(i, j, color);
             }
