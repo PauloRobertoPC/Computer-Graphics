@@ -29,7 +29,3 @@ vp sphere::get_center(){ return this->center; }
 void sphere::set_center(vp center){ this->center = center; }
 double sphere::get_radio(){ return this->radio; }
 void sphere::set_radio(double radio){ this->radio = radio; }
-double sphere::get_specular(){ return this->specular; }
-void sphere::set_specular(double specular){ this->specular = specular; }
-px sphere::get_color(){ return this->color; }
-void sphere::set_color(px color){ this->color = color; }

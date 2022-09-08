@@ -14,7 +14,7 @@ double scene::compute_lighting(vp P, vp N, vp V, int s){
 }
 
 px scene::trace_ray_spheres(vp O, vp D, double t_min, double t_max){
-    object* closest_object; px color = c.get_background_color(); bool nulo = true;
+    object* closest_object; bool nulo = true;
     double t1, t2, closest = INF;
     for(object* o:objects){
         std::tie(t1, t2) = o->intersection_with_ray(O, D); 

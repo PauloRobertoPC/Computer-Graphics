@@ -25,10 +25,6 @@ class sphere : public object{
         void set_center(vp center);
         double get_radio();
         void set_radio(double radio);
-        double get_specular();
-        void set_specular(double specular);
-        px get_color();
-        void set_color(px color);
 };
 
 #endif
