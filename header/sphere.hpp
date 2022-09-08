@@ -1,11 +1,12 @@
 #ifndef SPHERE_HPP
 #define SPHERE_HPP
 
+#include "object.hpp"
 #include "px.hpp"
 #include "vp.hpp"
 #include <tuple>
 
-class sphere{
+class sphere : public object{
     private:
         vp center; double radio, specular; px color;
      
@@ -16,6 +17,8 @@ class sphere{
 
         //calculate the intersections between the sphere and the ray
         std::tuple<double, double> intersection_with_ray(vp O, vp D);
+    
+        vp normal(vp P);
     
         //Getters and Setters
         vp get_center();

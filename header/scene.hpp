@@ -1,6 +1,7 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
+#include "object.hpp"
 #include "vp.hpp"
 #include "px.hpp"
 #include "viewport.hpp"
@@ -13,7 +14,7 @@ class scene{
         vp O;                           //camera/observer's position
         viewport vw;                    //viewport
         canvas c;                       //canvas
-        std::vector<sphere> spheres;    //spheres who are in the scene
+        std::vector<object*> objects;    //spheres who are in the scene
         std::vector<light*> lights;     //lights whoa are in the scene
         double dx, dy;                  //width and heigth of each pixel of canvas in real world
     
@@ -26,7 +27,7 @@ class scene{
     public:
         scene(vp O, viewport vw, canvas c);        
     
-        void add_sphere(sphere s);
+        void add_object(object *o);
         void add_light(light *l);
         
         void draw_scenario();

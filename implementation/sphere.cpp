@@ -2,8 +2,8 @@
 #include "../header/sphere.hpp"
 
 sphere::sphere(){}
-sphere::sphere(vp center, double r, double s, px color) : center(center), radio(r), specular(s), color(color){}
-sphere::sphere(double x, double y, double z, double r, double s, px color) : center(vp(x, y, z)), radio(r), specular(s), color(color){}
+sphere::sphere(vp center, double r, double s, px color) : center(center), radio(r), object(color, s){}
+sphere::sphere(double x, double y, double z, double r, double s, px color) : center(vp(x, y, z)), radio(r), object(color, s){}
 
 std::tuple<double, double> sphere::intersection_with_ray(vp O, vp D){
     vp CO = O - this->center;
@@ -18,6 +18,10 @@ std::tuple<double, double> sphere::intersection_with_ray(vp O, vp D){
     double t2 = (-b - sqrt(delta))/(2*a);
 
     return {t1, t2};
+}
+
+vp sphere::normal(vp P){
+    return (P-this->get_center())/this->get_radio();
 }
 
 //Getters and Setters

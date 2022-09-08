@@ -14,32 +14,32 @@ double scene::compute_lighting(vp P, vp N, vp V, int s){
 }
 
 px scene::trace_ray_spheres(vp O, vp D, double t_min, double t_max){
-    sphere closest_sphere; px color = c.get_background_color(); bool nulo = true;
+    object* closest_object; px color = c.get_background_color(); bool nulo = true;
     double t1, t2, closest = INF;
-    for(sphere s:spheres){
-        std::tie(t1, t2) = s.intersection_with_ray(O, D); 
+    for(object* o:objects){
+        std::tie(t1, t2) = o->intersection_with_ray(O, D); 
         if(t1 >= t_min && t1 <= t_max && t1 < closest){
             closest = t1;
-            closest_sphere = s;
+            closest_object = o;
             nulo = false;
         }
         if(t2 >= t_min && t2 <= t_max && t2 < closest){
             closest = t2;
-            closest_sphere = s;
+            closest_object = o;
             nulo = false;
         }
     }
     if(nulo) return c.get_background_color();
     vp P = O + D*closest;
-    vp N = (P-closest_sphere.get_center())/closest_sphere.get_radio();
-    return closest_sphere.get_color() * compute_lighting(P, N, -D, closest_sphere.get_specular());
+    vp N = closest_object->normal(P);
+    return closest_object->get_color() * compute_lighting(P, N, -D, closest_object->get_specular());
 }
 
 vp scene::xy(int i, int j){ 
     return vp(-vw.get_w()/2.0 + dx/2.0 + j*dx, vw.get_h()/2.0 - dy/2.0 - i*dy, vw.get_d());
 }
 
-void scene::add_sphere(sphere s){ spheres.push_back(s); }
+void scene::add_object(object *o){ objects.push_back(o); }
 void scene::add_light(light *l){ lights.push_back(l); }
 
 void scene::draw_scenario(){
