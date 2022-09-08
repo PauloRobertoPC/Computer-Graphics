@@ -1,9 +1,9 @@
 #ifndef DIRECTION_LIGHT_HPP
 #define DIRECTION_LIGHT_HPP
 
-#include "light.hpp"
+#include "specular_light.hpp"
 
-class direction_light : public light {
+class direction_light : public specular_light {
     private:
         vp direction; 
         

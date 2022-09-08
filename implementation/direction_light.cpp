@@ -1,6 +1,6 @@
 #include "../header/direction_light.hpp"
 
-direction_light::direction_light(double intensity, vp direction) : light(intensity), direction(direction){}
+direction_light::direction_light(double intensity, vp direction) : specular_light(intensity), direction(direction){}
 
 double direction_light::calculate_intensity(vp P, vp N, vp V, int s){ 
     double i = 0.0;

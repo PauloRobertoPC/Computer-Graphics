@@ -1,9 +1,9 @@
 #ifndef POINT_LIGHT_HPP
 #define POINT_LIGHT_HPP
 
-#include "light.hpp"
+#include "specular_light.hpp"
 
-class point_light : public light {
+class point_light : public specular_light {
     private:
         vp position; 
         

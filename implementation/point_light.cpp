@@ -1,6 +1,6 @@
 #include "../header/point_light.hpp"
 
-point_light::point_light(double intensity, vp position) : light(intensity), position(position){}
+point_light::point_light(double intensity, vp position) : specular_light(intensity), position(position){}
 
 double point_light::calculate_intensity(vp P, vp N, vp V, int s){ 
     double i = 0.0;
