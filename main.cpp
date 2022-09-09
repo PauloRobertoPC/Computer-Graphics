@@ -8,6 +8,8 @@
 #include "header/point_light.hpp"
 #include "header/direction_light.hpp"
 #include "header/plan.hpp"
+#include "header/matrix.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -18,7 +20,7 @@ int main(){
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
 
     scene cena(O, vw, c);
-   
+
     double R = 40;
     cena.add_object(new sphere(0, 0, -100, R, 10, px::convert_rgb(255, 0, 0))); 
     cena.add_object(new plan(vp(0, -R, 0), vp(0, 1, 0), 1, px::convert_rgb(0, 255, 0))); 
