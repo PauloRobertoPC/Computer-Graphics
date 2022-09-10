@@ -9,10 +9,10 @@
 class plan : public object{
     private:
         vp p_pi, n;         //p_pi = Point in Plan, n = vector normal with the plan
-        double specular;    //specular reflection
      
     public:
         plan();
+        plan(vp p_pi, vp n);
         plan(vp p_pi, vp n, px k_a, px k_d, px k_s, double s);
 
         //calculate the intersections between the plan and the ray

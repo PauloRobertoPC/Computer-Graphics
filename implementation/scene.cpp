@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cmath>
 #include "../header/scene.hpp"
 
@@ -16,15 +17,15 @@ bool scene::without_shade(vp P, light* l){
         if(t1-EPS > t_min && t1 < t_max && t1 < closest) closest = t1;
         if(t2-EPS > t_min && t2 < t_max && t2 < closest) closest = t2;
     }
-    return (closest == INF || closest >= (~L));
+    return (closest >= (~L));
 }
 
 px scene::compute_lighting(vp P, vp V, object* obj){
     vp N = obj->normal(P);
     px i(0, 0, 0);
     for(light* l:lights)
-        // i = i+l->calculate_intensity(P, N, V, obj, true);
-        i = i+l->calculate_intensity(P, N, V, obj, without_shade(P, l));
+        // i = i+l->calculate_intensity(P, N, V, obj, without_shade(P, l));
+        i = i+l->calculate_intensity(P, N, V, obj, true);
     return i;
 }
 
@@ -33,12 +34,12 @@ px scene::trace_ray(vp O, vp D, double t_min, double t_max){
     double t1, t2, closest = INF;
     for(object* o:objects){
         std::tie(t1, t2) = o->intersection_with_ray(O, D); 
-        if(t1 >= t_min && t1 <= t_max && t1 < closest){
+        if(t1-EPS > t_min && t1 < t_max && t1 < closest){
             closest = t1;
             closest_object = o;
             nulo = false;
         }
-        if(t2 >= t_min && t2 <= t_max && t2 < closest){
+        if(t2-EPS > t_min && t2 < t_max && t2 < closest){
             closest = t2;
             closest_object = o;
             nulo = false;
@@ -60,7 +61,7 @@ void scene::draw_scenario(){
     for(int i = 0; i < c.get_n(); i++){
         for(int j = 0; j < c.get_m(); j++){
             vp D = xy(i, j); 
-            px color = trace_ray(this->O, D, 1.0, INF);
+            px color = trace_ray(this->O, (D/(~D)), 0, INF);
             c.to_color(i, j, color);
         }
     }

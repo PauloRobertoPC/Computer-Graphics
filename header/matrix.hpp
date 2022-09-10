@@ -13,6 +13,7 @@ class matrix{
 
         int row();                          //quantity of rows
         int col();                          //quantity of cols
+        double matrix_to_scalar();          //return scalar of matrix 1x1(that is a number)
         void print();                       //print matrix in standard output
         
         matrix operator+(matrix A);         //sum of matrix

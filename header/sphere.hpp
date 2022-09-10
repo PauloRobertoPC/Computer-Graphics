@@ -8,7 +8,7 @@
 
 class sphere : public object{
     private:
-        vp center; double radio, specular;
+        vp center; double radio;
      
     public:
         sphere();
