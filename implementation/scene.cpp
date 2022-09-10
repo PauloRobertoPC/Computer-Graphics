@@ -6,14 +6,29 @@ scene::scene(vp O, viewport vw, canvas c) : O(O), vw(vw), c(c) {
     this->dy = 1.0*vw.get_h()/c.get_n(); 
 }
 
-double scene::compute_lighting(vp P, vp N, vp V, int s){
-    double i = 0.0;
+bool scene::without_shade(vp P, light* l){
+    double t1, t2, t_min = 0, t_max = INF, closest = INF;
+    vp L = l->get_l(P); 
+    if((~L) == 0.0) return true;
+    vp NL = L/(~L);
+    for(object* o:objects){
+        std::tie(t1, t2) = o->intersection_with_ray(P, NL); 
+        if(t1-EPS > t_min && t1 < t_max && t1 < closest) closest = t1;
+        if(t2-EPS > t_min && t2 < t_max && t2 < closest) closest = t2;
+    }
+    return (closest == INF || closest >= (~L));
+}
+
+px scene::compute_lighting(vp P, vp V, object* obj){
+    vp N = obj->normal(P);
+    px i(0, 0, 0);
     for(light* l:lights)
-        i += l->calculate_intensity(P, N, V, s);
+        // i = i+l->calculate_intensity(P, N, V, obj, true);
+        i = i+l->calculate_intensity(P, N, V, obj, without_shade(P, l));
     return i;
 }
 
-px scene::trace_ray_spheres(vp O, vp D, double t_min, double t_max){
+px scene::trace_ray(vp O, vp D, double t_min, double t_max){
     object* closest_object; bool nulo = true;
     double t1, t2, closest = INF;
     for(object* o:objects){
@@ -31,8 +46,7 @@ px scene::trace_ray_spheres(vp O, vp D, double t_min, double t_max){
     }
     if(nulo) return c.get_background_color();
     vp P = O + D*closest;
-    vp N = closest_object->normal(P);
-    return closest_object->get_color() * compute_lighting(P, N, -D, closest_object->get_specular());
+    return compute_lighting(P, -D, closest_object);
 }
 
 vp scene::xy(int i, int j){ 
@@ -46,7 +60,7 @@ void scene::draw_scenario(){
     for(int i = 0; i < c.get_n(); i++){
         for(int j = 0; j < c.get_m(); j++){
             vp D = xy(i, j); 
-            px color = trace_ray_spheres(this->O, D, 1.0, INF);
+            px color = trace_ray(this->O, D, 1.0, INF);
             c.to_color(i, j, color);
         }
     }

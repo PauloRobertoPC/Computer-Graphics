@@ -8,9 +8,10 @@ class point_light : public specular_light {
         vp position; 
         
     public:
-        point_light(double intensity, vp position);
+        point_light(px intensity, vp position);
     
-        double calculate_intensity(vp P, vp N, vp V, int s);
+        px calculate_intensity(vp P, vp N, vp V, object* obj, bool calculate);
+        vp get_l(vp P);
     
         vp get_position();
         void set_position(vp position);

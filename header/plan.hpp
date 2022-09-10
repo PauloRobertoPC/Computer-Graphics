@@ -9,12 +9,11 @@
 class plan : public object{
     private:
         vp p_pi, n;         //p_pi = Point in Plan, n = vector normal with the plan
-        px color;           //plan's color
         double specular;    //specular reflection
      
     public:
         plan();
-        plan(vp p_pi, vp n, double s, px color);
+        plan(vp p_pi, vp n, px k_a, px k_d, px k_s, double s);
 
         //calculate the intersections between the plan and the ray
         std::tuple<double, double> intersection_with_ray(vp O, vp D);

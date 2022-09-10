@@ -1,6 +1,8 @@
 #ifndef PX_HPP
 #define PX_HPP
 
+#include "vp.hpp"
+
 typedef unsigned char int8;
 
 class px{
@@ -12,7 +14,10 @@ class px{
 	    px();
 	    px(double r, double g, double b);
 
+        px operator+(px v);
         px operator*(double alp);
+        px operator*(px v);
+        px operator/(double alp);
         
         unsigned int convert_red();
         unsigned int convert_green();

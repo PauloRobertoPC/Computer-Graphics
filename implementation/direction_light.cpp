@@ -1,15 +1,18 @@
 #include "../header/direction_light.hpp"
 
-direction_light::direction_light(double intensity, vp direction) : specular_light(intensity), direction(direction){}
+direction_light::direction_light(px intensity, vp direction) : specular_light(intensity), direction(direction){}
 
-double direction_light::calculate_intensity(vp P, vp N, vp V, int s){ 
-    double i = 0.0;
+px direction_light::calculate_intensity(vp P, vp N, vp V, object* obj, bool calculate){ 
+    px i(0, 0, 0);
+    if(!calculate) return i;
     vp L = get_direction();  
     double ndl = N*L;
-    if(ndl > 0.0) i += (this->get_intensity()*ndl)/((~N)*(~L));
-    i += specular(N, L, V, s);
+    if(ndl > 0.0) i = i + (obj->get_k_d()*(this->get_intensity()*ndl)/((~N)*(~L)));
+    i = i + specular(N, L, V, obj);
     return i;
 }
+
+vp direction_light::get_l(vp P){ return get_direction(); }
 
 //Getters and Setters
 vp direction_light::get_direction(){ return this->direction; }

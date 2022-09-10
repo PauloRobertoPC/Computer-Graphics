@@ -8,12 +8,11 @@
 
 class sphere : public object{
     private:
-        vp center; double radio, specular; px color;
+        vp center; double radio, specular;
      
     public:
         sphere();
-        sphere(vp center, double r, double s, px color);
-        sphere(double x, double y, double z, double r, double s, px color);
+        sphere(vp center, double r, px k_a, px k_d, px k_s, double s);
 
         //calculate the intersections between the sphere and the ray
         std::tuple<double, double> intersection_with_ray(vp O, vp D);

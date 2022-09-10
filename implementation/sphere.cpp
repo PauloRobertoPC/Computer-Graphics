@@ -2,8 +2,7 @@
 #include "../header/sphere.hpp"
 
 sphere::sphere(){}
-sphere::sphere(vp center, double r, double s, px color) : center(center), radio(r), object(color, s){}
-sphere::sphere(double x, double y, double z, double r, double s, px color) : center(vp(x, y, z)), radio(r), object(color, s){}
+sphere::sphere(vp center, double r, px k_a, px k_d, px k_s, double s) : center(center), radio(r), object(k_a, k_d, k_s, s){}
 
 std::tuple<double, double> sphere::intersection_with_ray(vp O, vp D){
     vp CO = O - this->center;

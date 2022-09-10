@@ -32,6 +32,10 @@ double vp::operator~(){
     return sqrt(this->x*this->x + this->y*this->y + this->z*this->z); 
 }
 
+vp vp::operator&(vp v){
+    return vp(this->get_x()*v.get_x(), this->get_y()*v.get_y(), this->get_z()*v.get_z());
+}
+
 //Getters and Setters
 double vp::get_x(){ return this->x; }
 void vp::set_x(double x){ this->x = x; }

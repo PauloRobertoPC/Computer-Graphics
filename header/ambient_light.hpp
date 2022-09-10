@@ -5,9 +5,10 @@
 
 class ambient_light : public light {
     public:
-        ambient_light(double intensity);
+        ambient_light(px intensity);
     
-        double calculate_intensity(vp P, vp N, vp V, int s);
+        px calculate_intensity(vp P, vp N, vp V, object *obj, bool calculate);
+        vp get_l(vp P);
 };
 
 #endif

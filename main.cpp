@@ -9,7 +9,6 @@
 #include "header/direction_light.hpp"
 #include "header/plan.hpp"
 #include "header/matrix.hpp"
-#include <iostream>
 
 using namespace std;
 
@@ -22,12 +21,12 @@ int main(){
     scene cena(O, vw, c);
 
     double R = 40;
-    cena.add_object(new sphere(0, 0, -100, R, 10, px::convert_rgb(255, 0, 0))); 
-    cena.add_object(new plan(vp(0, -R, 0), vp(0, 1, 0), 1, px::convert_rgb(0, 255, 0))); 
-    cena.add_object(new plan(vp(0, 0, -200), vp(0, 0, 1), 1, px::convert_rgb(0, 0, 255))); 
+    cena.add_object(new sphere(vp(0, 0, -100), R, px(0.7, 0.2, 0.2), px(0.7, 0.2, 0.2), px(0.7, 0.2, 0.2), 10)); 
+    cena.add_object(new plan(vp(0, -R, 0), vp(0, 1, 0), px(0.2, 0.7, 0.2), px(0.2, 0.7, 0.2), px(0.0, 0.0, 0.0), 1)); 
+    cena.add_object(new plan(vp(0, 0, -200), vp(0, 0, 1), px(0.3, 0.3, 0.7), px(0.3, 0.3, 0.7), px(0.0, 0.0, 0.0), 1)); 
     
-    cena.add_light(new ambient_light(0.3));
-    cena.add_light(new point_light(0.7, vp(0, 60, -30)));
+    cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
+    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(0, 60, -30)));
      
     cena.draw_scenario(); //Execute the ray tracing
 

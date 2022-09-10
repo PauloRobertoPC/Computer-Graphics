@@ -8,9 +8,10 @@ class direction_light : public specular_light {
         vp direction; 
         
     public:
-        direction_light(double intensity, vp direction);
+        direction_light(px intensity, vp direction);
     
-        double calculate_intensity(vp P, vp N, vp V, int s);
+        px calculate_intensity(vp P, vp N, vp V, object* obj, bool calculate);
+        vp get_l(vp P);
     
         vp get_direction();
         void set_direction(vp direction);

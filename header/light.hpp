@@ -2,18 +2,20 @@
 #define LIGHT_HPP
 
 #include "vp.hpp"
+#include "object.hpp"
 
 class light{
     private: 
-        double intensity;
+        px intensity;
 
     public:
-        light(double intensity);
+        light(px intensity);
 
-        virtual double calculate_intensity(vp P, vp N, vp V, int s) = 0;
+        virtual px calculate_intensity(vp P, vp N, vp V, object *obj, bool calculate) = 0;
+        virtual vp get_l(vp P) = 0;
         
-        double get_intensity();
-        void set_intensity(double intensity);
+        px get_intensity();
+        void set_intensity(px intensity);
 };
 
 #endif

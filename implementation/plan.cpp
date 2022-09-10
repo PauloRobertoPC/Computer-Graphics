@@ -1,7 +1,7 @@
 #include "../header/plan.hpp"
 
 plan::plan(){}
-plan::plan(vp p_pi, vp n, double s, px color) : p_pi(p_pi), n(n), object(color, s){}
+plan::plan(vp p_pi, vp n, px k_a, px k_d, px k_s, double s) : p_pi(p_pi), n(n), object(k_a, k_d, k_s, s){}
 
 //calculate the intersections between the plan and the ray
 std::tuple<double, double> plan::intersection_with_ray(vp O, vp D){

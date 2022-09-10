@@ -6,9 +6,9 @@
 
 class specular_light : public light{
     public:
-        specular_light(double intensity);
+        specular_light(px intensity);
     
-        double specular(vp N, vp L, vp V, int s);
+        px specular(vp N, vp L, vp V, object* obj);
 };
 
 #endif
