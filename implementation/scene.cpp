@@ -24,8 +24,7 @@ px scene::compute_lighting(vp P, vp V, object* obj){
     vp N = obj->normal(P);
     px i(0, 0, 0);
     for(light* l:lights)
-        // i = i+l->calculate_intensity(P, N, V, obj, without_shade(P, l));
-        i = i+l->calculate_intensity(P, N, V, obj, true);
+        i = i+l->calculate_intensity(P, N, V, obj, without_shade(P, l));
     return i;
 }
 

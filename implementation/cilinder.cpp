@@ -19,7 +19,8 @@ bool cilinder::in_shell(vp P){
 
 bool cilinder::in_base(vp P, vp p_pi, vp n){
     vp cp = P-p_pi;
-    return ((cp*n == 0.0) && ((~cp) <= this->get_radio()));
+    return ((~cp) <= this->get_radio());
+    return (((cp*n) == 0.0) && ((~cp) <= this->get_radio()));
 }
 
 double cilinder::ray_intersect_base(vp O, vp D, vp p_pi, vp n){
@@ -85,7 +86,8 @@ std::tuple<double, double> cilinder::intersection_with_ray(vp O, vp D){
     aux2 = ray_intersect_base(O, D, this->get_center() + this->get_direction()*this->get_heigth(), this->get_direction());
     t.emplace_back(aux1); t.emplace_back(aux2);
     //Check if there are intersection with the shell of cilinder
-    std::tie(aux1, aux2) = ray_intersect_cylinder_shell_vector(O, D); 
+    // std::tie(aux1, aux2) = ray_intersect_cylinder_shell_vector(O, D); 
+    std::tie(aux1, aux2) = ray_intersect_cylinder_shell_matrix(O, D); 
     t.emplace_back(aux1); t.emplace_back(aux2);
     //Sort vector in order to choose the minimum 't' valid
     sort(t.begin(), t.end());
