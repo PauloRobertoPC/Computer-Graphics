@@ -59,13 +59,11 @@ std::tuple<double, double> cilinder::ray_intersect_cylinder_shell_matrix(vp O, v
 std::tuple<double, double> cilinder::ray_intersect_cylinder_shell_vector(vp O, vp D){
     double t1 = INF, t2 = INF;
     //Auxiliar vectors and numbers
-    vp q = O-this->get_center();
-    double alpha = this->get_direction()*D, beta = q*D, gamma = q*this->get_direction(), delta = q*q;
-    //Coefficients
-    double a = 1-alpha*alpha;
-    if(a-EPS == 0.0) return {t1, t2};
-    double b = beta - alpha*gamma;
-    double c = delta - (gamma*gamma) - (this->get_radio(), this->get_radio());
+    vp v = (O - this->get_center()) - this->get_direction()*((O - this->get_center())*this->get_direction());
+    vp w = D - this->get_direction()*(D*this->get_direction());
+    double a = w*w;
+    double b = v*w*2;
+    double c = v*v - this->get_radio()*this->get_radio();
     //Second degree equation
     double DELTA = b*b - 4*a*c;
     if(DELTA+EPS < 0.0) return {t1, t2};
@@ -87,7 +85,7 @@ std::tuple<double, double> cilinder::intersection_with_ray(vp O, vp D){
     t.emplace_back(aux1); t.emplace_back(aux2);
     //Check if there are intersection with the shell of cilinder
     // std::tie(aux1, aux2) = ray_intersect_cylinder_shell_vector(O, D); 
-    std::tie(aux1, aux2) = ray_intersect_cylinder_shell_matrix(O, D); 
+    std::tie(aux1, aux2) = ray_intersect_cylinder_shell_vector(O, D); 
     t.emplace_back(aux1); t.emplace_back(aux2);
     //Sort vector in order to choose the minimum 't' valid
     sort(t.begin(), t.end());
