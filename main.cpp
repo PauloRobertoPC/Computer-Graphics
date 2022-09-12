@@ -24,8 +24,8 @@ int main(){
 
     double R = 40;
     // cena.add_object(new sphere(vp(0, 0, -100), R, px(0.7, 0.2, 0.2), px(0.7, 0.2, 0.2), px(0.7, 0.2, 0.2), 10)); 
-    // cena.add_object(new cilinder(vp(0, 0, -100), vp(0, 1, 0), 30, 30, px(0.7, 0.2, 0.2), px(0.7, 0.2, 0.2), px(0.7, 0.2, 0.2), 10)); 
-    cena.add_object(new cilinder(vp(0, 0, -100), vp(0, -30, -100), vp(0, 30, -120), 30, px(0.7, 0.2, 0.2), px(0.7, 0.2, 0.2), px(0.7, 0.2, 0.2), 10)); 
+    cena.add_object(new cilinder(vp(0, 0, -100), vp(0, 0, 1), 60, 40, px(0.7, 0.2, 0.2), px(0.7, 0.2, 0.2), px(0.7, 0.2, 0.2), 10)); 
+    // cena.add_object(new cilinder(vp(0, 0, -100), vp(0, -30, -100), vp(0, 30, -120), 30, px(0.7, 0.2, 0.2), px(0.7, 0.2, 0.2), px(0.7, 0.2, 0.2), 10)); 
     cena.add_object(new plan(vp(0, -R, 0), vp(0, 1, 0), px(0.2, 0.7, 0.2), px(0.2, 0.7, 0.2), px(0.0, 0.0, 0.0), 1)); 
     cena.add_object(new plan(vp(0, 0, -200), vp(0, 0, 1), px(0.3, 0.3, 0.7), px(0.3, 0.3, 0.7), px(0.0, 0.0, 0.0), 1)); 
     

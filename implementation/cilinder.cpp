@@ -18,9 +18,10 @@ bool cilinder::in_shell(vp P){
 }
 
 bool cilinder::in_base(vp P, vp p_pi, vp n){
-    vp cp = P-p_pi;
-    return ((~cp) <= this->get_radio());
-    return (((cp*n) == 0.0) && ((~cp) <= this->get_radio()));
+    vp cp = P-p_pi; double cp_x_n = cp*n;
+    bool is_zero = (cp_x_n+EPS > 0.0) && (cp_x_n-EPS < 0.0);
+    bool in_radio = ((~cp) <= this->get_radio());
+    return (in_radio && is_zero);
 }
 
 double cilinder::ray_intersect_base(vp O, vp D, vp p_pi, vp n){
@@ -55,7 +56,6 @@ std::tuple<double, double> cilinder::ray_intersect_cylinder_shell_matrix(vp O, v
     return {t1, t2};
 }
 
-
 std::tuple<double, double> cilinder::ray_intersect_cylinder_shell_vector(vp O, vp D){
     double t1 = INF, t2 = INF;
     //Auxiliar vectors and numbers
@@ -78,13 +78,12 @@ std::tuple<double, double> cilinder::ray_intersect_cylinder_shell_vector(vp O, v
 }
 
 std::tuple<double, double> cilinder::intersection_with_ray(vp O, vp D){
-    std::vector<double> t; double aux1, aux2;
+    std::vector<double> t; double aux1 = INF, aux2 = INF;
     //Check if there are intersection with the base of cilinder
     aux1 =  ray_intersect_base(O, D, this->get_center(), -this->get_direction());
     aux2 = ray_intersect_base(O, D, this->get_center() + this->get_direction()*this->get_heigth(), this->get_direction());
     t.emplace_back(aux1); t.emplace_back(aux2);
     //Check if there are intersection with the shell of cilinder
-    // std::tie(aux1, aux2) = ray_intersect_cylinder_shell_vector(O, D); 
     std::tie(aux1, aux2) = ray_intersect_cylinder_shell_vector(O, D); 
     t.emplace_back(aux1); t.emplace_back(aux2);
     //Sort vector in order to choose the minimum 't' valid

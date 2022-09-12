@@ -60,7 +60,7 @@ void scene::draw_scenario(){
     for(int i = 0; i < c.get_n(); i++){
         for(int j = 0; j < c.get_m(); j++){
             vp D = xy(i, j); 
-            px color = trace_ray(this->O, (D/(~D)), 0, INF);
+            px color = trace_ray(this->O, (D/(~D)), 0.1, INF);
             c.to_color(i, j, color);
         }
     }
