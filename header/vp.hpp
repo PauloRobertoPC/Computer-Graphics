@@ -1,7 +1,7 @@
 #ifndef VP_HPP
 #define VP_HPP
 #define INF 1e18
-#define EPS 0.0000001
+// #define EPS 0.0000001
 
 class vp{
     private:
@@ -18,7 +18,7 @@ class vp{
         vp operator*(double alp); //vector multiplicaton by a scalar
         vp operator/(double alp); //vector division by a scalar
         double operator~(); //vector module/size
-        vp operator&(vp v);
+        vp operator%(vp v); //cross product
 
         //Getters and Setters
         double get_x();

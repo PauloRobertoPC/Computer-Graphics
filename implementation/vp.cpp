@@ -32,8 +32,12 @@ double vp::operator~(){
     return sqrt(this->x*this->x + this->y*this->y + this->z*this->z); 
 }
 
-vp vp::operator&(vp v){
-    return vp(this->get_x()*v.get_x(), this->get_y()*v.get_y(), this->get_z()*v.get_z());
+vp vp::operator%(vp v){
+    return vp(
+        this->get_y()*v.get_z() - this->get_z()*v.get_y(),
+        this->get_z()*v.get_x() - this->get_x() - v.get_z(),
+        this->get_x()*v.get_y() - this->get_y()*v.get_x()
+    );
 }
 
 //Getters and Setters

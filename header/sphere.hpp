@@ -15,7 +15,8 @@ class sphere : public object{
         sphere(vp center, double r, px k_a, px k_d, px k_s, double s);
 
         //calculate the intersections between the sphere and the ray
-        std::tuple<double, double> intersection_with_ray(vp O, vp D);
+        std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max);
+        vp normal_with_shell(vp &O, vp &D, double &t);
     
         vp normal(vp P);
     

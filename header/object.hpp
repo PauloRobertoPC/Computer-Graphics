@@ -13,9 +13,9 @@ class object{
     public:
         object(); 
         object(px k_a, px k_d, px k_s, double specular);
-    
-        virtual std::tuple<double, double> intersection_with_ray(vp O, vp D) = 0;
-        virtual vp normal(vp P) = 0;
+        
+        //return scalar 't' and normal with the point of intersection with the object
+        virtual std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max) = 0;
 
         //Getters and Setters
         px get_k_a();

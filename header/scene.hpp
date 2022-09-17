@@ -18,7 +18,7 @@ class scene{
         std::vector<light*> lights;     //lights whoa are in the scene
         double dx, dy;                  //width and heigth of each pixel of canvas in real world
     
-        px compute_lighting(vp P, vp V, object* obj); //calculate all the light in an specific point
+        px compute_lighting(vp P, vp N, vp V, object* obj); //calculate all the light in an specific point
 
         px trace_ray(vp O, vp D, double t_min, double t_max); //trace rays of from observer to direction D
         

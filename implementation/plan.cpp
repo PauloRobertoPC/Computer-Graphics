@@ -4,17 +4,12 @@ plan::plan(){}
 plan::plan(vp p_pi, vp n) : p_pi(p_pi), n(n), object(){}
 plan::plan(vp p_pi, vp n, px k_a, px k_d, px k_s, double s) : p_pi(p_pi), n(n), object(k_a, k_d, k_s, s){}
 
-//calculate the intersections between the plan and the ray
-std::tuple<double, double> plan::intersection_with_ray(vp O, vp D){
+std::tuple<double, vp> plan::intersection_with_ray(vp O, vp D, double t_min, double t_max){
     double denominator = D*this->get_n();
-    if(denominator == 0.0) return {INF, INF};
+    if(denominator == 0.0) return {INF, vp()};
     double numerator = (O-this->get_p_pi())*this->get_n();
     double t = -(numerator/denominator);
-    return {t, t};
-}
-
-vp plan::normal(vp P){
-    return this->get_n();
+    return {t, this->get_n()};
 }
 
 //Getters and Setters

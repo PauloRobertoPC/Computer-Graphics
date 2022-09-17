@@ -15,10 +15,8 @@ class plan : public object{
         plan(vp p_pi, vp n);
         plan(vp p_pi, vp n, px k_a, px k_d, px k_s, double s);
 
-        //calculate the intersections between the plan and the ray
-        std::tuple<double, double> intersection_with_ray(vp O, vp D);
+        std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max);
     
-        vp normal(vp P);
     
         //Getters and Setters
         vp get_p_pi();

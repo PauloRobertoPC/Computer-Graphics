@@ -9,14 +9,13 @@ scene::scene(vp O, viewport vw, canvas c) : O(O), vw(vw), c(c) {
 }
 
 bool scene::without_shade(vp P, light* l){
-    double t, t_min = 0.0, t_max = INF, closest = INF; vp n;
+    double t, t_min = 0, t_max = INF, closest = INF; vp n;
     vp L = l->get_l(P); 
     if((~L) == 0.0) return true;
     vp NL = L/(~L);
     for(object* o:objects){
         std::tie(t, n) = o->intersection_with_ray(P, NL, t_min, t_max); 
-        // if(t-EPS > t_min && t < t_max && t < closest) closest = t;
-        if(comparator::g(t, t_min) && comparator::l(t, closest)) closest = t;
+        if(t < closest) closest = t;
     }
     return (closest >= (~L));
 }
@@ -33,8 +32,8 @@ px scene::trace_ray(vp O, vp D, double t_min, double t_max){
     double t, closest = INF; vp aux, n;
     for(object* o:objects){
         std::tie(t, aux) = o->intersection_with_ray(O, D, t_min, t_max); 
-        // if(t-EPS > t_min && t < t_max && t < closest){
-        if(comparator::g(t, t_min) && comparator::l(t, t_max) && comparator::l(t, closest)){
+        if(t < closest){
+        // if(comparator::g(t, t_min) && comparator::l(t, t_max) && comparator::l(t, closest)){
             closest = t;
             n = aux;
             closest_object = o;
@@ -57,7 +56,7 @@ void scene::draw_scenario(){
     for(int i = 0; i < c.get_n(); i++){
         for(int j = 0; j < c.get_m(); j++){
             vp D = xy(i, j); 
-            px color = trace_ray(this->O, (D/(~D)), 0.0, INF);
+            px color = trace_ray(this->O, (D/(~D)), 0.1, INF);
             c.to_color(i, j, color);
         }
     }
