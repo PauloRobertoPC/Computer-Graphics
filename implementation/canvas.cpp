@@ -19,6 +19,7 @@ void canvas::write_image(const char* image_name){
 }
 
 void canvas::to_color(int i, int j, px color){ this->M[i][j] = color; }
+px canvas::get_color(int i, int j){ return this->M[i][j]; } 
 
 //Getters and Setters
 int canvas::get_n(){ return this->n; }

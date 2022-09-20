@@ -1,4 +1,6 @@
+#include <bits/stdc++.h>
 #include "../header/point_light.hpp"
+#include "../header/comparator.hpp"
 
 point_light::point_light(px intensity, vp position) : specular_light(intensity), position(position){}
 
@@ -6,8 +8,9 @@ px point_light::calculate_intensity(vp P, vp N, vp V, object* obj, bool calculat
     px i(0, 0, 0);
     if(!calculate) return i;
     vp L = this->get_position()-P;  
+    L = L/(~L);
     double ndl = N*L;
-    if(ndl > 0.0) i = i + (obj->get_k_d()*(this->get_intensity()*ndl)/((~N)*(~L)));
+    if(ndl > 0.0) i = i + (obj->get_k_d()*(this->get_intensity()*ndl));
     i = i + specular(N, L, V, obj);
     return i;
 }

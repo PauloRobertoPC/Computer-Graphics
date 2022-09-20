@@ -58,6 +58,12 @@ std::tuple<double, double> cone::ray_intersect_cone_shell_vector(vp O, vp D){
 
 std::tuple<double, vp> cone::intersection_with_ray(vp O, vp D, double t_min, double t_max){
     double aux1 = INF, aux2 = INF, t = INF; vp n; bool invert = false;
+    // Check if there are intersection with the shell of cone
+    std::tie(aux1, aux2) = ray_intersect_cone_shell_vector(O, D); 
+    // if(aux1-EPS > t_min && aux1 < t_max && aux1 < t) t = aux1, n = normal_with_shell(O, D, aux1);
+    // if(aux2-EPS > t_min && aux2 < t_max && aux2 < t) t = aux2, n = normal_with_shell(O, D, aux2);
+    if(comparator::g(aux1, t_min) && comparator::l(aux1, t_max) && comparator::l(aux1, t)) t = aux1, n = normal_with_shell(O, D, aux1);
+    if(comparator::g(aux2, t_min) && comparator::l(aux2, t_max) && comparator::l(aux2, t)) t = aux2, n = normal_with_shell(O, D, aux2);
     //Check if there are intersection with the base of cone
     aux1 =  ray_intersect_base(O, D, this->get_center(), -this->get_direction());
     // if(aux1-EPS > t_min && aux1 < t_max && aux1 < t){
@@ -65,13 +71,7 @@ std::tuple<double, vp> cone::intersection_with_ray(vp O, vp D, double t_min, dou
         if(this->get_has_base()) t = aux1, n = -this->get_direction();
         else invert = true;
     }
-    // Check if there are intersection with the shell of cone
-    std::tie(aux1, aux2) = ray_intersect_cone_shell_vector(O, D); 
-    // if(aux1-EPS > t_min && aux1 < t_max && aux1 < t) t = aux1, n = normal_with_shell(O, D, aux1);
-    // if(aux2-EPS > t_min && aux2 < t_max && aux2 < t) t = aux2, n = normal_with_shell(O, D, aux2);
-    if(comparator::g(aux1, t_min) && comparator::l(aux1, t_max) && comparator::l(aux1, t)) t = aux1, n = normal_with_shell(O, D, aux1);
-    if(comparator::g(aux2, t_min) && comparator::l(aux2, t_max) && comparator::l(aux2, t)) t = aux2, n = normal_with_shell(O, D, aux2);
-    // if(invert) n = -n;
+    if(invert) n = -n;
     return {t, n};
 }
 

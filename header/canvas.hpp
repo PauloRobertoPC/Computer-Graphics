@@ -16,7 +16,7 @@ class canvas{
         
         void write_image(const char* image_name); //save imagem with name "image_name" in .png 
         void to_color(int i, int j, px color); //to color the pixel[i][j] of our canvas/image with the "color"
-        
+        px get_color(int i, int j);        
         //Getters and Setters
         int get_n();
         void set_n(int n);

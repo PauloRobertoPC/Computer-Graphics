@@ -1,4 +1,4 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include <cmath>
 #include "../header/scene.hpp"
 #include "../header/comparator.hpp"
@@ -9,7 +9,7 @@ scene::scene(vp O, viewport vw, canvas c) : O(O), vw(vw), c(c) {
 }
 
 bool scene::without_shade(vp P, light* l){
-    double t, t_min = 0.0, t_max = INF, closest = INF; vp n;
+    double t, t_min = 1, t_max = INF, closest = INF; vp n;
     vp L = l->get_l(P); 
     if((~L) == 0.0) return true;
     vp NL = L/(~L);
@@ -57,7 +57,7 @@ void scene::draw_scenario(){
     for(int i = 0; i < c.get_n(); i++){
         for(int j = 0; j < c.get_m(); j++){
             vp D = xy(i, j); 
-            px color = trace_ray(this->O, (D/(~D)), 0.0, INF);
+            px color = trace_ray(this->O, (D/(~D)), 1.0, INF);
             c.to_color(i, j, color);
         }
     }

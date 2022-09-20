@@ -19,7 +19,8 @@ class vp{
         vp operator/(double alp); //vector division by a scalar
         double operator~(); //vector module/size
         vp operator%(vp v); //cross product
-
+        void print();
+    
         //Getters and Setters
         double get_x();
         void set_x(double x);

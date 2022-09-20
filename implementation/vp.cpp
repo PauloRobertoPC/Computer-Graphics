@@ -1,4 +1,5 @@
 #include <cmath>
+#include <iostream>
 #include "../header/vp.hpp"
 
 vp::vp() : x(0), y(0), z(0){}
@@ -35,10 +36,15 @@ double vp::operator~(){
 vp vp::operator%(vp v){
     return vp(
         this->get_y()*v.get_z() - this->get_z()*v.get_y(),
-        this->get_z()*v.get_x() - this->get_x() - v.get_z(),
+        this->get_z()*v.get_x() - this->get_x()*v.get_z(),
         this->get_x()*v.get_y() - this->get_y()*v.get_x()
     );
 }
+
+void vp::print(){
+    std::cout << this->x << " " << this->y << " " << this->z << "\n";
+}
+
 
 //Getters and Setters
 double vp::get_x(){ return this->x; }
