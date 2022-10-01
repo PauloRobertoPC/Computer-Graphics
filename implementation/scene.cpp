@@ -43,6 +43,7 @@ px scene::trace_ray(vp O, vp D, double t_min, double t_max){
     }
     if(nulo) return c.get_background_color();
     vp P = O + D*closest;
+    if(comparator::g(D*n, 0)) n = -n;
     return compute_lighting(P, n, -D, closest_object);
 }
 

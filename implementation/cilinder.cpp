@@ -83,20 +83,16 @@ std::tuple<double, double> cilinder::ray_intersect_cylinder_shell_vector(vp O, v
 }
 
 std::tuple<double, vp> cilinder::intersection_with_ray(vp O, vp D, double t_min, double t_max){
-    double aux1 = INF, aux2 = INF, t = INF; vp n; bool invert = false;
+    double aux1 = INF, aux2 = INF, t = INF; vp n;
     //Check if there are intersection with the base of cilinder
     aux1 =  ray_intersect_base(O, D, this->get_center(), -this->get_direction());
     aux2 = ray_intersect_base(O, D, this->get_center() + this->get_direction()*this->get_heigth(), this->get_direction());
     // if(aux1-EPS > t_min && aux1 < t_max && aux1 < t){
-    if(comparator::g(aux1, t_min) && comparator::l(aux1, t_max) && comparator::l(aux1, t)){
-        if(this->get_has_base()) t = aux1, n = -this->get_direction(), invert = false;
-        else invert = true;
-    }
+    if(this->get_has_base() && comparator::g(aux1, t_min) && comparator::l(aux1, t_max) && comparator::l(aux1, t))
+        t = aux1, n = -this->get_direction();
     // if(aux2-EPS > t_min && aux2 < t_max && aux2 < t){
-    if(comparator::g(aux2, t_min) && comparator::l(aux2, t_max) && comparator::l(aux2, t)){
-        if(this->get_has_top()) t = aux2, n = this->get_direction(), invert = false;
-        else invert = true;
-    }
+    if(this->get_has_top() && comparator::g(aux2, t_min) && comparator::l(aux2, t_max) && comparator::l(aux2, t))
+        t = aux2, n = this->get_direction();
     //Check if there are intersection with the shell of cilinder
     std::tie(aux1, aux2) = ray_intersect_cylinder_shell_vector(O, D); 
     // if(aux1-EPS > t_min && aux1 < t_max && aux1 < t) t = aux1, n = normal_with_shell(O, D, aux1);
