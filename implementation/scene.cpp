@@ -55,6 +55,9 @@ void scene::add_object(object *o){ objects.push_back(o); }
 void scene::add_light(light *l){ lights.push_back(l); }
 
 void scene::draw_scenario(){
+    // vp D = xy(200, 250);
+    // px color = trace_ray(this->O, (D/(~D)), 1.0, INF);
+    // return;
     for(int i = 0; i < c.get_n(); i++){
         for(int j = 0; j < c.get_m(); j++){
             vp D = xy(i, j); 
