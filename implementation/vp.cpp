@@ -4,7 +4,6 @@
 
 vp::vp() : x(0), y(0), z(0){}
 vp::vp(double x, double y, double z) : x(x), y(y), z(z){}
-
 vp vp::operator+(vp v){ 
     return vp(this->x+v.x, this->y+v.y, this->z+v.z);
 }
@@ -44,7 +43,6 @@ vp vp::operator%(vp v){
 void vp::print(){
     std::cout << this->x << " " << this->y << " " << this->z << "\n";
 }
-
 
 //Getters and Setters
 double vp::get_x(){ return this->x; }

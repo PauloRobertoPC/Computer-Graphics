@@ -13,7 +13,6 @@ class cilinder : public object{
         
         bool in_shell(vp P);
         bool in_base(vp P, vp p_pi, vp n);
-        std::tuple<double, double> ray_intersect_cylinder_shell_matrix(vp O, vp D);
         std::tuple<double, double> ray_intersect_cylinder_shell_vector(vp O, vp D);
         double ray_intersect_base(vp O, vp D, vp p_pi, vp n);
         vp normal_with_shell(vp &O, vp &D, double &t);

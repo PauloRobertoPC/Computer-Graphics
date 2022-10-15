@@ -34,32 +34,6 @@ double cilinder::ray_intersect_base(vp O, vp D, vp p_pi, vp n){
     return (in_base(P, p_pi, n)) ? t : INF;
 }
 
-std::tuple<double, double> cilinder::ray_intersect_cylinder_shell_matrix(vp O, vp D){
-    double t1 = INF, t2 = INF;
-    //Auxiliar Matrizes
-    matrix dc = matrix::vector_to_matrix(this->get_direction());
-    matrix dr = matrix::vector_to_matrix(D);
-    matrix w = matrix::vector_to_matrix(O-this->get_center());
-    matrix M = matrix::identity(3) - (dc*(~dc));
-    //Coeficients
-    double a = ((~dr)*M*dr).matrix_to_scalar();
-    if(a-EPS == 0.0) return {t1, t2};
-    double b = ((~w)*M*dr).matrix_to_scalar()*2;
-    double c = ((~w)*M*w).matrix_to_scalar()-(this->get_radio()*this->get_radio());
-    //Second degree equation
-    double DELTA = b*b - 4*a*c;
-    // if(DELTA+EPS < 0.0) return {t1, t2};
-    if(comparator::l(DELTA, 0.0)) return {t1, t2};
-    t1 = (-b+sqrt(DELTA))/(2*a);
-    t2 = (-b-sqrt(DELTA))/(2*a);
-    //check if the points are in cylinder's shell
-    vp P1 = O + D*t1;
-    t1 = (in_shell(P1)) ? t1 : INF;
-    vp P2 = O + D*t2;
-    t2 = (in_shell(P2)) ? t2 : INF;
-    return {t1, t2};
-}
-
 std::tuple<double, double> cilinder::ray_intersect_cylinder_shell_vector(vp O, vp D){
     double t1 = INF, t2 = INF;
     //Auxiliar vectors and numbers

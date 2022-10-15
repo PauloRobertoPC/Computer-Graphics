@@ -8,6 +8,7 @@ matrix::matrix(int n, int m){
 int matrix::row(){ return this->M.size(); }
 int matrix::col(){ return this->M[0].size(); }
 double matrix::matrix_to_scalar(){ return this->M[0][0]; }
+vp matrix::matrix_to_vp(){ return vp(this->M[0][0], this->M[1][0], this->M[2][0]); }
 
 void matrix::print(){
     for(int i = 0; i < this->row(); i++){

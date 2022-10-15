@@ -43,6 +43,9 @@ class mesh : public object {
                 bool in_face(vp P);
                 std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max);
                 std::tuple<vertex*, vertex*, vertex*> counter_clocwise_vertices(edge* a, edge* b, edge* c);
+                vertex* get_a(); 
+                vertex* get_b(); 
+                vertex* get_c(); 
                 vp get_normal();
                 void set_normal(vp normal);
         };
@@ -58,7 +61,6 @@ class mesh : public object {
         mesh(vp center, px k_a, px k_d, px k_s, double s);
         
         std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max);
-    
     
 };
 

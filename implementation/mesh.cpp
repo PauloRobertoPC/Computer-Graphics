@@ -47,7 +47,7 @@ mesh::face::face(edge *&a, edge *&b, edge *&c){
     std::tie(this->a, this->b, this->c) = counter_clocwise_vertices(a, b, c); 
     //Calculating normal
     this->normal = ((*this->b->get_pos())-(*this->a->get_pos()))%((*this->c->get_pos())-(*this->a->get_pos()));
-    if(comparator::neq(~(this->normal), 0.0)) this->normal/~(this->normal);
+    if(comparator::neq(~(this->normal), 0.0)) this->normal = this->normal/~(this->normal);
 }
 
 std::tuple<mesh::vertex*, mesh::vertex*, mesh::vertex*> mesh::face::counter_clocwise_vertices(edge* a, edge* b, edge* c){
@@ -79,5 +79,8 @@ std::tuple<double, vp> mesh::face::intersection_with_ray(vp O, vp D, double t_mi
     return {t, this->get_normal()};
 }
     
+mesh::vertex* mesh::face::get_a(){ return this->a; }
+mesh::vertex* mesh::face::get_b(){ return this->b; }
+mesh::vertex* mesh::face::get_c(){ return this->c; }
 vp mesh::face::get_normal(){ return this->normal; }
 void mesh::face::set_normal(vp normal){ this->normal = normal; }
