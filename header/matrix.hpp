@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <vector>
+#include "comparator.hpp"
 #include "vp.hpp"
 
 class matrix{
@@ -148,6 +149,48 @@ class matrix{
             T.M[0][0] = T.M[1][1] = T.M[2][2] = T.M[3][3] = 1;
             T.M[0][0] = -1;
             return T;
+        }
+
+        static matrix house_holder(vp n){
+            matrix normal = matrix::vp_to_matrix(n);
+            matrix HH = matrix::identity(4) - normal*(~normal)*2;
+            HH.M[0][3] = HH.M[1][3] = HH.M[2][3] = HH.M[3][0] = HH.M[3][1] = HH.M[3][2] = 0;
+            HH.M[3][3] = 1;
+            return HH;
+        }
+        
+        static matrix mirror_arbitrary_matrix(vp n, vp p){
+            return matrix::translation_matrix(p)*matrix::house_holder(n)*matrix::translation_matrix(-p); 
+        }
+
+        static matrix new_coordinates_matrix(vp i, vp j, vp k, vp o){ //x' -> x
+            matrix T(4, 4);
+            T.M[0][0] = i.get_x(); T.M[1][0] = i.get_y(); T.M[2][0] = i.get_z();
+            T.M[0][1] = j.get_x(); T.M[1][1] = j.get_y(); T.M[2][1] = j.get_z();
+            T.M[0][2] = k.get_x(); T.M[1][2] = k.get_y(); T.M[2][2] = k.get_z();
+            T.M[0][3] = o.get_x(); T.M[1][3] = o.get_y(); T.M[2][3] = o.get_z();
+            T.M[3][3] = 1;
+            return T;
+        }
+    
+        static matrix new_coordinates_inverse_matrix(vp i, vp j, vp k, vp o){ //x -> x'
+            matrix T(4, 4);
+            T.M[0][0] = i.get_x(); T.M[0][1] = i.get_y(); T.M[0][2] = i.get_z();
+            T.M[1][0] = j.get_x(); T.M[1][1] = j.get_y(); T.M[1][2] = j.get_z();
+            T.M[2][0] = k.get_x(); T.M[2][1] = k.get_y(); T.M[2][2] = k.get_z();
+            T.M[0][3] = -(i*o); T.M[1][3] = -(j*o); T.M[2][3] = -(k*o);
+            T.M[3][3] = 1;
+            return T;
+        }
+
+        static matrix rotation_arbitrary_matrix(vp o, vp direction, double angle){
+            direction = direction/(~direction);
+            vp aux = direction; aux.set_x(direction.get_x()-1);
+            vp j = direction % aux; j = j/(~j);
+            vp i = j % direction;
+            return matrix::new_coordinates_matrix(i, j, direction, o) *
+                   matrix::rotationZ_matrix(angle) *
+                   matrix::new_coordinates_inverse_matrix(i, j, direction, o);
         }
 };
 

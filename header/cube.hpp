@@ -27,6 +27,8 @@ class cube : public mesh {
         void mirror_xy();
         void mirror_xz();
         void mirror_yz();
+        void mirror_arbitrary(vp n, vp p);
+        void rotate_arbitrary(vp o, vp direction, double angle);
 };
 
 #endif

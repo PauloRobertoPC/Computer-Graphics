@@ -96,3 +96,5 @@ void cube::shear_zy(double angle){ transformations.emplace_back(matrix::shear_zy
 void cube::mirror_xy(){ transformations.emplace_back(matrix::mirroringXY_matrix()); }
 void cube::mirror_xz(){ transformations.emplace_back(matrix::mirroringXZ_matrix()); }
 void cube::mirror_yz(){ transformations.emplace_back(matrix::mirroringYZ_matrix()); }
+void cube::mirror_arbitrary(vp n, vp p){ transformations.emplace_back(matrix::mirror_arbitrary_matrix(n, p)); }
+void cube::rotate_arbitrary(vp o, vp direction, double angle){ transformations.emplace_back(matrix::rotation_arbitrary_matrix(o, direction, angle)); }

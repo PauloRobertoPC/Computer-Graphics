@@ -14,6 +14,7 @@
 #include "header/mesh.hpp"
 #include "header/cube.hpp"
 #include <cmath>
+#include <iostream>
 
 using namespace std;
 
@@ -25,34 +26,23 @@ int main(){
     scene cena(O, vw, c);
 
     cube* cuboa = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
-    // cuboa->rotation_x(0.785398);
-    // cuboa->rotation_y(0.785398);
-    // cuboa->rotation_z(0.785398);
-    // cuboa->transform();
-    cuboa->scaling(vp(50, 50, 50));
-    cuboa->transform();
-    // cuboa->shear_xy(0.785398);
-    cuboa->shear_yx(0.785398);
-    // cuboa->shear_xz(0.785398);
-    // cuboa->shear_zx(0.785398);
-    // cuboa->shear_yz(0.785398);
-    // cuboa->shear_zy(0.785398);
+    cuboa->scaling(vp(100, 50, 50));
     cuboa->transform();
     cuboa->translation(vp(0, 100, -165));
     cuboa->transform();
-    
-    cube* cubob = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
-    cubob->scaling(vp(50, 50, 50));
-    cubob->transform();
-    cubob->shear_yx(0.785398);
-    cubob->transform();
-    cubob->mirror_yz();
-    cubob->transform();
-    cubob->translation(vp(50, 100, -165));
-    cubob->transform();
-    
     cena.add_object(cuboa);
+
+    cube* cubob = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
+    cubob->scaling(vp(100, 50, 50));
+    cubob->transform();
+    // cubob->mirror_xz(); 
+    // cubob->rotation_z(0.7);
+    cubob->rotate_arbitrary(vp(0, 0, 0), vp(0, 0, 1), 0.7);
+    cubob->transform();
+    cubob->translation(vp(0, -100, -165));
+    cubob->transform();
     cena.add_object(cubob);
+    
 
     // cena.add_object(new cilinder(vp(0, -150, -200), vp(0, 1, 0), 5, 90, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true)); 
     // cena.add_object(new cone(vp(0, -60, -200), vp(0, 1, 0), 90, 150, px(0, 1, 0.498), px(0, 1, 0.498), px(0, 1, 0.498),  10, true)); 
