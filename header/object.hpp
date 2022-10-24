@@ -12,7 +12,7 @@ class object{
         double specular;    //object's shineness
     
     protected:
-        std::vector<matrix> transformations; 
+        matrix transformations; 
     
     public:
         object(); 
@@ -21,20 +21,9 @@ class object{
         //return scalar 't' and normal with the point of intersection with the object
         virtual std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max) = 0;
 
-
         //transformations 
-        void transform();
-        void translation(vp P);
-        void rotation_x(double angle);
-        void rotation_y(double angle);
-        void rotation_z(double angle);
-        void shear_xy(double angle);
-        void shear_yx(double angle);
-        void shear_xz(double angle);
-        void shear_zx(double angle);
-        void shear_yz(double angle);
-        void shear_zy(double angle);
-
+        void to_camera(matrix M);
+        virtual void transform() = 0;
 
         //Getters and Setters
         px get_k_a();

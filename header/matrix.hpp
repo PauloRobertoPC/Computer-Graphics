@@ -9,8 +9,8 @@
 class matrix{
     private: 
         std::vector<std::vector<double>> M;
-    
     public:
+        matrix();
         matrix(int n, int m);
 
         int row();                          //quantity of rows
@@ -25,6 +25,7 @@ class matrix{
         matrix operator*(double alp);       //matrix multiplication by a scalar
         matrix operator*(matrix A);         //multiplication between matrix
         matrix operator~();                 //transposed matrix
+        bool operator==(matrix A);          //equality test
         
         static matrix identity(int n){
             matrix A(n, n);

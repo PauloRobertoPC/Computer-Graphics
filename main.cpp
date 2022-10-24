@@ -13,48 +13,35 @@
 #include "header/cone.hpp"
 #include "header/mesh.hpp"
 #include "header/cube.hpp"
+#include "header/camera.hpp"
 #include <cmath>
 #include <iostream>
 
 using namespace std;
 
 int main(){
-    vp O(0, 0, 0);
-    viewport vw(60, 60, -25);
+    camera O(vp(0, 0, 0), vp(0, 0, -1), vp(1, 1, -1));
+    viewport vw(60, 60, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
 
     scene cena(O, vw, c);
 
     cube* cuboa = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
+    cuboa->mirror_xy();
     cuboa->scaling(vp(100, 50, 50));
     cuboa->transform();
     cuboa->translation(vp(0, 100, -165));
     cuboa->transform();
     cena.add_object(cuboa);
-
+    
     cube* cubob = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
     cubob->scaling(vp(100, 50, 50));
     cubob->transform();
-    // cubob->mirror_xz(); 
-    // cubob->rotation_z(0.7);
-    cubob->rotate_arbitrary(vp(0, 0, 0), vp(0, 0, 1), 0.7);
-    cubob->transform();
+    cubob->mirror_xy(); 
     cubob->translation(vp(0, -100, -165));
     cubob->transform();
     cena.add_object(cubob);
     
-
-    // cena.add_object(new cilinder(vp(0, -150, -200), vp(0, 1, 0), 5, 90, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true)); 
-    // cena.add_object(new cone(vp(0, -60, -200), vp(0, 1, 0), 90, 150, px(0, 1, 0.498), px(0, 1, 0.498), px(0, 1, 0.498),  10, true)); 
-    // cena.add_object(new cube(vp(0, -150, -165), 40, px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10));
-    // cena.add_object(new sphere(vp(0, 95, -200), 5, px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), 10)); 
-    // 
-    // cena.add_object(new plan(vp(0, -150, 0), vp(0, 1, 0), px(0.2, 0.7, 0.2), px(0.2, 0.7, 0.2), px(0.0, 0.0, 0.0), 1)); 
-    // cena.add_object(new plan(vp(200, -150, 0), vp(-1, 0, 0), px(0.686, 0.933, 0.933),px(0.686, 0.933, 0.933),px(0.686, 0.933, 0.933), 1)); 
-    // cena.add_object(new plan(vp(200, -150, -400), vp(0, 0, 1), px(0.686, 0.933, 0.933),px(0.686, 0.933, 0.933),px(0.686, 0.933, 0.933), 1)); 
-    // cena.add_object(new plan(vp(-200, -150, 0), vp(1, 0, 0), px(0.686, 0.933, 0.933),px(0.686, 0.933, 0.933),px(0.686, 0.933, 0.933), 1)); 
-    // cena.add_object(new plan(vp(0, 150, 0), vp(0, -1, 0), px(0.933, 0.933, 0.933),px(0.933, 0.933, 0.933),px(0.933, 0.933, 0.933), 1)); 
-    //
     cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
     cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
      

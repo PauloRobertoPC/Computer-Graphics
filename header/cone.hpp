@@ -24,6 +24,9 @@ class cone : public object{
     
         std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max);
     
+        //transformations
+        void transform();
+    
         //Getters and Setters
         vp get_center();
         void set_center(vp center);

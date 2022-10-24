@@ -12,6 +12,12 @@ std::tuple<double, vp> plan::intersection_with_ray(vp O, vp D, double t_min, dou
     return {t, this->get_n()};
 }
 
+//transformations
+void plan::transform(){
+    this->p_pi = (this->transformations*matrix::vp_to_matrix(this->p_pi)).matrix_to_vp();
+    transformations = matrix::identity(4);
+}
+
 //Getters and Setters
 vp plan::get_p_pi(){ return this->p_pi; }
 void plan::set_p_pi(vp p_pi){ this->p_pi = p_pi; }

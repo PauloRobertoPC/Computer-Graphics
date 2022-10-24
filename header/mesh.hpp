@@ -6,6 +6,10 @@
 #include <tuple>
 
 class mesh : public object {
+    private:
+        bool invert_normal;
+        void mirror(matrix M);
+    
     protected:
         class vertex{
             private:
@@ -48,6 +52,7 @@ class mesh : public object {
                 vertex* get_c(); 
                 vp get_normal();
                 void set_normal(vp normal);
+                void update_normal(bool invert=false);
         };
     
         vp center;
@@ -61,6 +66,28 @@ class mesh : public object {
         mesh(vp center, px k_a, px k_d, px k_s, double s);
         
         std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max);
+
+        void update_normals();
+    
+        //transformations
+        void transform();
+        void translation(vp P);
+        void rotation_x(double angle);
+        void rotation_y(double angle);
+        void rotation_z(double angle);
+        void rotate_arbitrary(vp o, vp direction, double angle);
+        void scaling(vp S);
+        void shear_xy(double angle);
+        void shear_yx(double angle);
+        void shear_xz(double angle);
+        void shear_zx(double angle);
+        void shear_yz(double angle);
+        void shear_zy(double angle);
+        void mirror_xy();
+        void mirror_xz();
+        void mirror_yz();
+        void mirror_arbitrary(vp n, vp p);
+        void to_camera(matrix M);
     
 };
 

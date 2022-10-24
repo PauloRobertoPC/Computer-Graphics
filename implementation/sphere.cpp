@@ -31,6 +31,12 @@ vp sphere::normal_with_shell(vp &O, vp &D, double &t){
     return (P-this->get_center())/this->get_radio();
 }
 
+//transformations
+void sphere::transform(){
+    this->center = (this->transformations*matrix::vp_to_matrix(this->center)).matrix_to_vp();
+    transformations = matrix::identity(4);
+}
+
 //Getters and Setters
 vp sphere::get_center(){ return this->center; }
 void sphere::set_center(vp center){ this->center = center; }

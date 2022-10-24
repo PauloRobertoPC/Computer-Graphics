@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 #include "../header/matrix.hpp"
 
+matrix::matrix(){
+    M.assign(1, std::vector<double>(1, 0.0));
+}
+
 matrix::matrix(int n, int m){
     M.assign(n, std::vector<double>(m, 0.0));
 }
@@ -70,4 +74,14 @@ matrix matrix::operator~(){
         for(int j = 0; j < this->row(); j++)
             A.M[i][j] = this->M[j][i];
     return A; 
+}
+
+bool matrix::operator==(matrix A){ 
+    if(this->M.size() != A.M.size() || this->M[0].size() != A.M[0].size()) return false;
+    int n = this->M.size(), m = this->M[0].size();
+    for(int i = 0; i < n; i++)
+        for(int j = 0; j < m; j++)
+            if(this->M[i][j] != A.M[i][j])
+                return false;
+    return true;
 }

@@ -5,7 +5,9 @@
 
 mesh::mesh(){}
 mesh::mesh(vp center, px k_a, px k_d, px k_s, double s) :
-    center(center), object(k_a, k_d, k_s, s){}
+    center(center), object(k_a, k_d, k_s, s){
+    invert_normal = false;
+}
 
 std::tuple<double, vp> mesh::intersection_with_ray(vp O, vp D, double t_min, double t_max){
     double t = INF, taux; vp n, naux;
@@ -61,12 +63,15 @@ std::tuple<mesh::vertex*, mesh::vertex*, mesh::vertex*> mesh::face::counter_cloc
 }
 
 bool mesh::face::in_face(vp P){
-    vp N = ((*this->b->get_pos())-(*this->a->get_pos()))%((*this->c->get_pos())-(*this->a->get_pos()));
-    double a1 = ((*this->a->get_pos()-P)%(*this->b->get_pos()-P))*(this->get_normal()/(~N));
-    double a2 = ((*this->b->get_pos()-P)%(*this->c->get_pos()-P))*(this->get_normal()/(~N));
+    
+    vp N = this->get_normal();
+
+    double area_total = ((*this->get_b()->get_pos() - *this->get_a()->get_pos()) % (*this->get_c()->get_pos() - *this->get_a()->get_pos())) * N;
+
+    double a1 = ((*this->get_a()->get_pos() - P) % (*this->get_b()->get_pos() - P) * N) / area_total;
+    double a2 = ((*this->get_c()->get_pos() - P) % (*this->get_a()->get_pos() - P) * N) / area_total;
     double a3 = 1 - a1 - a2;
-    // std::cout << "P: "; P.print();
-    // std::cout << a1 << " " << a2 << " " << a3 << "\n";
+    
     return (comparator::geq(a1, 0.0) && comparator::geq(a2, 0.0) && comparator::geq(a3, 0.0));
 }
 
@@ -84,3 +89,61 @@ mesh::vertex* mesh::face::get_b(){ return this->b; }
 mesh::vertex* mesh::face::get_c(){ return this->c; }
 vp mesh::face::get_normal(){ return this->normal; }
 void mesh::face::set_normal(vp normal){ this->normal = normal; }
+
+void mesh::face::update_normal(bool invert){
+    vp normal = ((*this->get_b()->get_pos())-(*this->get_a()->get_pos()))%((*this->get_c()->get_pos())-(*this->get_a()->get_pos()));
+    if(comparator::neq(~(normal), 0.0)) normal = normal/~(normal);
+    if(invert) normal = normal*(-1);
+    this->set_normal(normal);
+}
+      
+void mesh::update_normals(){
+    for(face *f:this->faces)
+        f->update_normal(this->invert_normal);
+}
+
+void mesh::transform(){
+    if(this->transformations == matrix::identity(4)) return;
+
+    this->center = (this->transformations*matrix::vp_to_matrix(this->center)).matrix_to_vp();
+
+    for(vertex *&v:this->vertices){
+        vp p = (this->transformations*matrix::vp_to_matrix(*v->get_pos())).matrix_to_vp();
+        v->get_pos()->set_x(p.get_x());
+        v->get_pos()->set_y(p.get_y());
+        v->get_pos()->set_z(p.get_z());
+    }
+    
+    this->update_normals(); 
+    
+    transformations = matrix::identity(4);
+}
+
+void mesh::translation(vp P){
+    vp t = P-this->center;
+    matrix T = matrix::translation_matrix(t); 
+    this->transformations = T*this->transformations; 
+}
+
+void mesh::rotation_x(double angle){ this->transformations = matrix::rotationX_matrix(angle)*this->transformations; }
+void mesh::rotation_y(double angle){ this->transformations = matrix::rotationY_matrix(angle)*this->transformations; }
+void mesh::rotation_z(double angle){ this->transformations = matrix::rotationZ_matrix(angle)*this->transformations; }
+void mesh::rotate_arbitrary(vp o, vp direction, double angle){ this->transformations = matrix::rotation_arbitrary_matrix(o, direction, angle)*this->transformations; }
+void mesh::scaling(vp S){ this->transformations = matrix::scaling_matrix(S)*this->transformations; }
+void mesh::shear_xy(double angle){ this->transformations = matrix::shear_xy(angle)*this->transformations; }
+void mesh::shear_yx(double angle){ this->transformations = matrix::shear_yx(angle)*this->transformations; }
+void mesh::shear_xz(double angle){ this->transformations = matrix::shear_xz(angle)*this->transformations; }
+void mesh::shear_zx(double angle){ this->transformations = matrix::shear_zx(angle)*this->transformations; }
+void mesh::shear_yz(double angle){ this->transformations = matrix::shear_yz(angle)*this->transformations; }
+void mesh::shear_zy(double angle){ this->transformations = matrix::shear_zy(angle)*this->transformations; }
+
+void mesh::mirror(matrix M){
+    // this->transform();
+    this->invert_normal ^= 1;
+    this->transformations = M; 
+    this->transform(); 
+}
+void mesh::mirror_xy(){ mirror(matrix::mirroringXY_matrix()); }
+void mesh::mirror_xz(){ mirror(matrix::mirroringXZ_matrix()); } 
+void mesh::mirror_yz(){ mirror(matrix::mirroringYZ_matrix()); }
+void mesh::mirror_arbitrary(vp n, vp p){ mirror(matrix::mirror_arbitrary_matrix(n, p)); }

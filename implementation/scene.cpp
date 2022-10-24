@@ -2,8 +2,9 @@
 #include <cmath>
 #include "../header/scene.hpp"
 #include "../header/comparator.hpp"
+#include "../header/camera.hpp"
 
-scene::scene(vp O, viewport vw, canvas c) : O(O), vw(vw), c(c) {
+scene::scene(camera O, viewport vw, canvas c) : O(O), vw(vw), c(c) {
     this->dx = 1.0*vw.get_w()/c.get_m();
     this->dy = 1.0*vw.get_h()/c.get_n(); 
 }
@@ -54,14 +55,16 @@ vp scene::xy(int i, int j){
 void scene::add_object(object *o){ objects.push_back(o); }
 void scene::add_light(light *l){ lights.push_back(l); }
 
+void scene::transform_scenario_to_camera(){
+    for(object *o:objects) o->to_camera(O.get_w2c());
+}
+
 void scene::draw_scenario(){
-    // vp D = xy(200, 250);
-    // px color = trace_ray(this->O, (D/(~D)), 1.0, INF);
-    // return;
+    transform_scenario_to_camera();
     for(int i = 0; i < c.get_n(); i++){
         for(int j = 0; j < c.get_m(); j++){
             vp D = xy(i, j); 
-            px color = trace_ray(this->O, (D/(~D)), 1.0, INF);
+            px color = trace_ray(vp(0, 0, 0), (D/(~D)), 1.0, INF);
             c.to_color(i, j, color);
         }
     }

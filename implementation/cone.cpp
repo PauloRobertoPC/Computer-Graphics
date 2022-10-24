@@ -79,6 +79,13 @@ vp cone::normal_with_shell(vp &O, vp &D, double &t){
     return ((n_barra%w)/~(n_barra%w));
 }
 
+//transformations
+void cone::transform(){
+    this->center = (this->transformations*matrix::vp_to_matrix(this->center)).matrix_to_vp();
+    this->direction = (this->transformations*matrix::vp_to_matrix(this->direction)).matrix_to_vp();
+    transformations = matrix::identity(4);
+}
+
 //Getters and Setters
 vp cone::get_center(){ return this->center; }
 void cone::set_center(vp center){ this->center = center; }
