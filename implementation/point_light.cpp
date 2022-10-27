@@ -19,6 +19,10 @@ vp point_light::get_l(vp P){
     return this->get_position()-P;
 }
 
+void point_light::to_camera(matrix M){
+    this->position = (M*matrix::vp_to_matrix(this->position)).matrix_to_vp();
+}
+
 //Getters and Setters
 vp point_light::get_position(){ return this->position; }
 void point_light::set_position(vp position) { this->position = position; }

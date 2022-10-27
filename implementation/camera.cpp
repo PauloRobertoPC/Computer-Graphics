@@ -7,6 +7,7 @@ camera::camera(vp E, vp look_at, vp up) : E(E) {
     vp j = k % i;
     this->w2c = matrix::new_coordinates_inverse_matrix(i, j, k, E);
     this->c2w = matrix::new_coordinates_matrix(i, j, k, E);
+    this->i = i; this->j = j; this->k = k;
 }
 
 vp camera::world_to_camera(vp p){
@@ -20,3 +21,6 @@ vp camera::camera_to_world(vp p){
 vp camera::get_E(){ return this->E; }
 matrix camera::get_w2c(){ return this->w2c; };
 matrix camera::get_c2w(){ return this->c2w; };
+vp camera::get_i(){ return this->i; }
+vp camera::get_j(){ return this->j; }
+vp camera::get_k(){ return this->k; }

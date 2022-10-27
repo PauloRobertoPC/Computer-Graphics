@@ -10,6 +10,9 @@ class direction_light : public specular_light {
     public:
         direction_light(px intensity, vp direction);
     
+        //transformations
+        void to_camera(matrix M);
+    
         px calculate_intensity(vp P, vp N, vp V, object* obj, bool calculate);
         vp get_l(vp P);
     

@@ -15,6 +15,7 @@ std::tuple<double, vp> plan::intersection_with_ray(vp O, vp D, double t_min, dou
 //transformations
 void plan::transform(){
     this->p_pi = (this->transformations*matrix::vp_to_matrix(this->p_pi)).matrix_to_vp();
+    this->n = (this->transformations*matrix::vp_to_matrix(this->n)).matrix_to_vp();
     transformations = matrix::identity(4);
 }
 

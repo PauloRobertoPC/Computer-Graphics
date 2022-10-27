@@ -57,14 +57,16 @@ void scene::add_light(light *l){ lights.push_back(l); }
 
 void scene::transform_scenario_to_camera(){
     for(object *o:objects) o->to_camera(O.get_w2c());
+    for(light *l:lights) l->to_camera(O.get_w2c());
 }
 
 void scene::draw_scenario(){
     transform_scenario_to_camera();
     for(int i = 0; i < c.get_n(); i++){
         for(int j = 0; j < c.get_m(); j++){
-            vp D = xy(i, j); 
-            px color = trace_ray(vp(0, 0, 0), (D/(~D)), 1.0, INF);
+            vp D = xy(i, j); D = D/(~D);
+            px color = trace_ray(vp(0, 0, 0), D, 1.0, INF); //Perspectiva
+            // px color = trace_ray(D, vp(0, 0, -1), 1.0, INF); //Paralela Ortogrâfica
             c.to_color(i, j, color);
         }
     }

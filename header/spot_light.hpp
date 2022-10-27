@@ -1,14 +1,15 @@
-#ifndef POINT_LIGHT_HPP
-#define POINT_LIGHT_HPP
+#ifndef SPOT_LIGHT_HPP
+#define SPOT_LIGHT_HPP
 
 #include "specular_light.hpp"
 
-class point_light : public specular_light {
+class spot_light : public specular_light {
     private:
-        vp position; 
+        vp position, direction; 
+        double angle;
         
     public:
-        point_light(px intensity, vp position);
+        spot_light(px intensity, vp position, vp direction, double angle);
     
         //transformations
         void to_camera(matrix M);
@@ -18,6 +19,8 @@ class point_light : public specular_light {
     
         vp get_position();
         void set_position(vp position);
+        vp get_direction();
+        void set_direction(vp direction);
 };
 
 #endif

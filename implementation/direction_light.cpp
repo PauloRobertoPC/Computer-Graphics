@@ -12,7 +12,11 @@ px direction_light::calculate_intensity(vp P, vp N, vp V, object* obj, bool calc
     return i;
 }
 
-vp direction_light::get_l(vp P){ return get_direction(); }
+vp direction_light::get_l(vp P){ return -get_direction(); }
+
+void direction_light::to_camera(matrix M){
+    this->direction = (M*matrix::vp_to_matrix(this->direction)).matrix_to_vp();
+}
 
 //Getters and Setters
 vp direction_light::get_direction(){ return this->direction; }

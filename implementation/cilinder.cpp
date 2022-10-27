@@ -87,6 +87,7 @@ vp cilinder::normal_with_shell(vp &O, vp &D, double &t){
 //transformations
 void cilinder::transform(){
     this->center = (this->transformations*matrix::vp_to_matrix(this->center)).matrix_to_vp();
+    this->direction = (this->transformations*matrix::vp_to_matrix(this->direction)).matrix_to_vp();
     transformations = matrix::identity(4);
 }
 

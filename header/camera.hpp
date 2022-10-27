@@ -6,7 +6,7 @@
 
 class camera{
     private:
-        vp E;
+        vp E, i, j, k;
         matrix w2c, c2w;
     
     public:
@@ -17,6 +17,9 @@ class camera{
         vp get_E();
         matrix get_w2c();
         matrix get_c2w();
+        vp get_i();
+        vp get_j();
+        vp get_k();
 };
 
 #endif
