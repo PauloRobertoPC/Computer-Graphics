@@ -14,8 +14,7 @@ cone::cone(vp center, vp top, double r, px k_a, px k_d, px k_s, double s, bool h
 
 bool cone::in_shell(vp P){
     double projection = ((P-this->get_center())*this->get_direction());
-    return (projection > 0 && projection <= this->get_heigth());
-}
+    return (projection > 0 && projection <= this->get_heigth()); }
 
 bool cone::in_base(vp P, vp p_pi, vp n){
     vp cp = P-p_pi; double cp_x_n = cp*n;
@@ -83,6 +82,7 @@ vp cone::normal_with_shell(vp &O, vp &D, double &t){
 void cone::transform(){
     this->center = (this->transformations*matrix::vp_to_matrix(this->center)).matrix_to_vp();
     this->direction = (this->transformations*matrix::vp_to_matrix(this->direction)).matrix_to_vp();
+    this->direction = this->direction/~this->direction;
     transformations = matrix::identity(4);
 }
 

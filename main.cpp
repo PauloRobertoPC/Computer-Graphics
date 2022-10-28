@@ -15,8 +15,16 @@
 #include "header/mesh.hpp"
 #include "header/cube.hpp"
 #include "header/camera.hpp"
+#include "header/SDLEngine.hpp"
+#include <SDL2/SDL_events.h>
+#include <SDL2/SDL_mouse.h>
 #include <cmath>
 #include <iostream>
+
+#define LARGURA_TELA 500
+#define ALTURA_TELA  500
+#define LARGURA_CANVAS 500
+#define ALTURA_CANVAS  500
 
 using namespace std;
 
@@ -56,5 +64,44 @@ int main(){
 
     cena.save_scenario("image.png"); //Save image in "image.png"
 
+    //
+    
+    SDLEngine sdlEngine{ "IMAGEM", 
+                        LARGURA_TELA, ALTURA_TELA, 
+                        LARGURA_CANVAS, ALTURA_CANVAS
+    };
+    
+    SDL_Event e;
+    bool quit = false;
+    bool teste = true;
+    int testeNum = 0; 
+
+    int press = 0, x, y, i, j;
+    
+    sdlEngine.atualizarCanvas( cena );
+    sdlEngine.atualizarJanela();
+
+    while (!quit){
+        while(SDL_PollEvent(&e) ){
+            if(e.type == SDL_QUIT) quit = true;
+            if(SDL_MOUSEBUTTONDOWN == e.type){
+                if(SDL_BUTTON_LEFT == e.button.button){
+                    if(!press){
+                        SDL_GetMouseState(&x, &y);
+                        std::cout << "LEFT BUTTON PRESSED AT xy: " << x << " " << y << "\n";
+                        press ^= 1;
+                    }else{
+                        SDL_GetMouseState(&i, &j);
+                        std::cout << "LEFT BUTTON PRESSED AT ij: " << i << " " << j << "\n";
+                        press ^= 1;
+                        sdlEngine.atualizarCanvas( cena );
+                        sdlEngine.atualizarJanela();
+                    }
+                }
+            }
+        }
+        // std::cout << "AQUI\n";
+    }
+    
     return 0;
 }

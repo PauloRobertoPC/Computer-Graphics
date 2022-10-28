@@ -38,6 +38,8 @@ class scene{
         void draw_scenario();
 
         void save_scenario(const char* image_name);
+
+        px get_pixel(int i, int j); 
 };
 
 #endif

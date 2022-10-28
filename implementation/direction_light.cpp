@@ -16,6 +16,7 @@ vp direction_light::get_l(vp P){ return -get_direction(); }
 
 void direction_light::to_camera(matrix M){
     this->direction = (M*matrix::vp_to_matrix(this->direction)).matrix_to_vp();
+    this->direction = this->direction/~direction;
 }
 
 //Getters and Setters

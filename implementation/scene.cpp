@@ -72,6 +72,10 @@ void scene::draw_scenario(){
     }
 }
 
+px scene::get_pixel(int i, int j){
+    return c.get_color(i, j);
+}
+
 void scene::save_scenario(const char* image_name){
     c.write_image(image_name);
 }

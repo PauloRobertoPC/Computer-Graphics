@@ -2,6 +2,7 @@ clear: compile
 	rm *.o
 
 compile: object
-	g++ -o main *.o
+	g++ -lSDL2 -o  main *.o
+	
 object:
-	g++ -c main.cpp implementation/*.cpp
+	g++ -c  main.cpp implementation/*.cpp 
