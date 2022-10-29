@@ -12,6 +12,8 @@ cone::cone(vp center, vp direction, double r, double heigth, px k_a, px k_d, px 
 cone::cone(vp center, vp top, double r, px k_a, px k_d, px k_s, double s, bool has_base) : 
     center(center), direction((top-center)/(~(top-center))), heigth(~(top-center)), radio(r), object(k_a, k_d, k_s, s), has_base(has_base){}
 
+vp cone::get_def_point(){ return this->center; }
+
 bool cone::in_shell(vp P){
     double projection = ((P-this->get_center())*this->get_direction());
     return (projection > 0 && projection <= this->get_heigth()); }
@@ -81,10 +83,22 @@ vp cone::normal_with_shell(vp &O, vp &D, double &t){
 //transformations
 void cone::transform(){
     this->center = (this->transformations*matrix::vp_to_matrix(this->center)).matrix_to_vp();
-    this->direction = (this->transformations*matrix::vp_to_matrix(this->direction)).matrix_to_vp();
-    this->direction = this->direction/~this->direction;
     transformations = matrix::identity(4);
 }
+
+void cone::to_camera(matrix M){
+    this->center = (M*matrix::vp_to_matrix(this->center)).matrix_to_vp();
+    this->direction = (M*matrix::vp_to_matrix(this->direction)).matrix_to_vp();
+    this->direction = this->direction/~this->direction;
+}
+
+void cone::translation(vp P){
+    vp t = P-this->center;
+    matrix T = matrix::translation_matrix(t); 
+    this->transformations = T*this->transformations; 
+    this->transform();
+}
+
 
 //Getters and Setters
 vp cone::get_center(){ return this->center; }

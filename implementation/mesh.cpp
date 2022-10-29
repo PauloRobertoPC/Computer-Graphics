@@ -123,22 +123,23 @@ void mesh::translation(vp P){
     vp t = P-this->center;
     matrix T = matrix::translation_matrix(t); 
     this->transformations = T*this->transformations; 
+    this->transform();
 }
 
-void mesh::rotation_x(double angle){ this->transformations = matrix::rotationX_matrix(angle)*this->transformations; }
-void mesh::rotation_y(double angle){ this->transformations = matrix::rotationY_matrix(angle)*this->transformations; }
-void mesh::rotation_z(double angle){ this->transformations = matrix::rotationZ_matrix(angle)*this->transformations; }
-void mesh::rotate_arbitrary(vp o, vp direction, double angle){ this->transformations = matrix::rotation_arbitrary_matrix(o, direction, angle)*this->transformations; }
-void mesh::scaling(vp S){ this->transformations = matrix::scaling_matrix(S)*this->transformations; }
-void mesh::shear_xy(double angle){ this->transformations = matrix::shear_xy(angle)*this->transformations; }
-void mesh::shear_yx(double angle){ this->transformations = matrix::shear_yx(angle)*this->transformations; }
-void mesh::shear_xz(double angle){ this->transformations = matrix::shear_xz(angle)*this->transformations; }
-void mesh::shear_zx(double angle){ this->transformations = matrix::shear_zx(angle)*this->transformations; }
-void mesh::shear_yz(double angle){ this->transformations = matrix::shear_yz(angle)*this->transformations; }
-void mesh::shear_zy(double angle){ this->transformations = matrix::shear_zy(angle)*this->transformations; }
+void mesh::to_camera(matrix M){ this->transformations = M*this->transformations; this->transform(); }
+void mesh::rotation_x(double angle){ this->transformations = matrix::rotationX_matrix(angle)*this->transformations; this->transform(); }
+void mesh::rotation_y(double angle){ this->transformations = matrix::rotationY_matrix(angle)*this->transformations; this->transform(); }
+void mesh::rotation_z(double angle){ this->transformations = matrix::rotationZ_matrix(angle)*this->transformations; this->transform(); }
+void mesh::rotate_arbitrary(vp o, vp direction, double angle){ this->transformations = matrix::rotation_arbitrary_matrix(o, direction, angle)*this->transformations; this->transform(); }
+void mesh::scaling(vp S){ this->transformations = matrix::scaling_matrix(S)*this->transformations; this->transform(); }
+void mesh::shear_xy(double angle){ this->transformations = matrix::shear_xy(angle)*this->transformations; this->transform(); }
+void mesh::shear_yx(double angle){ this->transformations = matrix::shear_yx(angle)*this->transformations; this->transform(); }
+void mesh::shear_xz(double angle){ this->transformations = matrix::shear_xz(angle)*this->transformations; this->transform(); }
+void mesh::shear_zx(double angle){ this->transformations = matrix::shear_zx(angle)*this->transformations; this->transform(); }
+void mesh::shear_yz(double angle){ this->transformations = matrix::shear_yz(angle)*this->transformations; this->transform(); }
+void mesh::shear_zy(double angle){ this->transformations = matrix::shear_zy(angle)*this->transformations; this->transform(); }
 
 void mesh::mirror(matrix M){
-    // this->transform();
     this->invert_normal ^= 1;
     this->transformations = M; 
     this->transform(); 

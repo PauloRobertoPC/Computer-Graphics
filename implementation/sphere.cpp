@@ -5,6 +5,8 @@
 sphere::sphere(){}
 sphere::sphere(vp center, double r, px k_a, px k_d, px k_s, double s) : center(center), radio(r), object(k_a, k_d, k_s, s){}
 
+vp sphere::get_def_point(){ return this->center; }
+
 std::tuple<double, vp> sphere::intersection_with_ray(vp O, vp D, double t_min, double t_max){
     double t = INF; vp n;
     vp CO = O - this->center;
@@ -32,9 +34,20 @@ vp sphere::normal_with_shell(vp &O, vp &D, double &t){
 }
 
 //transformations
+void sphere::to_camera(matrix M){
+    this->center = (M*matrix::vp_to_matrix(this->center)).matrix_to_vp();
+}
+
 void sphere::transform(){
     this->center = (this->transformations*matrix::vp_to_matrix(this->center)).matrix_to_vp();
     transformations = matrix::identity(4);
+}
+
+void sphere::translation(vp P){
+    vp t = P-this->center;
+    matrix T = matrix::translation_matrix(t); 
+    this->transformations = T*this->transformations; 
+    this->transform();
 }
 
 //Getters and Setters

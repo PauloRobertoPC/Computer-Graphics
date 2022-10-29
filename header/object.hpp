@@ -17,13 +17,16 @@ class object{
     public:
         object(); 
         object(px k_a, px k_d, px k_s, double specular);
+
+        virtual vp get_def_point() = 0;
         
         //return scalar 't' and normal with the point of intersection with the object
         virtual std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max) = 0;
 
         //transformations 
-        void to_camera(matrix M);
+        virtual void to_camera(matrix M) = 0;
         virtual void transform() = 0;
+        virtual void translation(vp P) = 0;
 
         //Getters and Setters
         px get_k_a();

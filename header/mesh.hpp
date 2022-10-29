@@ -71,6 +71,7 @@ class mesh : public object {
     
         //transformations
         void transform();
+        void to_camera(vp M);
         void translation(vp P);
         void rotation_x(double angle);
         void rotation_y(double angle);
@@ -88,7 +89,6 @@ class mesh : public object {
         void mirror_yz();
         void mirror_arbitrary(vp n, vp p);
         void to_camera(matrix M);
-    
 };
 
 #endif

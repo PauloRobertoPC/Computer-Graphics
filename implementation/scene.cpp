@@ -3,8 +3,9 @@
 #include "../header/scene.hpp"
 #include "../header/comparator.hpp"
 #include "../header/camera.hpp"
+#include "../header/plan.hpp"
 
-scene::scene(camera O, viewport vw, canvas c) : O(O), vw(vw), c(c) {
+scene::scene(camera O, viewport vw, canvas c, PROJECTION p) : O(O), vw(vw), c(c), p(p) {
     this->dx = 1.0*vw.get_w()/c.get_m();
     this->dy = 1.0*vw.get_h()/c.get_n(); 
 }
@@ -29,8 +30,8 @@ px scene::compute_lighting(vp P, vp N, vp V, object* obj){
     return i;
 }
 
-px scene::trace_ray(vp O, vp D, double t_min, double t_max){
-    object* closest_object; bool nulo = true;
+std::tuple<px, object*> scene::trace_ray(vp O, vp D, double t_min, double t_max){
+    object* closest_object = nullptr; bool nulo = true;
     double t, closest = INF; vp aux, n;
     for(object* o:objects){
         std::tie(t, aux) = o->intersection_with_ray(O, D, t_min, t_max); 
@@ -42,10 +43,10 @@ px scene::trace_ray(vp O, vp D, double t_min, double t_max){
             nulo = false;
         }
     }
-    if(nulo) return c.get_background_color();
+    if(nulo) return {c.get_background_color(), closest_object};
     vp P = O + D*closest;
     if(comparator::g(D*n, 0)) n = -n;
-    return compute_lighting(P, n, -D, closest_object);
+    return {compute_lighting(P, n, -D, closest_object), closest_object};
 }
 
 vp scene::xy(int i, int j){ 
@@ -60,16 +61,59 @@ void scene::transform_scenario_to_camera(){
     for(light *l:lights) l->to_camera(O.get_w2c());
 }
 
-void scene::draw_scenario(){
-    transform_scenario_to_camera();
+std::tuple<vp, vp> scene::ray_equation(int i, int j){
+    vp D = xy(i, j); D = D/(~D);
+    switch (this->p) {
+        case PERSPECITVE:
+            std::cout << "ENTROU\n";
+            return {vp(0, 0, 0), D}; 
+            break;
+        case PARALELL:
+            return {D, vp(0, 0, -1)}; 
+            break;
+    }  
+    return {vp(0, 0, 0), vp(0, 0, 0)};
+}
+
+void scene::draw_scenario(bool change_coordinates){
+    if(change_coordinates) transform_scenario_to_camera();
+    px color; object *choosen_object; vp O, D;
     for(int i = 0; i < c.get_n(); i++){
         for(int j = 0; j < c.get_m(); j++){
-            vp D = xy(i, j); D = D/(~D);
-            px color = trace_ray(vp(0, 0, 0), D, 1.0, INF); //Perspectiva
-            // px color = trace_ray(D, vp(0, 0, -1), 1.0, INF); //Paralela Ortogrâfica
+            std::tie(O, D) = ray_equation(i, j);
+            std::tie(color, choosen_object) = trace_ray(O, D, 1.0, INF);
             c.to_color(i, j, color);
         }
     }
+    std::cout << "DESENHO CONCLUIDO\n";
+}
+
+void change_alpha(object *o, double alpha){
+    px ka = o->get_k_a(); ka.set_a(alpha);  
+    px kd = o->get_k_d(); kd.set_a(alpha);  
+    px ks = o->get_k_s(); ks.set_a(alpha);  
+    o->set_k_a(ka); o->set_k_d(kd); o->set_k_s(ks);
+}
+
+object* scene::select_object(int i, int j){
+    px color; object *choosen_object;
+    vp O, D; std::tie(O, D) = ray_equation(i, j);
+    std::tie(color, choosen_object) = trace_ray(O, D, 1.0, INF);
+    if(choosen_object != nullptr){
+        change_alpha(choosen_object, 0.5);
+        std::cout << "OBJETO SELECIONADO\n";
+    }
+    return choosen_object;
+}
+
+void scene::translation(object *choosen_object, int x, int y, int i, int j){
+    change_alpha(choosen_object, 0.5);
+    plan p(choosen_object->get_def_point(), vp(0, 0, 1));  
+    vp n, O, D; std::tie(O, D) = ray_equation(i, j); double t;
+    std::tie(t, n) = p.intersection_with_ray(O, D, 1, INF);
+    vp P = D*t;
+    P.print();
+    choosen_object->translation(P); 
 }
 
 px scene::get_pixel(int i, int j){

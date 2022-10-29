@@ -29,6 +29,7 @@
 #define SHIFT_RED   << 0
 #define SHIFT_GREEN << 8
 #define SHIFT_BLUE  << 16
+#define SHIFT_ALPHA  << 24
 
 // \endcond
 
@@ -118,7 +119,7 @@ public:
      *
      * \param novoCanvas Array com as novas cores do canvas, com cada valor variando de 0 a 1
     */
-    void atualizarCanvas ( scene &cena );
+    void atualizarCanvas(scene &cena);
 
     /*!
      * Muda a regra de stretch

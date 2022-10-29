@@ -13,6 +13,8 @@ class sphere : public object{
     public:
         sphere();
         sphere(vp center, double r, px k_a, px k_d, px k_s, double s);
+    
+        vp get_def_point();
 
         //calculate the intersections between the sphere and the ray
         std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max);
@@ -20,6 +22,8 @@ class sphere : public object{
         vp normal(vp P);
     
         //transformations
+        void to_camera(matrix M);
+        void translation(vp P);
         void transform();
     
         //Getters and Setters

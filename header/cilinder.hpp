@@ -21,10 +21,14 @@ class cilinder : public object{
         cilinder();
         cilinder(vp center, vp direction, double r, double heigth, px k_a, px k_d, px k_s, double s, bool has_base, bool has_top);
         cilinder(vp center, vp top, double r, px k_a, px k_d, px k_s, double s, bool has_base, bool has_top);
+    
+        vp get_def_point();
 
         std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max);
     
         //transformations
+        void to_camera(matrix M);
+        void translation(vp P);
         void transform();
     
         //Getters and Setters

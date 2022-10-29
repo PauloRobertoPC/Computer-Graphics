@@ -6,7 +6,6 @@ object::object(px k_a, px k_d, px k_s, double specular) : k_a(k_a), k_d(k_d), k_
 }
 
 //transformations
-void object::to_camera(matrix M){ this->transformations = M*this->transformations; this->transform(); }
 
 //Getters and Setters
 px object::get_k_a(){ return this->k_a; }
