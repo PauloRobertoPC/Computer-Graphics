@@ -28,58 +28,35 @@
 
 using namespace std;
 
-void tarefa5(){
-    // cena.add_object(new sphere(vp(0, 95, -200), 5, px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), 10)); 
-    // cube *cb = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
-    // cb->scaling(vp(40, 40, 40));
-    // cb->transform();
-    // cb->translation(vp(0, -150, -165));
-    // cena.add_object(cb);
-    // cena.add_object(new cone(vp(0, -60, -200), vp(0., 1., 0), 90, 150, px(0., 1., 0.498), px(0., 1., 0.498), px(0., 1., 0.498), 10, false));
-    // cena.add_object(new cilinder(vp(0, -150, -200), vp(0., 1., 0), 5, 90, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true)); 
-    //
-    // cena.add_object(new plan(vp(0, -150, 0), vp(0, 1, 0), px(0.5, 0.5, 0.5), px(0.5, 0.5, 0.5), px(0.5, 0.5, 0.5), 1));
-    // cena.add_object(new plan(vp(200, -150, 0), vp(-1., 0., 0), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), 1));
-    // cena.add_object(new plan(vp(200, -150, -400), vp(0., 0., 1), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), 1));
-    // cena.add_object(new plan(vp(-200, -150, 0), vp(1., 0., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(00.933, 0.933, 0.933), 1));
-    // cena.add_object(new plan(vp(0, 150, 0), vp(0., -1., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), 1));
-    //
-    // 
-    // cena.add_light(new ambient_light(px(0.3, 0.3, 0.3))); 
-    // cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20))); 
-    // cena.add_light(new direction_light(px(0.0, 0.0, 0.0), vp(0, 0, 0))); 
+scene tarefa5(){
+    camera O(vp(0, 0, 0), vp(0, 0, -1), vp(1, 1, -1));
+    viewport vw(60, 60, -20);
+    canvas c(500, 500, px::convert_rgb(255, 255, 255));
+    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
+    
+    cena.add_object(new sphere(vp(0, 95, -200), 5, px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), 10)); 
+    cube *cb = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
+    cb->scaling(vp(40, 40, 40));
+    cb->transform();
+    cb->translation(vp(0, -150, -165));
+    cena.add_object(cb);
+    cena.add_object(new cone(vp(0, -60, -200), vp(0., 1., 0), 90, 150, px(0., 1., 0.498), px(0., 1., 0.498), px(0., 1., 0.498), 10, false));
+    cena.add_object(new cilinder(vp(0, -150, -200), vp(0., 1., 0), 5, 90, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true)); 
 
+    cena.add_object(new plan(vp(0, -150, 0), vp(0, 1, 0), px(0.5, 0.5, 0.5), px(0.5, 0.5, 0.5), px(0.5, 0.5, 0.5), 1));
+    cena.add_object(new plan(vp(200, -150, 0), vp(-1., 0., 0), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), 1));
+    cena.add_object(new plan(vp(200, -150, -400), vp(0., 0., 1), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), 1));
+    cena.add_object(new plan(vp(-200, -150, 0), vp(1., 0., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(00.933, 0.933, 0.933), 1));
+    cena.add_object(new plan(vp(0, 150, 0), vp(0., -1., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), 1));
+
+    cena.add_light(new ambient_light(px(0.3, 0.3, 0.3))); 
+    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20))); 
+    cena.add_light(new direction_light(px(0.0, 0.0, 0.0), vp(0, 0, 0))); 
+    
+    return cena;
 }
 
-void cena_qualquer(){
-    // cube* cuboa = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
-    // cuboa->mirror_xy();
-    // cuboa->mirror_xy();
-    // cuboa->scaling(vp(100, 50, 50));
-    // cuboa->transform();
-    // cuboa->translation(vp(0.33, 103.29, -165));
-    // cuboa->translation(vp(0, 100, -165));
-    // cuboa->transform();
-    // cena.add_object(cuboa);
-    //
-    // cube* cubob = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
-    // cubob->scaling(vp(100, 50, 50));
-    // cubob->transform();
-    // cubob->mirror_xy(); 
-    // cubob->translation(vp(0, -50, -165));
-    // cubob->transform();
-    // cena.add_object(cubob);
-    //
-    // cena.add_object(new plan(vp(0, 0, -400), vp(0, 0, 1), px(0.5, 0.0, 0.5), px(0.5, 0.0, 0.5), px(0.5, 0.0, 0.5), 1));
-    // cena.add_object(new plan(vp(0, -250, 0), vp(0, 1, 0), px(0.0, 0.5, 0.0), px(0.0, 0.5, 0.0), px(0.0, 0.5, 0.0), 1));
-    //
-    // cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
-    // cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
-    // cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
-    // cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 1000, 0), vp(-1, -1, -1), 3.14/3.0));
-}
-
-int main(){
+scene tarefa6(){
     // camera O(vp(0, 0, 0), vp(0, 0, -1), vp(1, 1, -1));
     // camera O(vp(0, 800, -665), vp(0, 0, -665), vp(0, 800, -800)); // CIMA
     camera O(vp(0, 0, 0), vp(0, 0, -165), vp(0, 90, -165)); // FRENTE
@@ -88,7 +65,6 @@ int main(){
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
 
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
-
     
     // teto forro
     
@@ -217,10 +193,52 @@ int main(){
     cena.add_light(new ambient_light(px(0.3, 0.3, 0.3))); 
     cena.add_light(new point_light(px(1, 1, 0.7), vp(0, 1000, 0))); 
     cena.add_light(new spot_light(px(1, 1, 0.7), vp(0, 380, -665), vp(0, -1, 0), 0.4)); 
-     
-    cena.draw_scenario(1); 
+    return cena;  
+
     
-    //
+}
+
+scene cena_qualquer(){
+    camera O(vp(0, 0, 0), vp(0, 0, -1), vp(1, 1, -1));
+    viewport vw(60, 60, -20);
+    canvas c(500, 500, px::convert_rgb(255, 255, 255));
+    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
+    
+    cube* cuboa = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
+    cuboa->mirror_xy();
+    cuboa->mirror_xy();
+    cuboa->scaling(vp(100, 50, 50));
+    cuboa->transform();
+    cuboa->translation(vp(0.33, 103.29, -165));
+    cuboa->translation(vp(0, 100, -165));
+    cuboa->transform();
+    cena.add_object(cuboa);
+
+    cube* cubob = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
+    cubob->scaling(vp(100, 50, 50));
+    cubob->transform();
+    cubob->mirror_xy(); 
+    cubob->translation(vp(0, -50, -165));
+    cubob->transform();
+    cena.add_object(cubob);
+
+    cena.add_object(new plan(vp(0, 0, -400), vp(0, 0, 1), px(0.5, 0.0, 0.5), px(0.5, 0.0, 0.5), px(0.5, 0.0, 0.5), 1));
+    cena.add_object(new plan(vp(0, -250, 0), vp(0, 1, 0), px(0.0, 0.5, 0.0), px(0.0, 0.5, 0.0), px(0.0, 0.5, 0.0), 1));
+
+    cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
+    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
+    cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
+    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 1000, 0), vp(-1, -1, -1), 3.14/3.0));
+
+    return cena;
+}
+
+int main(){
+    scene cena = tarefa6(); 
+    cena.draw_scenario(1); 
+    cena.save_scenario("image.png");
+    
+    //SDL2 stuffs
     
     SDLEngine sdlEngine{ "IMAGEM", 
                         LARGURA_TELA, ALTURA_TELA, 

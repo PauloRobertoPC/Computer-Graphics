@@ -65,7 +65,6 @@ std::tuple<vp, vp> scene::ray_equation(int i, int j){
     vp D = xy(i, j); D = D/(~D);
     switch (this->p) {
         case PERSPECITVE:
-            std::cout << "ENTROU\n";
             return {vp(0, 0, 0), D}; 
             break;
         case PARALELL:
