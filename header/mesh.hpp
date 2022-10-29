@@ -9,6 +9,7 @@ class mesh : public object {
     private:
         bool invert_normal;
         void mirror(matrix M);
+        void shear(matrix M);
     
     protected:
         class vertex{
@@ -72,12 +73,6 @@ class mesh : public object {
         //transformations
         void transform();
         void to_camera(vp M);
-        void translation(vp P);
-        void rotation_x(double angle);
-        void rotation_y(double angle);
-        void rotation_z(double angle);
-        void rotate_arbitrary(vp o, vp direction, double angle);
-        void scaling(vp S);
         void shear_xy(double angle);
         void shear_yx(double angle);
         void shear_xz(double angle);

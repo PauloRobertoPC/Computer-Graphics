@@ -7,7 +7,7 @@
 #include "../header/stb_image_write.hpp"
 
 canvas::canvas(){}
-canvas::canvas(int n, int m, px bg): n(n), m(m), background_color(bg), M(n, std::vector<px>(m, bg)){}
+canvas::canvas(int n, int m, px bg): n(n), m(m), background_color(bg), M(n, std::vector<px>(m, bg)), z_buffer(n, std::vector<object*>(m, nullptr)){}
 
 void canvas::write_image(const char* image_name){
 	int width = m, height = n;
@@ -18,8 +18,9 @@ void canvas::write_image(const char* image_name){
 	stbi_write_png(image_name, width, height, CHANNEL_NUM, imageW, width * CHANNEL_NUM);
 }
 
-void canvas::to_color(int i, int j, px color){ this->M[i][j] = color; }
+void canvas::to_color(int i, int j, px color, object *o){ this->M[i][j] = color; this->z_buffer[i][j] = o; }
 px canvas::get_color(int i, int j){ return this->M[i][j]; } 
+object* canvas::get_object(int i, int j){ return this->z_buffer[i][j]; }
 
 //Getters and Setters
 int canvas::get_n(){ return this->n; }

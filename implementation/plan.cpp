@@ -23,15 +23,27 @@ void plan::to_camera(matrix M){
 
 void plan::transform(){
     this->p_pi = (this->transformations*matrix::vp_to_matrix(this->p_pi)).matrix_to_vp();
+    this->n = (this->transformations*matrix::vp_to_matrix(this->n)).matrix_to_vp();
+    this->n = this->n/~this->n;
     transformations = matrix::identity(4);
 }
 
-void plan::translation(vp P){
-    // vp t = P-this->p_pi;
-    // matrix T = matrix::translation_matrix(t); 
-    // this->transformations = T*this->transformations; 
-    // this->transform();
-}
+void plan::translation(vp P){}
+void plan::rotation_x(double angle){}
+void plan::rotation_y(double angle){}
+void plan::rotation_z(double angle){}
+void plan::rotate_arbitrary(vp o, vp direction, double angle){}
+void plan::scaling(vp S){}
+void plan::shear_xy(double angle){}
+void plan::shear_yx(double angle){}
+void plan::shear_xz(double angle){}
+void plan::shear_zx(double angle){}
+void plan::shear_yz(double angle){}
+void plan::shear_zy(double angle){}
+void plan::mirror_xy(){}
+void plan::mirror_xz(){}
+void plan::mirror_yz(){}
+void plan::mirror_arbitrary(vp n, vp p){}
 
 //Getters and Setters
 vp plan::get_p_pi(){ return this->p_pi; }

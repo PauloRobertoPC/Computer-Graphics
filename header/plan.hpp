@@ -22,6 +22,21 @@ class plan : public object{
         //transformations
         void to_camera(matrix M);
         void translation(vp P);
+        void rotation_x(double angle);
+        void rotation_y(double angle);
+        void rotation_z(double angle);
+        void rotate_arbitrary(vp o, vp direction, double angle);
+        void scaling(vp S);
+        void shear_xy(double angle);
+        void shear_yx(double angle);
+        void shear_xz(double angle);
+        void shear_zx(double angle);
+        void shear_yz(double angle);
+        void shear_zy(double angle);
+        void mirror_xy();
+        void mirror_xz();
+        void mirror_yz();
+        void mirror_arbitrary(vp n, vp p);
         void transform();
     
         //Getters and Setters

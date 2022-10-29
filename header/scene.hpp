@@ -50,7 +50,7 @@ class scene{
 
         object* select_object(int i, int j);
 
-        void translation(object *choosen_object, int x, int y, int i, int j);
+        void translation(object *choosen_object, int i, int j);
 
         px get_pixel(int i, int j); 
 };

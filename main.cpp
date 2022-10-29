@@ -194,8 +194,6 @@ scene tarefa6(){
     cena.add_light(new point_light(px(1, 1, 0.7), vp(0, 1000, 0))); 
     cena.add_light(new spot_light(px(1, 1, 0.7), vp(0, 380, -665), vp(0, -1, 0), 0.4)); 
     return cena;  
-
-    
 }
 
 scene cena_qualquer(){
@@ -222,8 +220,8 @@ scene cena_qualquer(){
     cubob->transform();
     cena.add_object(cubob);
 
-    cena.add_object(new plan(vp(0, 0, -400), vp(0, 0, 1), px(0.5, 0.0, 0.5), px(0.5, 0.0, 0.5), px(0.5, 0.0, 0.5), 1));
-    cena.add_object(new plan(vp(0, -250, 0), vp(0, 1, 0), px(0.0, 0.5, 0.0), px(0.0, 0.5, 0.0), px(0.0, 0.5, 0.0), 1));
+    // cena.add_object(new plan(vp(0, 0, -400), vp(0, 0, 1), px(0.5, 0.0, 0.5), px(0.5, 0.0, 0.5), px(0.5, 0.0, 0.5), 1));
+    // cena.add_object(new plan(vp(0, -250, 0), vp(0, 1, 0), px(0.0, 0.5, 0.0), px(0.0, 0.5, 0.0), px(0.0, 0.5, 0.0), 1));
 
     cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
     cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
@@ -234,8 +232,8 @@ scene cena_qualquer(){
 }
 
 int main(){
-    scene cena = tarefa6(); 
-    cena.draw_scenario(1); 
+    scene cena = tarefa5(); 
+    cena.draw_scenario(0); 
     cena.save_scenario("image.png");
     
     //SDL2 stuffs
@@ -261,26 +259,92 @@ int main(){
             if(e.type == SDL_QUIT) quit = true;
             if(SDL_MOUSEBUTTONDOWN == e.type){
                 if(SDL_BUTTON_LEFT == e.button.button){
-                    if(!press){
-                        SDL_GetMouseState(&x, &y);
-                        swap(x, y);
-                        std::cout << "LEFT BUTTON PRESSED AT xy: " << x << " " << y << "\n";
-                        choosen_object = cena.select_object(x, y);
-                        if(choosen_object == nullptr) continue;
-                        cena.draw_scenario(0);
-                        sdlEngine.atualizarCanvas(cena);
-                        sdlEngine.atualizarJanela();
-                        press ^= 1;
-                    }else{
-                        SDL_GetMouseState(&i, &j);
-                        swap(i, j);
-                        std::cout << "LEFT BUTTON PRESSED AT ij: " << i << " " << j << "\n";
-                        cena.translation(choosen_object, x, y, i, j);
-                        cena.draw_scenario(0);
-                        sdlEngine.atualizarCanvas(cena);
-                        sdlEngine.atualizarJanela();
-                        press ^= 1;
+                    SDL_GetMouseState(&y, &x);
+                    std::cout << "LEFT BUTTON PRESSED AT: " << x << " " << y << "\n";
+                    choosen_object = cena.select_object(x, y);
+                    if(choosen_object == nullptr){
+                        std::cout << "NENHUM OBJETO SELECIONADO\n";  
+                        continue;
                     }
+                    sdlEngine.atualizarCanvas(cena, choosen_object);
+                    sdlEngine.atualizarJanela();
+                    int op;
+                    std::cout << " --- MENU DE OPCOES ---\n";
+                    std::cout << "(1) - Translação\n";
+                    std::cout << "(2) - Rotação\n";
+                    std::cout << "(3) - Espelhamento\n";
+                    std::cout << "(4) - Escalonamento\n";
+                    std::cout << "(5) - Cisalhamento\n";
+                    cout << "Digite a sua opção: "; cin >> op;
+                    if(op == 1){
+                        int i, j, k;
+                        std::cout << "Digite o local de translação: "; cin >> i >> j >> k;
+                        choosen_object->translation(vp(i, j, k));
+                    }else if(op == 2){
+                        std::cout << " --- MENU DE ROTAÇÕES ---\n";
+                        std::cout << "(1) - Rotação no Eixo X\n";
+                        std::cout << "(2) - Rotação no Eixo Y\n";
+                        std::cout << "(3) - Rotação no Eixo Z\n";
+                        // std::cout << "(4) - Rotação no Eixo Arbitrário\n";
+                        cout << "Digite a sua opção: "; cin >> op;
+                        double angle;
+                        std::cout << "Digite o ângulo da rotação(em radianos): "; cin >> angle;
+                        if(op == 1){
+                            choosen_object->rotation_x(angle);                             
+                        }else if(op == 2){
+                            choosen_object->rotation_y(angle);                             
+                        }else if(op == 3){
+                            choosen_object->rotation_z(angle);                             
+                        }else{
+                            // int i, j, k;
+                            // std::cout << "Digite o ponto da origem do eixo: "; cin >> i >> j >> k; vp O(i, j, k);
+                            // std::cout << "Digite o vetor direção do eixo: "; cin >> i >> j >> k; vp D(i, j, k);
+                            // choosen_object->rotate_arbitrary(O, D, angle);                             
+                        }
+                    }else if(op == 3){
+                        std::cout << " --- MENU DE ROTAÇÕES ---\n";
+                        std::cout << "(1) - Espelhamento no plano XY\n";
+                        std::cout << "(2) - Espelhamento no plano XZ\n";
+                        std::cout << "(3) - Espelhamento no plano YZ\n";
+                        std::cout << "(4) - Espelhamento no plano arbitrário\n";
+                        cout << "Digite a sua opção: "; cin >> op;
+                        if(op == 1){
+                            choosen_object->mirror_xy();                             
+                        }else if(op == 2){
+                            choosen_object->mirror_xz();                             
+                        }else if(op == 3){
+                            choosen_object->mirror_yz();                             
+                        }else{
+                            int i, j, k;
+                            std::cout << "Digite o vetor normal ao plano: "; cin >> i >> j >> k; vp n(i, j, k);
+                            std::cout << "Digite o ponto que pertencem ao plano: "; cin >> i >> j >> k; vp p(i, j, k);
+                            choosen_object->mirror_arbitrary(n, p);                             
+                        }
+                    }else if(op == 4){
+                        int i, j, k;
+                        std::cout << "Digite o tamanho do objeto: "; cin >> i >> j >> k; vp s(i, j, k);
+                        choosen_object->scaling(s);
+                    }else{
+                        std::cout << " --- MENU DE ROTAÇÕES ---\n";
+                        std::cout << "(1) - Cisalhamento XY\n";
+                        std::cout << "(2) - Cisalhamento YX\n";
+                        std::cout << "(3) - Cisalhamento XZ\n";
+                        std::cout << "(4) - Cisalhamento ZX\n";
+                        std::cout << "(5) - Cisalhamento YZ\n";
+                        std::cout << "(6) - Cisalhamento ZY\n";
+                        cout << "Digite a sua opção: "; cin >> op;
+                        double angle;
+                        std::cout << "Digite o ângulo do cisalhamento(em radianos): "; cin >> angle;
+                        if(op == 1) choosen_object->shear_xy(angle);                             
+                        else if(op == 2) choosen_object->shear_yx(angle);                             
+                        else if(op == 3) choosen_object->shear_xz(angle);                             
+                        else if(op == 4) choosen_object->shear_zx(angle);                             
+                        else if(op == 5) choosen_object->shear_yz(angle);                             
+                        else choosen_object->shear_zy(angle);                             
+                    }
+                    cena.draw_scenario(0);
+                    sdlEngine.atualizarCanvas(cena);
+                    sdlEngine.atualizarJanela();
                 }
             }
         }

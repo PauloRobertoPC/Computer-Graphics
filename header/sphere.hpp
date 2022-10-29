@@ -23,8 +23,8 @@ class sphere : public object{
     
         //transformations
         void to_camera(matrix M);
-        void translation(vp P);
         void transform();
+        void scaling(vp S);
     
         //Getters and Setters
         vp get_center();

@@ -7,7 +7,7 @@
 
 class cone : public object{
     private:
-        vp center, direction; 
+        vp center, direction, top; 
         double radio, heigth;
         bool has_base;
         
@@ -28,8 +28,8 @@ class cone : public object{
     
         //transformations
         void to_camera(matrix M);
-        void translation(vp P);
         void transform();
+        void scaling(vp S);
     
         //Getters and Setters
         vp get_center();

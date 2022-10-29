@@ -81,32 +81,24 @@ void scene::draw_scenario(bool change_coordinates){
         for(int j = 0; j < c.get_m(); j++){
             std::tie(O, D) = ray_equation(i, j);
             std::tie(color, choosen_object) = trace_ray(O, D, 1.0, INF);
-            c.to_color(i, j, color);
+            c.to_color(i, j, color, choosen_object);
         }
     }
     std::cout << "DESENHO CONCLUIDO\n";
 }
 
-void change_alpha(object *o, double alpha){
-    px ka = o->get_k_a(); ka.set_a(alpha);  
-    px kd = o->get_k_d(); kd.set_a(alpha);  
-    px ks = o->get_k_s(); ks.set_a(alpha);  
-    o->set_k_a(ka); o->set_k_d(kd); o->set_k_s(ks);
-}
+// void change_alpha(object *o, double alpha){
+//     // px ka = o->get_k_a(); ka.set_a(alpha);  
+//     // px kd = o->get_k_d(); kd.set_a(alpha);  
+//     // px ks = o->get_k_s(); ks.set_a(alpha);  
+//     // o->set_k_a(ka); o->set_k_d(kd); o->set_k_s(ks);
+//     o->set_k_a(px(0, 0, 1)); o->set_k_d(px(0, 0, 1)); o->set_k_s(px(0, 0, 1));
+// }
 
-object* scene::select_object(int i, int j){
-    px color; object *choosen_object;
-    vp O, D; std::tie(O, D) = ray_equation(i, j);
-    std::tie(color, choosen_object) = trace_ray(O, D, 1.0, INF);
-    if(choosen_object != nullptr){
-        change_alpha(choosen_object, 0.5);
-        std::cout << "OBJETO SELECIONADO\n";
-    }
-    return choosen_object;
-}
+object* scene::select_object(int i, int j){ return c.get_object(i, j); }
 
-void scene::translation(object *choosen_object, int x, int y, int i, int j){
-    change_alpha(choosen_object, 0.5);
+void scene::translation(object *choosen_object, int i, int j){
+    // change_alpha(choosen_object, 0.5);
     plan p(choosen_object->get_def_point(), vp(0, 0, 1));  
     vp n, O, D; std::tie(O, D) = ray_equation(i, j); double t;
     std::tie(t, n) = p.intersection_with_ray(O, D, 1, INF);

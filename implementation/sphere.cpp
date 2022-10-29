@@ -43,11 +43,8 @@ void sphere::transform(){
     transformations = matrix::identity(4);
 }
 
-void sphere::translation(vp P){
-    vp t = P-this->center;
-    matrix T = matrix::translation_matrix(t); 
-    this->transformations = T*this->transformations; 
-    this->transform();
+void sphere::scaling(vp S){
+    this->radio = S.get_x();
 }
 
 //Getters and Setters

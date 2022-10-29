@@ -10,6 +10,8 @@ class object{
     private:
         px k_a, k_d, k_s;   //intensity of ambient, difuse ans specular light_reflection
         double specular;    //object's shineness
+        
+        void rotation_auxiliar(matrix M);
     
     protected:
         matrix transformations; 
@@ -26,7 +28,22 @@ class object{
         //transformations 
         virtual void to_camera(matrix M) = 0;
         virtual void transform() = 0;
-        virtual void translation(vp P) = 0;
+        virtual void translation(vp P);
+        virtual void rotation_x(double angle);
+        virtual void rotation_y(double angle);
+        virtual void rotation_z(double angle);
+        virtual void rotate_arbitrary(vp o, vp direction, double angle);
+        virtual void scaling(vp S) = 0;
+        virtual void shear_xy(double angle);
+        virtual void shear_yx(double angle);
+        virtual void shear_xz(double angle);
+        virtual void shear_zx(double angle);
+        virtual void shear_yz(double angle);
+        virtual void shear_zy(double angle);
+        virtual void mirror_xy();
+        virtual void mirror_xz();
+        virtual void mirror_yz();
+        virtual void mirror_arbitrary(vp n, vp p);
 
         //Getters and Setters
         px get_k_a();
