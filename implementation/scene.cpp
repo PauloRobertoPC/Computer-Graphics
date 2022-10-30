@@ -53,7 +53,7 @@ vp scene::xy(int i, int j){
     return vp(-vw.get_w()/2.0 + dx/2.0 + j*dx, vw.get_h()/2.0 - dy/2.0 - i*dy, vw.get_d());
 }
 
-void scene::add_object(object *o){ objects.push_back(o); }
+void scene::add_object(object *o){ objects.insert(o); }
 void scene::add_light(light *l){ lights.push_back(l); }
 
 void scene::transform_scenario_to_camera(){
@@ -87,18 +87,13 @@ void scene::draw_scenario(bool change_coordinates){
     std::cout << "DESENHO CONCLUIDO\n";
 }
 
-// void change_alpha(object *o, double alpha){
-//     // px ka = o->get_k_a(); ka.set_a(alpha);  
-//     // px kd = o->get_k_d(); kd.set_a(alpha);  
-//     // px ks = o->get_k_s(); ks.set_a(alpha);  
-//     // o->set_k_a(ka); o->set_k_d(kd); o->set_k_s(ks);
-//     o->set_k_a(px(0, 0, 1)); o->set_k_d(px(0, 0, 1)); o->set_k_s(px(0, 0, 1));
-// }
-
 object* scene::select_object(int i, int j){ return c.get_object(i, j); }
 
+void scene::del_object(object* o){
+    objects.erase(o);
+}
+
 void scene::translation(object *choosen_object, int i, int j){
-    // change_alpha(choosen_object, 0.5);
     plan p(choosen_object->get_def_point(), vp(0, 0, 1));  
     vp n, O, D; std::tie(O, D) = ray_equation(i, j); double t;
     std::tie(t, n) = p.intersection_with_ray(O, D, 1, INF);

@@ -233,7 +233,7 @@ scene cena_qualquer(){
 
 int main(){
     scene cena = tarefa5(); 
-    cena.draw_scenario(0); 
+    cena.draw_scenario(1); 
     cena.save_scenario("image.png");
     
     //SDL2 stuffs
@@ -275,6 +275,8 @@ int main(){
                     std::cout << "(3) - Espelhamento\n";
                     std::cout << "(4) - Escalonamento\n";
                     std::cout << "(5) - Cisalhamento\n";
+                    std::cout << "(6) - Mudar Coloração\n";
+                    std::cout << "(7) - Deletar\n";
                     cout << "Digite a sua opção: "; cin >> op;
                     if(op == 1){
                         int i, j, k;
@@ -315,16 +317,16 @@ int main(){
                         }else if(op == 3){
                             choosen_object->mirror_yz();                             
                         }else{
-                            int i, j, k;
+                            double i, j, k;
                             std::cout << "Digite o vetor normal ao plano: "; cin >> i >> j >> k; vp n(i, j, k);
                             std::cout << "Digite o ponto que pertencem ao plano: "; cin >> i >> j >> k; vp p(i, j, k);
                             choosen_object->mirror_arbitrary(n, p);                             
                         }
                     }else if(op == 4){
-                        int i, j, k;
+                        double i, j, k;
                         std::cout << "Digite o tamanho do objeto: "; cin >> i >> j >> k; vp s(i, j, k);
                         choosen_object->scaling(s);
-                    }else{
+                    }else if(op == 5){
                         std::cout << " --- MENU DE ROTAÇÕES ---\n";
                         std::cout << "(1) - Cisalhamento XY\n";
                         std::cout << "(2) - Cisalhamento YX\n";
@@ -341,6 +343,14 @@ int main(){
                         else if(op == 4) choosen_object->shear_zx(angle);                             
                         else if(op == 5) choosen_object->shear_yz(angle);                             
                         else choosen_object->shear_zy(angle);                             
+                    }else if(op == 6){
+                        double i, j, k;
+                        std::cout << "Digite as intensidades do ka: "; cin >> i >> j >> k; px ka(i, j, k);
+                        std::cout << "Digite as intensidades do kd: "; cin >> i >> j >> k; px kd(i, j, k);
+                        std::cout << "Digite as intensidades do ks: "; cin >> i >> j >> k; px ks(i, j, k);
+                        choosen_object->set_k_a(ka); choosen_object->set_k_d(kd); choosen_object->set_k_s(ks);
+                    }else{
+                        cena.del_object(choosen_object); 
                     }
                     cena.draw_scenario(0);
                     sdlEngine.atualizarCanvas(cena);

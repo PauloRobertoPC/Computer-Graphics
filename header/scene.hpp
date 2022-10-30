@@ -9,6 +9,7 @@
 #include "sphere.hpp"
 #include "light.hpp"
 #include "camera.hpp"
+#include <set>
 
 enum PROJECTION{
     PERSPECITVE,
@@ -21,7 +22,7 @@ class scene{
         viewport vw;                    //viewport
         canvas c;                       //canvas
         PROJECTION p;                   //projection used
-        std::vector<object*> objects;   //objects who are in the scene
+        std::set<object*> objects;   //objects who are in the scene
         std::vector<light*> lights;     //lights whoa are in the scene
         double dx, dy;                  //width and heigth of each pixel of canvas in real world
     
@@ -49,6 +50,7 @@ class scene{
         void save_scenario(const char* image_name);
 
         object* select_object(int i, int j);
+        void del_object(object* o);
 
         void translation(object *choosen_object, int i, int j);
 
