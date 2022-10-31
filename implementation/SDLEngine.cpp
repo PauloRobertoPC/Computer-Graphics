@@ -35,20 +35,19 @@ SDLEngine::~SDLEngine(){
         delete [] _canvas;
 }
 
-void SDLEngine::atualizarCanvas(scene &cena, object *o){
+void SDLEngine::atualizarCanvas(scene &cena, std::set<object*> &objs, object *o){
+    if(o != nullptr && objs.count(o)) objs.erase(o);
+    else if(o != nullptr) objs.insert(o);
+        
     for(int i = 0, px_position = 0; i < alturaCanvas; i++){
         for(int j = 0; j < larguraCanvas; j++, px_position++){
             px pixel = cena.get_pixel(i, j);
-            if(o != nullptr && o == cena.select_object(i, j)) pixel.set_a(0.5); //alpha
-            // if(o != nullptr && o == cena.select_object(i, j)) pixel = px(0, 0, 1); //azul
+            if(objs.count(cena.select_object(i, j))) pixel.set_a(0.5); //alpha
             _canvas[px_position] = 
                      ((pixel.convert_red() << 0) & R_MASK )
                    + ((pixel.convert_green() << 8) & G_MASK)
                    + ((pixel.convert_blue() << 16) & B_MASK )
                    + ((pixel.convert_alpha() << 24) & A_MASK );
-                   // + ((127 << 24) & A_MASK );
-            // std::cout << _canvas[px_position] << "\n";
-            // if(o != nullptr && o == cena.select_object(i, j)) std::cout << _canvas[px_position] << "\n";
         }
     }
     copiarCanvas();

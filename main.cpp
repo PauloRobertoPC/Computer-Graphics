@@ -20,6 +20,7 @@
 #include <SDL2/SDL_mouse.h>
 #include <cmath>
 #include <iostream>
+#include <sys/select.h>
 
 #define LARGURA_TELA 500
 #define ALTURA_TELA  500
@@ -58,8 +59,8 @@ scene tarefa5(){
 
 scene tarefa6(){
     // camera O(vp(0, 0, 0), vp(0, 0, -1), vp(1, 1, -1));
-    // camera O(vp(0, 800, -665), vp(0, 0, -665), vp(0, 800, -800)); // CIMA
-    camera O(vp(0, 0, 0), vp(0, 0, -165), vp(0, 90, -165)); // FRENTE
+    camera O(vp(0, 800, -665), vp(0, 0, -665), vp(0, 800, -800)); // CIMA
+    // camera O(vp(0, 0, 0), vp(0, 0, -165), vp(0, 90, -165)); // FRENTE
     // camera O(vp(665, 0, -665), vp(0, 0, -165), vp(665, 90, -665)); // DIREITA
     viewport vw(60, 60, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
@@ -233,7 +234,7 @@ scene cena_qualquer(){
 
 int main(){
     scene cena = tarefa5(); 
-    cena.draw_scenario(1); 
+    cena.draw_scenario(0); 
     cena.save_scenario("image.png");
     
     //SDL2 stuffs
@@ -248,14 +249,15 @@ int main(){
     bool teste = true;
     int testeNum = 0; 
     object *choosen_object;
+    set<object*> selecteds;
 
     int press = 0, x, y, i, j;
     
-    sdlEngine.atualizarCanvas(cena);
+    sdlEngine.atualizarCanvas(cena, selecteds);
     sdlEngine.atualizarJanela();
     
     while(!quit){
-        while(SDL_PollEvent(&e) ){
+        while(SDL_PollEvent(&e)){
             if(e.type == SDL_QUIT) quit = true;
             if(SDL_MOUSEBUTTONDOWN == e.type){
                 if(SDL_BUTTON_LEFT == e.button.button){
@@ -266,7 +268,7 @@ int main(){
                         std::cout << "NENHUM OBJETO SELECIONADO\n";  
                         continue;
                     }
-                    sdlEngine.atualizarCanvas(cena, choosen_object);
+                    sdlEngine.atualizarCanvas(cena, selecteds, choosen_object);
                     sdlEngine.atualizarJanela();
                     int op;
                     std::cout << " --- MENU DE OPCOES ---\n";
@@ -277,11 +279,12 @@ int main(){
                     std::cout << "(5) - Cisalhamento\n";
                     std::cout << "(6) - Mudar Coloração\n";
                     std::cout << "(7) - Deletar\n";
+                    std::cout << "(8) - Selecionar/Deselecionar Objetos\n";
                     cout << "Digite a sua opção: "; cin >> op;
                     if(op == 1){
                         int i, j, k;
                         std::cout << "Digite o local de translação: "; cin >> i >> j >> k;
-                        choosen_object->translation(vp(i, j, k));
+                        for(object *o:selecteds) o->translation(vp(i, j, k));
                     }else if(op == 2){
                         std::cout << " --- MENU DE ROTAÇÕES ---\n";
                         std::cout << "(1) - Rotação no Eixo X\n";
@@ -292,11 +295,11 @@ int main(){
                         double angle;
                         std::cout << "Digite o ângulo da rotação(em radianos): "; cin >> angle;
                         if(op == 1){
-                            choosen_object->rotation_x(angle);                             
+                            for(object *o:selecteds) o->rotation_x(angle);
                         }else if(op == 2){
-                            choosen_object->rotation_y(angle);                             
+                            for(object *o:selecteds) o->rotation_y(angle);
                         }else if(op == 3){
-                            choosen_object->rotation_z(angle);                             
+                            for(object *o:selecteds) o->rotation_z(angle);
                         }else{
                             // int i, j, k;
                             // std::cout << "Digite o ponto da origem do eixo: "; cin >> i >> j >> k; vp O(i, j, k);
@@ -304,30 +307,30 @@ int main(){
                             // choosen_object->rotate_arbitrary(O, D, angle);                             
                         }
                     }else if(op == 3){
-                        std::cout << " --- MENU DE ROTAÇÕES ---\n";
+                        std::cout << " --- MENU DE ESPELHAMENTO ---\n";
                         std::cout << "(1) - Espelhamento no plano XY\n";
                         std::cout << "(2) - Espelhamento no plano XZ\n";
                         std::cout << "(3) - Espelhamento no plano YZ\n";
                         std::cout << "(4) - Espelhamento no plano arbitrário\n";
                         cout << "Digite a sua opção: "; cin >> op;
                         if(op == 1){
-                            choosen_object->mirror_xy();                             
+                            for(object *o:selecteds) o->mirror_xy();
                         }else if(op == 2){
-                            choosen_object->mirror_xz();                             
+                            for(object *o:selecteds) o->mirror_xz();
                         }else if(op == 3){
-                            choosen_object->mirror_yz();                             
+                            for(object *o:selecteds) o->mirror_yz();
                         }else{
                             double i, j, k;
                             std::cout << "Digite o vetor normal ao plano: "; cin >> i >> j >> k; vp n(i, j, k);
                             std::cout << "Digite o ponto que pertencem ao plano: "; cin >> i >> j >> k; vp p(i, j, k);
-                            choosen_object->mirror_arbitrary(n, p);                             
+                            for(object *o:selecteds) o->mirror_arbitrary(n, p);
                         }
                     }else if(op == 4){
                         double i, j, k;
                         std::cout << "Digite o tamanho do objeto: "; cin >> i >> j >> k; vp s(i, j, k);
-                        choosen_object->scaling(s);
+                        for(object *o:selecteds) o->scaling(s);
                     }else if(op == 5){
-                        std::cout << " --- MENU DE ROTAÇÕES ---\n";
+                        std::cout << " --- MENU DE CISALHAMENTO ---\n";
                         std::cout << "(1) - Cisalhamento XY\n";
                         std::cout << "(2) - Cisalhamento YX\n";
                         std::cout << "(3) - Cisalhamento XZ\n";
@@ -337,23 +340,29 @@ int main(){
                         cout << "Digite a sua opção: "; cin >> op;
                         double angle;
                         std::cout << "Digite o ângulo do cisalhamento(em radianos): "; cin >> angle;
-                        if(op == 1) choosen_object->shear_xy(angle);                             
-                        else if(op == 2) choosen_object->shear_yx(angle);                             
-                        else if(op == 3) choosen_object->shear_xz(angle);                             
-                        else if(op == 4) choosen_object->shear_zx(angle);                             
-                        else if(op == 5) choosen_object->shear_yz(angle);                             
-                        else choosen_object->shear_zy(angle);                             
+                        if(op == 1) for(object* o:selecteds) o->shear_xy(angle);                             
+                        else if(op == 2) for(object* o:selecteds) o->shear_yx(angle);                             
+                        else if(op == 3) for(object* o:selecteds) o->shear_xz(angle);                             
+                        else if(op == 4) for(object* o:selecteds) o->shear_zx(angle);                             
+                        else if(op == 5) for(object* o:selecteds) o->shear_yz(angle);                             
+                        else for(object* o:selecteds) o->shear_zy(angle);                             
                     }else if(op == 6){
                         double i, j, k;
                         std::cout << "Digite as intensidades do ka: "; cin >> i >> j >> k; px ka(i, j, k);
                         std::cout << "Digite as intensidades do kd: "; cin >> i >> j >> k; px kd(i, j, k);
                         std::cout << "Digite as intensidades do ks: "; cin >> i >> j >> k; px ks(i, j, k);
-                        choosen_object->set_k_a(ka); choosen_object->set_k_d(kd); choosen_object->set_k_s(ks);
+                        for(object* o:selecteds){
+                            o->set_k_a(ka); 
+                            o->set_k_d(kd);
+                            o->set_k_s(ks);
+                        }
+                    }else if(op == 7){
+                        for(object* o:selecteds) cena.del_object(o); 
                     }else{
-                        cena.del_object(choosen_object); 
+                        continue;    
                     }
                     cena.draw_scenario(0);
-                    sdlEngine.atualizarCanvas(cena);
+                    sdlEngine.atualizarCanvas(cena, selecteds);
                     sdlEngine.atualizarJanela();
                 }
             }

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <set>
 #include "scene.hpp"
 
 #include <SDL2/SDL.h>
@@ -119,14 +120,14 @@ public:
      *
      * \param novoCanvas Array com as novas cores do canvas, com cada valor variando de 0 a 1
     */
-    void atualizarCanvas(scene &cena, object* o = nullptr);
+    void atualizarCanvas(scene &cena, std::set<object*> &objs, object* o = nullptr);
 
     /*!
      * Muda a regra de stretch
      *
      * \param scretch Nova regra de stretch
     */
-    void mudarStretch ( StretchCanvas scretch );
+    void mudarStretch(StretchCanvas scretch);
 
     /*!
      * Muda as proporções do canvas
@@ -134,19 +135,19 @@ public:
      * \param novaLargura Nova lagura do canvas
      * \param novaAltura Nova altura do canvas
     */
-    void mudarCanvas ( uint novaLargura, uint novaAltura );
+    void mudarCanvas(uint novaLargura, uint novaAltura);
 
     /*!
      * Verifica se houve algum evento de mudança de tamanho da janela e atualiza as informações da surface da janela caso haja o evento
      *
      * \param event <a href='https://wiki.libsdl.org/SDL_Event'>SDL_Event</a> que informará se houve o evento de mudança de tamanho da janela 
     */
-    void junelaMudouTamanho ( const SDL_Event &event );
+    void junelaMudouTamanho(const SDL_Event &event);
 
     /*!
      *  Atualiza a janela
     */
-    void atualizarJanela ();
+    void atualizarJanela();
 
 private:
     
