@@ -1,8 +1,32 @@
 #include "../header/object.hpp"
+#include "../header/stb_image.hpp"
+#include "../header/stb_image_write.hpp"
 
 object::object(){}
 object::object(px k_a, px k_d, px k_s, double specular) : k_a(k_a), k_d(k_d), k_s(k_s), specular(specular){
+    this->has_image = false;
     this->transformations = matrix::identity(4);
+}
+
+object::object(const char* name, double s){ 
+    this->transformations = matrix::identity(4);
+    this->has_image = true;
+    this->specular = s;
+    int chanel;
+    int8* imageR = stbi_load(name, &this->width, &this->height, &chanel, 0);
+    if(imageR == NULL) {
+        printf("Error in loading the image\n");
+        exit(1);
+    }
+    this->image.resize(this->height, std::vector<px>(this->width));
+    double r, g, b;
+    for(int i = 0, c = 0; i < this->height; i++){
+        for(int j = 0; j < this->width; j++){
+            r = 1.0 * imageR[c++]/255, g = 1.0 * imageR[c++]/255, b = 1.0 * imageR[c++]/255;
+            this->image[i][j] = px(r, g, b);
+        }
+    }
+    stbi_image_free(imageR);
 }
 
 //transformations
@@ -37,11 +61,13 @@ void object::mirror_yz(){ this->transformations = matrix::mirroringYZ_matrix()*t
 void object::mirror_arbitrary(vp n, vp p){ this->transformations = matrix::mirror_arbitrary_matrix(n, p)*this->transformations; this->transform(); }
 
 //Getters and Setters
-px object::get_k_a(){ return this->k_a; }
+void object::set_pixel_image(int i, int j){ this->current_pixel_image = image[i%this->height][j%this->width]; }
+bool object::get_has_image(){ return this->has_image; }
+px object::get_k_a(){ return (this->has_image ? this->current_pixel_image : this->k_a); }
 void object::set_k_a(px k_a){ this->k_a = k_a; }
-px object::get_k_d(){ return this->k_d; }
+px object::get_k_d(){ return (this->has_image ? this->current_pixel_image : this->k_d); }
 void object::set_k_d(px k_d){ this->k_d = k_d; }
-px object::get_k_s(){ return this->k_s; }
+px object::get_k_s(){ return (this->has_image ? this->current_pixel_image : this->k_s); }
 void object::set_k_s(px k_s){ this->k_s = k_s; }
 double object::get_specular(){ return this->specular; }
 void object::set_specular(double specular){ this->specular = specular; }

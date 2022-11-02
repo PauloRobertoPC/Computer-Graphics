@@ -59,9 +59,10 @@ scene tarefa5(){
 
 scene tarefa6(){
     // camera O(vp(0, 0, 0), vp(0, 0, -1), vp(1, 1, -1));
-    camera O(vp(0, 800, -665), vp(0, 0, -665), vp(0, 800, -800)); // CIMA
+    // camera O(vp(0, 800, -665), vp(0, 0, -665), vp(0, 800, -800)); // CIMA
     // camera O(vp(0, 0, 0), vp(0, 0, -165), vp(0, 90, -165)); // FRENTE
-    // camera O(vp(665, 0, -665), vp(0, 0, -165), vp(665, 90, -665)); // DIREITA
+    // camera O(vp(600, 0, -665), vp(0, 0, -665), vp(600, 500, -665)); // SLA
+    camera O(vp(665, 0, -665), vp(0, 0, -165), vp(665, 90, -665)); // DIREITA
     viewport vw(60, 60, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
 
@@ -184,7 +185,7 @@ scene tarefa6(){
     cilinder *suport_tree_table = new cilinder(vp(0, -148, -665), vp(0, 1, 0), 30, 9, px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), 10, true, true);
     cena.add_object(suport_tree_table);
 
-    plan *floor = new plan(vp(0, -255, -165), vp(0, 1, 0), px(0.5, 0.5, 0.5), px(0.5, 0.5, 0.5), px(0.5, 0.5, 0.5), 10);
+    plan *floor = new plan(vp(0, -255, -165), vp(0, 1, 0), "./img/grass.jpg" , 10);
     cena.add_object(floor);
 
     plan *wall = new plan(vp(0, 0, -4000), vp(0, 0, 1), px(px::convert_rgb(126, 166, 253)), px(px::convert_rgb(126, 166, 253)), px(px::convert_rgb(126, 166, 253)), 10);
@@ -233,8 +234,8 @@ scene cena_qualquer(){
 }
 
 int main(){
-    scene cena = tarefa5(); 
-    cena.draw_scenario(0); 
+    scene cena = tarefa6(); 
+    cena.draw_scenario(1); 
     cena.save_scenario("image.png");
     
     //SDL2 stuffs
@@ -362,6 +363,7 @@ int main(){
                         continue;    
                     }
                     cena.draw_scenario(0);
+                    selecteds.clear();
                     sdlEngine.atualizarCanvas(cena, selecteds);
                     sdlEngine.atualizarJanela();
                 }

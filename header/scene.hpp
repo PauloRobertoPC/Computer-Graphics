@@ -28,7 +28,7 @@ class scene{
     
         px compute_lighting(vp P, vp N, vp V, object* obj); //calculate all the light in an specific point
 
-        std::tuple<px, object*> trace_ray(vp O, vp D, double t_min, double t_max); //trace rays of from observer to direction D
+        std::tuple<px, object*> trace_ray(vp O, vp D, double t_min, double t_max, int i, int j); //trace rays of from observer to direction D
         
         bool without_shade(vp P, light* l);
 

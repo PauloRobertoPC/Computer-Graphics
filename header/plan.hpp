@@ -14,6 +14,7 @@ class plan : public object{
         plan();
         plan(vp p_pi, vp n);
         plan(vp p_pi, vp n, px k_a, px k_d, px k_s, double s);
+        plan(vp p_pi, vp n, const char* name, double s);
     
         vp get_def_point();
 

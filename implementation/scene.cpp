@@ -30,7 +30,7 @@ px scene::compute_lighting(vp P, vp N, vp V, object* obj){
     return i;
 }
 
-std::tuple<px, object*> scene::trace_ray(vp O, vp D, double t_min, double t_max){
+std::tuple<px, object*> scene::trace_ray(vp O, vp D, double t_min, double t_max, int i, int j){
     object* closest_object = nullptr; bool nulo = true;
     double t, closest = INF; vp aux, n;
     for(object* o:objects){
@@ -44,6 +44,7 @@ std::tuple<px, object*> scene::trace_ray(vp O, vp D, double t_min, double t_max)
         }
     }
     if(nulo) return {c.get_background_color(), closest_object};
+    if(closest_object->get_has_image()) closest_object->set_pixel_image(i, j);
     vp P = O + D*closest;
     if(comparator::g(D*n, 0)) n = -n;
     return {compute_lighting(P, n, -D, closest_object), closest_object};
@@ -80,7 +81,7 @@ void scene::draw_scenario(bool change_coordinates){
     for(int i = 0; i < c.get_n(); i++){
         for(int j = 0; j < c.get_m(); j++){
             std::tie(O, D) = ray_equation(i, j);
-            std::tie(color, choosen_object) = trace_ray(O, D, 1.0, INF);
+            std::tie(color, choosen_object) = trace_ray(O, D, 1.0, INF, i, j);
             c.to_color(i, j, color, choosen_object);
         }
     }

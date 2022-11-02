@@ -33,12 +33,12 @@ class matrix{
             return A;
         }
 
-        static matrix vp_to_matrix(vp v, bool R3=false){
-            matrix V(4-R3, 1);
+        static matrix vp_to_matrix(vp v, bool point = true){
+            matrix V(4, 1);
             V.M[0][0] = v.get_x();
             V.M[1][0] = v.get_y();
             V.M[2][0] = v.get_z();
-            if(!R3) V.M[3][0] = 1;
+            V.M[3][0] = point;
             return V;
         }
 

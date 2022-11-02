@@ -14,11 +14,16 @@ class object{
         void rotation_auxiliar(matrix M);
     
     protected:
+        int width, height;
+        bool has_image;
+        px current_pixel_image;
+        std::vector<std::vector<px>> image;
         matrix transformations; 
     
     public:
         object(); 
         object(px k_a, px k_d, px k_s, double specular);
+        object(const char*, double specular);
 
         virtual vp get_def_point() = 0;
         
@@ -46,6 +51,8 @@ class object{
         virtual void mirror_arbitrary(vp n, vp p);
 
         //Getters and Setters
+        virtual void set_pixel_image(int i, int j);
+        bool get_has_image();
         px get_k_a();
         void set_k_a(px k_a);
         px get_k_d();

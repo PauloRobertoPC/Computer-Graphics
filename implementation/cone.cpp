@@ -94,7 +94,7 @@ void cone::transform(){
 void cone::to_camera(matrix M){
     this->center = (M*matrix::vp_to_matrix(this->center)).matrix_to_vp();
     this->top = (M*matrix::vp_to_matrix(this->top)).matrix_to_vp();
-    this->direction = (M*matrix::vp_to_matrix(this->direction)).matrix_to_vp();
+    this->direction = (M*matrix::vp_to_matrix(this->direction, 0)).matrix_to_vp();
     this->direction = this->direction/~this->direction;
 }
 

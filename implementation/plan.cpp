@@ -3,6 +3,7 @@
 plan::plan(){}
 plan::plan(vp p_pi, vp n) : p_pi(p_pi), n(n), object(){}
 plan::plan(vp p_pi, vp n, px k_a, px k_d, px k_s, double s) : p_pi(p_pi), n(n), object(k_a, k_d, k_s, s){}
+plan::plan(vp p_pi, vp n, const char* name, double s) : p_pi(p_pi), n(n), object(name, s){}
 
 vp plan::get_def_point(){ return this->p_pi; }
 
@@ -17,14 +18,12 @@ std::tuple<double, vp> plan::intersection_with_ray(vp O, vp D, double t_min, dou
 //transformations
 void plan::to_camera(matrix M){
     this->p_pi = (M*matrix::vp_to_matrix(this->p_pi)).matrix_to_vp();
-    this->n = (M*matrix::vp_to_matrix(this->n)).matrix_to_vp();
+    this->n = (M*matrix::vp_to_matrix(this->n, 0)).matrix_to_vp();
     this->n = this->n/~this->n;
 }
 
 void plan::transform(){
     this->p_pi = (this->transformations*matrix::vp_to_matrix(this->p_pi)).matrix_to_vp();
-    this->n = (this->transformations*matrix::vp_to_matrix(this->n)).matrix_to_vp();
-    this->n = this->n/~this->n;
     transformations = matrix::identity(4);
 }
 
