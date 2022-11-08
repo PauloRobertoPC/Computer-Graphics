@@ -75,6 +75,10 @@ std::tuple<vp, vp> scene::ray_equation(int i, int j){
     return {vp(0, 0, 0), vp(0, 0, 0)};
 }
 
+void scene::change_projection(PROJECTION p) {
+    this->p = p;
+}
+
 void scene::draw_scenario(bool change_coordinates){
     if(change_coordinates) transform_scenario_to_camera();
     px color; object *choosen_object; vp O, D;
@@ -89,6 +93,15 @@ void scene::draw_scenario(bool change_coordinates){
 }
 
 object* scene::select_object(int i, int j){ return c.get_object(i, j); }
+light* scene::select_light(int i){ if(i > this->lights.size() && i < 1) return nullptr; return this->lights[i-1]; }
+
+void scene::print_lights() {
+    for(int i = 0; i < this->lights.size(); i++) {
+        std::cout << '(' << i+1 << ") - ";
+        this->lights[i]->print_light();
+        std::cout << std::endl;
+    }
+}
 
 void scene::del_object(object* o){
     objects.erase(o);

@@ -18,6 +18,9 @@ class point_light : public specular_light {
     
         vp get_position();
         void set_position(vp position);
+
+        void translation(vp v);
+        void print_light();
 };
 
 #endif

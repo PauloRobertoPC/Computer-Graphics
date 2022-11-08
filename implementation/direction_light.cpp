@@ -22,3 +22,13 @@ void direction_light::to_camera(matrix M){
 //Getters and Setters
 vp direction_light::get_direction(){ return this->direction; }
 void direction_light::set_direction(vp direction) { this->direction = direction; }
+
+void direction_light::translation(vp v) {
+    matrix M = matrix::translation_matrix(v);
+    this->direction = (M*matrix::vp_to_matrix(this->direction, 0)).matrix_to_vp();
+    this->direction = this->direction/~direction;
+}
+
+void direction_light::print_light() {
+    std::cout << "LUZ DIRECIONAL - (" << this->direction.get_x() << ", " << this->direction.get_y() << ", " << this->direction.get_z() << ")";
+}

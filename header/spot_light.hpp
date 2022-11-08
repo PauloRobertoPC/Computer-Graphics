@@ -21,6 +21,9 @@ class spot_light : public specular_light {
         void set_position(vp position);
         vp get_direction();
         void set_direction(vp direction);
+
+        void translation(vp v);
+        void print_light();
 };
 
 #endif

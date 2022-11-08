@@ -18,6 +18,9 @@ class direction_light : public specular_light {
     
         vp get_direction();
         void set_direction(vp direction);
+
+        void translation(vp v);
+        void print_light();
 };
 
 #endif

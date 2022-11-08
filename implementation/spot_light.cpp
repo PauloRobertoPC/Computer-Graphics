@@ -27,6 +27,17 @@ void spot_light::to_camera(matrix M){
     this->direction = this->direction/~this->direction;
 }
 
+void spot_light::translation(vp v) {
+    matrix M = matrix::translation_matrix(v);
+    this->position = (M*matrix::vp_to_matrix(this->position)).matrix_to_vp();
+    this->direction = (M*matrix::vp_to_matrix(this->direction, 0)).matrix_to_vp();
+    this->direction = this->direction/~this->direction;
+}
+
+void spot_light::print_light() {
+    std::cout << "LUZ SPOT - (" << this->position.get_x() << ", " << this->position.get_y() << ", " << this->position.get_z() << ")";
+}
+
 //Getters and Setters
 vp spot_light::get_position(){ return this->position; }
 void spot_light::set_position(vp position) { this->position = position; }

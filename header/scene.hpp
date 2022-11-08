@@ -50,11 +50,17 @@ class scene{
         void save_scenario(const char* image_name);
 
         object* select_object(int i, int j);
+        light* select_light(int i);
+
         void del_object(object* o);
 
         void translation(object *choosen_object, int i, int j);
 
         px get_pixel(int i, int j); 
+
+        void print_lights();
+
+        void change_projection(PROJECTION p);
 };
 
 #endif

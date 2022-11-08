@@ -10,3 +10,8 @@ px ambient_light::calculate_intensity(vp P, vp N, vp V, object* obj, bool calcul
 void ambient_light::to_camera(matrix M){}
 
 vp ambient_light::get_l(vp P){ return vp(0, 0, 0); }
+
+void ambient_light::translation(vp v) {}
+void ambient_light::print_light() {
+    std::cout << "LUZ AMBIENTE";
+}
