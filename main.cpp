@@ -270,7 +270,6 @@ int main(){
                     std::cout << "(2) - LUZES\n";
                     std::cout << "(3) - CÂMERA\n";
                     std::cout << "(4) - PROJEÇÃO\n";
-                    std::cout << "(0) - SAIR\n";
                     cout << "Digite a sua opção: "; cin >> op;
                     
                     if (op == 1) {
@@ -407,7 +406,40 @@ int main(){
                             std::cout << "Digite o local de translação: "; cin >> i >> j >> k;
                             choosen_light->translation(vp(i, j, k));
                         } else continue;    
-                    } else if (op == 4) {
+                    } else if (op == 3) {
+                        std::cout << " --- MENU DE CÂMERA ---\n";
+                        std::cout << "(1) - MUDAR EYE\n";
+                        std::cout << "(2) - MUDAR AT\n";
+                        std::cout << "(3) - MUDAR UP\n";
+                        std::cout << "(4) - MUDAR VIEW (EYE, AT, UP)\n";
+                        cout << "Digite a sua opção: "; cin >> op;
+
+                        if(op == 1) {
+                            double i, j, k;
+                            std::cout << "Digite as coordenadas do eye: "; cin >> i >> j >> k;
+                            cena.change_e(vp(i, j, k));
+                        }
+                        else if(op == 2) {
+                            double i, j, k;
+                            std::cout << "Digite as coordenadas do at: "; cin >> i >> j >> k;
+                            cena.change_look_at(vp(i, j, k));
+                        }
+                        else if(op == 3) {
+                            double i, j, k;
+                            std::cout << "Digite as coordenadas do up: "; cin >> i >> j >> k;
+                            cena.change_up(vp(i, j, k));
+                        }
+                        else if(op == 4) {
+                            double i, j, k;
+                            std::cout << "Digite as coordenadas do eye: "; cin >> i >> j >> k;
+                            cena.change_e(vp(i, j, k));
+                            std::cout << "Digite as coordenadas do at: "; cin >> i >> j >> k;
+                            cena.change_look_at(vp(i, j, k));
+                            std::cout << "Digite as coordenadas do up: "; cin >> i >> j >> k;
+                            cena.change_up(vp(i, j, k));
+                        }
+                    }
+                    else if (op == 4) {
                         std::cout << " --- MENU DE PROJEÇÕES ---\n";
                         std::cout << "(1) - PERSPECTIVA\n";
                         std::cout << "(2) - ORTOGRÁFICA\n";

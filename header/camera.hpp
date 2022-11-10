@@ -6,7 +6,8 @@
 
 class camera{
     private:
-        vp E, i, j, k;
+        vp E, at, up;
+        vp i, j, k;
         matrix w2c, c2w;
     
     public:
@@ -20,6 +21,11 @@ class camera{
         vp get_i();
         vp get_j();
         vp get_k();
+
+        void change_e(vp p);
+        void change_look_at(vp p);
+        void change_up(vp p);
+        void change_view();
 };
 
 #endif

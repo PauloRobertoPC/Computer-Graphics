@@ -107,6 +107,11 @@ void scene::del_object(object* o){
     objects.erase(o);
 }
 
+void scene::change_e(vp p) { this->O.change_e(p); }
+void scene::change_look_at(vp p) { this->O.change_look_at(p); }
+void scene::change_up(vp p) { this->O.change_up(p); }
+
+
 void scene::translation(object *choosen_object, int i, int j){
     plan p(choosen_object->get_def_point(), vp(0, 0, 1));  
     vp n, O, D; std::tie(O, D) = ray_equation(i, j); double t;

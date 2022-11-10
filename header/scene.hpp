@@ -61,6 +61,10 @@ class scene{
         void print_lights();
 
         void change_projection(PROJECTION p);
+
+        void change_e(vp p);
+        void change_look_at(vp p);
+        void change_up(vp p);
 };
 
 #endif
