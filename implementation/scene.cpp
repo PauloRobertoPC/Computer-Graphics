@@ -62,11 +62,16 @@ void scene::transform_scenario_to_camera(){
     for(light *l:lights) l->to_camera(O.get_w2c());
 }
 
+void scene::transform_scenario_to_world(){
+    for(object *o:objects) o->to_camera(O.get_c2w());
+    for(light *l:lights) l->to_camera(O.get_c2w());
+}
+
 std::tuple<vp, vp> scene::ray_equation(int i, int j){
-    vp D = xy(i, j); D = D/(~D);
+    vp D = xy(i, j);
     switch (this->p) {
         case PERSPECITVE:
-            return {vp(0, 0, 0), D}; 
+            return {vp(0, 0, 0), (D/(~D))}; 
             break;
         case PARALELL:
             return {D, vp(0, 0, -1)}; 
@@ -107,9 +112,20 @@ void scene::del_object(object* o){
     objects.erase(o);
 }
 
-void scene::change_e(vp p) { this->O.change_e(p); }
-void scene::change_look_at(vp p) { this->O.change_look_at(p); }
-void scene::change_up(vp p) { this->O.change_up(p); }
+void scene::change_view(vp E, vp look_at, vp up){ 
+    this->transform_scenario_to_world(); 
+    this->O.change_view(E, look_at, up); 
+    this->transform_scenario_to_camera();
+}
+
+void scene::change_vp(double w, double h) {
+    vw.set_w(w);
+    vw.set_h(h);
+}
+
+void scene::change_d(double d) {
+    vw.set_d(d);
+}
 
 
 void scene::translation(object *choosen_object, int i, int j){

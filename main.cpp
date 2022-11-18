@@ -234,8 +234,9 @@ scene cena_qualquer(){
 }
 
 int main(){
+    bool obs = false;
     scene cena = tarefa6(); 
-    cena.draw_scenario(1); 
+    cena.draw_scenario(obs); 
     cena.save_scenario("image.png");
     
     //SDL2 stuffs
@@ -408,35 +409,31 @@ int main(){
                         } else continue;    
                     } else if (op == 3) {
                         std::cout << " --- MENU DE CÂMERA ---\n";
-                        std::cout << "(1) - MUDAR EYE\n";
-                        std::cout << "(2) - MUDAR AT\n";
-                        std::cout << "(3) - MUDAR UP\n";
-                        std::cout << "(4) - MUDAR VIEW (EYE, AT, UP)\n";
+
+                        std::cout << "(1) - MUDAR PARA CÂMERA\n";
+                        std::cout << "(2) - MUDAR PARA MUNDO\n";
+                        std::cout << "(3) - MUDAR VIEW (EYE, AT, UP)\n";
+                        std::cout << "(4) - MUDAR TAMANHO DA JANELA\n";
+                        std::cout << "(5) - MUDAR DISTÂNCIA FOCAL\n";
                         cout << "Digite a sua opção: "; cin >> op;
 
-                        if(op == 1) {
-                            double i, j, k;
-                            std::cout << "Digite as coordenadas do eye: "; cin >> i >> j >> k;
-                            cena.change_e(vp(i, j, k));
-                        }
-                        else if(op == 2) {
-                            double i, j, k;
-                            std::cout << "Digite as coordenadas do at: "; cin >> i >> j >> k;
-                            cena.change_look_at(vp(i, j, k));
-                        }
+
+                        if(op == 1) obs = true;
+                        else if(op == 2) obs = false;
                         else if(op == 3) {
                             double i, j, k;
-                            std::cout << "Digite as coordenadas do up: "; cin >> i >> j >> k;
-                            cena.change_up(vp(i, j, k));
-                        }
-                        else if(op == 4) {
-                            double i, j, k;
+                            double a, b, c;
+                            double l, m, n;
                             std::cout << "Digite as coordenadas do eye: "; cin >> i >> j >> k;
-                            cena.change_e(vp(i, j, k));
-                            std::cout << "Digite as coordenadas do at: "; cin >> i >> j >> k;
-                            cena.change_look_at(vp(i, j, k));
-                            std::cout << "Digite as coordenadas do up: "; cin >> i >> j >> k;
-                            cena.change_up(vp(i, j, k));
+                            std::cout << "Digite as coordenadas do at: "; cin >> a >> b >> c;
+                            std::cout << "Digite as coordenadas do up: "; cin >> l >> m >> n;
+                            cena.change_view(vp(i, j, k), vp(a, b, c), vp(l, m, n));
+                        } else if(op == 4) {
+                            std::cout << "Digite as novas medidas da janela (largura, altura): "; cin >> i >> j;
+                            cena.change_vp(i, j);
+                        } else if(op == 5)  {
+                            std::cout << "Digite a nova distância focal: "; cin >> i;
+                            cena.change_d(i);
                         }
                     }
                     else if (op == 4) {
@@ -452,7 +449,7 @@ int main(){
                         } else continue; 
 
                     }
-                    cena.draw_scenario(0);
+                    cena.draw_scenario(obs);
                     sdlEngine.atualizarCanvas(cena, selecteds);
                     sdlEngine.atualizarJanela();
                 }

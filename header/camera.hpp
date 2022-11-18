@@ -6,7 +6,6 @@
 
 class camera{
     private:
-        vp E, at, up;
         vp i, j, k;
         matrix w2c, c2w;
     
@@ -15,17 +14,13 @@ class camera{
         vp world_to_camera(vp p); 
         vp camera_to_world(vp p);
 
-        vp get_E();
         matrix get_w2c();
         matrix get_c2w();
         vp get_i();
         vp get_j();
         vp get_k();
 
-        void change_e(vp p);
-        void change_look_at(vp p);
-        void change_up(vp p);
-        void change_view();
+        void change_view(vp E, vp look_at, vp up);
 };
 
 #endif
