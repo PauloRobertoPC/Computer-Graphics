@@ -23,26 +23,27 @@
 #include <sys/select.h>
 
 #define LARGURA_TELA 500
-#define ALTURA_TELA  500
+#define ALTURA_TELA 500
 #define LARGURA_CANVAS 500
-#define ALTURA_CANVAS  500
+#define ALTURA_CANVAS 500
 
 using namespace std;
 
-scene tarefa5(){
-    camera O(vp(0, 0, 0), vp(0, 0, -1), vp(1, 1, -1));
+scene tarefa5()
+{
+    camera O(vp(600, 0, -665), vp(0, 0, -665), vp(600, 500, -665));
     viewport vw(60, 60, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
-    
-    cena.add_object(new sphere(vp(0, 95, -200), 5, px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), 10)); 
+
+    cena.add_object(new sphere(vp(0, 95, -200), 5, px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), 10));
     cube *cb = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
     cb->scaling(vp(40, 40, 40));
     cb->transform();
     cb->translation(vp(0, -150, -165));
     cena.add_object(cb);
     cena.add_object(new cone(vp(0, -60, -200), vp(0., 1., 0), 90, 150, px(0., 1., 0.498), px(0., 1., 0.498), px(0., 1., 0.498), 10, false));
-    cena.add_object(new cilinder(vp(0, -150, -200), vp(0., 1., 0), 5, 90, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true)); 
+    cena.add_object(new cilinder(vp(0, -150, -200), vp(0., 1., 0), 5, 90, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true));
 
     cena.add_object(new plan(vp(0, -150, 0), vp(0, 1, 0), px(0.5, 0.5, 0.5), px(0.5, 0.5, 0.5), px(0.5, 0.5, 0.5), 1));
     cena.add_object(new plan(vp(200, -150, 0), vp(-1., 0., 0), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), 1));
@@ -50,14 +51,15 @@ scene tarefa5(){
     cena.add_object(new plan(vp(-200, -150, 0), vp(1., 0., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(00.933, 0.933, 0.933), 1));
     cena.add_object(new plan(vp(0, 150, 0), vp(0., -1., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), 1));
 
-    cena.add_light(new ambient_light(px(0.3, 0.3, 0.3))); 
-    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20))); 
-    cena.add_light(new direction_light(px(0.0, 0.0, 0.0), vp(0, 0, 0))); 
-    
+    cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
+    // cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
+    // cena.add_light(new direction_light(px(0.3, 0.3, 0.3), vp(0, 0, 0)));
+
     return cena;
 }
 
-scene tarefa6(){
+scene tarefa6()
+{
     // camera O(vp(0, 0, 0), vp(0, 0, -1), vp(1, 1, -1));
     // camera O(vp(0, 800, -665), vp(0, 0, -665), vp(0, 800, -800)); // CIMA
     // camera O(vp(0, 0, 0), vp(0, 0, -165), vp(0, 90, -165)); // FRENTE
@@ -67,9 +69,9 @@ scene tarefa6(){
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
 
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
-    
+
     // teto forro
-    
+
     cube *left_roof = new cube(px(px::convert_rgb(214, 214, 214)), px(px::convert_rgb(214, 214, 214)), px(px::convert_rgb(214, 214, 214)), 10);
     cube *right_roof = new cube(px(px::convert_rgb(214, 214, 214)), px(px::convert_rgb(214, 214, 214)), px(px::convert_rgb(214, 214, 214)), 10);
 
@@ -98,7 +100,7 @@ scene tarefa6(){
     front_right_roof->shear_yx(0.75);
     front_right_roof->translation(vp(-150, 363, -165));
     front_right_roof->mirror_yz();
-    
+
     cena.add_object(front_left_roof);
     cena.add_object(front_right_roof);
 
@@ -116,7 +118,6 @@ scene tarefa6(){
     back_right_roof->translation(vp(-150, 363, -1165));
     back_right_roof->mirror_yz();
 
-    
     cena.add_object(back_left_roof);
     cena.add_object(back_right_roof);
 
@@ -185,26 +186,26 @@ scene tarefa6(){
     cilinder *suport_tree_table = new cilinder(vp(0, -148, -665), vp(0, 1, 0), 30, 9, px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), 10, true, true);
     cena.add_object(suport_tree_table);
 
-    plan *floor = new plan(vp(0, -255, -165), vp(0, 1, 0), "./img/grass.jpg" , 10);
+    plan *floor = new plan(vp(0, -255, -165), vp(0, 1, 0), "./img/grass.jpg", 10);
     cena.add_object(floor);
 
     plan *wall = new plan(vp(0, 0, -4000), vp(0, 0, 1), px(px::convert_rgb(126, 166, 253)), px(px::convert_rgb(126, 166, 253)), px(px::convert_rgb(126, 166, 253)), 10);
     cena.add_object(wall);
 
-    
-    cena.add_light(new ambient_light(px(0.3, 0.3, 0.3))); 
-    cena.add_light(new point_light(px(1, 1, 0.7), vp(0, 1000, 0))); 
-    cena.add_light(new spot_light(px(1, 1, 0.7), vp(0, 380, -665), vp(0, -1, 0), 0.4)); 
-    return cena;  
+    cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
+    cena.add_light(new point_light(px(1, 1, 0.7), vp(0, 1000, 0)));
+    cena.add_light(new spot_light(px(1, 1, 0.7), vp(0, 380, -665), vp(0, -1, 0), 0.4));
+    return cena;
 }
 
-scene cena_qualquer(){
+scene cena_qualquer()
+{
     camera O(vp(0, 0, 0), vp(0, 0, -1), vp(1, 1, -1));
     viewport vw(60, 60, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
-    
-    cube* cuboa = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
+
+    cube *cuboa = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
     cuboa->mirror_xy();
     cuboa->mirror_xy();
     cuboa->scaling(vp(100, 50, 50));
@@ -214,13 +215,12 @@ scene cena_qualquer(){
     cuboa->transform();
     cena.add_object(cuboa);
 
-    cube* cubob = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
-    cubob->scaling(vp(100, 50, 50));
-    cubob->transform();
-    cubob->mirror_xy(); 
-    cubob->translation(vp(0, -50, -165));
-    cubob->transform();
-    cena.add_object(cubob);
+    // cubob->scaling(vp(100, 50, 50));
+    // cubob->transform();
+    // cubob->mirror_xy();
+    // cubob->translation(vp(0, -50, -165));
+    // cubob->transform();
+    // cena.add_object(cubob);
 
     // cena.add_object(new plan(vp(0, 0, -400), vp(0, 0, 1), px(0.5, 0.0, 0.5), px(0.5, 0.0, 0.5), px(0.5, 0.0, 0.5), 1));
     // cena.add_object(new plan(vp(0, -250, 0), vp(0, 1, 0), px(0.0, 0.5, 0.0), px(0.0, 0.5, 0.0), px(0.0, 0.5, 0.0), 1));
@@ -228,58 +228,171 @@ scene cena_qualquer(){
     cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
     cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
     cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
-    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 1000, 0), vp(-1, -1, -1), 3.14/3.0));
+    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 1000, 0), vp(-1, -1, -1), 3.14 / 3.0));
 
     return cena;
 }
 
-int main(){
-    bool obs = false;
-    scene cena = tarefa6(); 
-    cena.draw_scenario(obs); 
+scene fundo()
+{
+    camera O(vp(-700, 500, 500), vp(0, 0, -165), vp(-700, 1050, 500));
+    viewport vw(60, 60, -20);
+    canvas c(500, 500, px::convert_rgb(255, 255, 255));
+    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
+
+    cube *chao = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
+    chao->scaling(vp(1000, 50, 1000));
+    chao->transform();
+    chao->translation(vp(0, 0, 0));
+    chao->transform();
+    cena.add_object(chao);
+
+    cube *parede_traseira = new cube(px(px::convert_rgb(126, 166, 253)), px(px::convert_rgb(126, 166, 253)), px(px::convert_rgb(126, 166, 253)), 10);
+    parede_traseira->scaling(vp(1000, 600, 50));
+    parede_traseira->transform();
+    parede_traseira->translation(vp(0, 300, -500));
+    parede_traseira->transform();
+    cena.add_object(parede_traseira);
+
+    cube *parede_direita = new cube(px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
+    parede_direita->scaling(vp(50, 600, 1000));
+    parede_direita->transform();
+    parede_direita->translation(vp(500, 300, 0));
+    parede_direita->transform();
+    cena.add_object(parede_direita);
+
+    cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
+    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
+    cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
+    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 1000, 0), vp(-1, -1, -1), 3.14 / 3.0));
+
+    return cena;
+}
+
+scene mesa()
+{
+    camera O(vp(0, 200, 120), vp(0, 0, -165), vp(0, 550, 120));
+    viewport vw(60, 60, -20);
+    canvas c(500, 500, px::convert_rgb(255, 255, 255));
+    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
+
+    cena.add_object(new cilinder(vp(0, 0, 0), vp(0., 1., 0), 5, 90, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true));
+    cena.add_object(new cilinder(vp(0, 90, 0), vp(0., 1., 0), 60, 10, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true));
+    cena.add_object(new cilinder(vp(0, 0, 0), vp(0., 1., 0), 30, 10, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true));
+    cena.add_object(new cilinder(vp(0, 100, 0), vp(0., 1., 0), 4, 10, px(px::convert_rgb(135, 232, 246)), px(px::convert_rgb(135, 232, 246)), px(px::convert_rgb(135, 232, 246)), 10, true, true));
+    cena.add_object(new cilinder(vp(0, 110, 0), vp(0., 1., 0), 4, 5, px(px::convert_rgb(220, 220, 220)), px(px::convert_rgb(220, 220, 220)), px(px::convert_rgb(220, 220, 220)), 10, false, false));
+
+    cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
+    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
+    cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
+    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 1000, 0), vp(-1, -1, -1), 3.14 / 3.0));
+    return cena;
+}
+
+scene cadeira()
+{
+    camera O(vp(0, 600, 0), vp(0, 0, 0), vp(0, -1, 10));
+    viewport vw(60, 60, -20);
+    canvas c(500, 500, px::convert_rgb(255, 255, 255));
+    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
+
+    cube *perna1 = new cube(px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
+    perna1->scaling(vp(20, 100, 20));
+    perna1->transform();
+    perna1->translation(vp(-100, 0, 0));
+    perna1->transform();
+    cena.add_object(perna1);
+
+    cube *perna2 = new cube(px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
+    perna2->scaling(vp(20, 100, 20));
+    perna2->transform();
+    perna2->translation(vp(100, 0, 0));
+    perna2->transform();
+    cena.add_object(perna2);
+
+    cube *perna3 = new cube(px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
+    perna3->scaling(vp(20, 100, 20));
+    perna3->transform();
+    perna3->translation(vp(100, 0, 100));
+    perna3->transform();
+    cena.add_object(perna3);
+
+    cube *perna4 = new cube(px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
+    perna4->scaling(vp(20, 100, 20));
+    perna4->transform();
+    perna4->translation(vp(-100, 0, 100));
+    perna4->transform();
+    cena.add_object(perna4);
+
+    cube *banco = new cube(px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
+    banco->scaling(vp(100, 10, 100));
+    banco->transform();
+    banco->translation(vp(0, 40, 0));
+    banco->transform();
+    cena.add_object(banco);
+
+    cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
+    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
+    cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
+    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 1000, 0), vp(-1, -1, -1), 3.14 / 3.0));
+    return cena;
+}
+
+int main()
+{
+    bool obs = true;
+    scene cena = cadeira();
+    cena.draw_scenario(obs);
     cena.save_scenario("image.png");
-    
-    //SDL2 stuffs
-    
-    SDLEngine sdlEngine{ "IMAGEM", 
-                        LARGURA_TELA, ALTURA_TELA, 
-                        LARGURA_CANVAS, ALTURA_CANVAS
-    };
-    
+
+    // SDL2 stuffs
+
+    SDLEngine sdlEngine{"IMAGEM",
+                        LARGURA_TELA, ALTURA_TELA,
+                        LARGURA_CANVAS, ALTURA_CANVAS};
+
     SDL_Event e;
     bool quit = false;
     bool teste = true;
-    int testeNum = 0; 
+    int testeNum = 0;
     object *choosen_object;
     light *choosen_light;
 
-    set<object*> selecteds;
+    set<object *> selecteds;
 
     int press = 0, x, y, i, j;
-    
+
     sdlEngine.atualizarCanvas(cena, selecteds);
     sdlEngine.atualizarJanela();
-    
-    while(!quit){
-        while(SDL_PollEvent(&e)){
-            if(e.type == SDL_QUIT) quit = true;
-            if(SDL_MOUSEBUTTONDOWN == e.type){
-                if(SDL_BUTTON_LEFT == e.button.button){
+
+    while (!quit)
+    {
+        while (SDL_PollEvent(&e))
+        {
+            if (e.type == SDL_QUIT)
+                quit = true;
+            if (SDL_MOUSEBUTTONDOWN == e.type)
+            {
+                if (SDL_BUTTON_LEFT == e.button.button)
+                {
                     int op;
                     std::cout << " --- MENU DE OPCOES ---\n";
                     std::cout << "(1) - OBJETOS\n";
                     std::cout << "(2) - LUZES\n";
                     std::cout << "(3) - CÂMERA\n";
                     std::cout << "(4) - PROJEÇÃO\n";
-                    cout << "Digite a sua opção: "; cin >> op;
-                    
-                    if (op == 1) {
+                    cout << "Digite a sua opção: ";
+                    cin >> op;
+
+                    if (op == 1)
+                    {
                         SDL_GetMouseState(&y, &x);
                         std::cout << "LEFT BUTTON PRESSED AT: " << x << " " << y << "\n";
 
                         choosen_object = cena.select_object(x, y);
-                        if(choosen_object == nullptr){
-                            std::cout << "NENHUM OBJETO SELECIONADO\n";  
+                        if (choosen_object == nullptr)
+                        {
+                            std::cout << "NENHUM OBJETO SELECIONADO\n";
                             continue;
                         }
                         sdlEngine.atualizarCanvas(cena, selecteds, choosen_object);
@@ -294,56 +407,99 @@ int main(){
                         std::cout << "(6) - Mudar Coloração\n";
                         std::cout << "(7) - Deletar\n";
                         std::cout << "(8) - Selecionar/Deselecionar Objetos\n";
-                        cout << "Digite a sua opção: "; cin >> op;
-                        if(op == 1){
+                        cout << "Digite a sua opção: ";
+                        cin >> op;
+                        if (op == 1)
+                        {
                             int i, j, k;
-                            std::cout << "Digite o local de translação: "; cin >> i >> j >> k;
-                            for(object *o:selecteds) o->translation(vp(i, j, k));
-                        }else if(op == 2){
+                            std::cout << "Digite o local de translação: ";
+                            cin >> i >> j >> k;
+                            for (object *o : selecteds)
+                                o->translation(vp(i, j, k));
+                        }
+                        else if (op == 2)
+                        {
                             std::cout << " --- MENU DE ROTAÇÕES ---\n";
                             std::cout << "(1) - Rotação no Eixo X\n";
                             std::cout << "(2) - Rotação no Eixo Y\n";
                             std::cout << "(3) - Rotação no Eixo Z\n";
                             // std::cout << "(4) - Rotação no Eixo Arbitrário\n";
-                            cout << "Digite a sua opção: "; cin >> op;
+                            cout << "Digite a sua opção: ";
+                            cin >> op;
                             double angle;
-                            std::cout << "Digite o ângulo da rotação(em radianos): "; cin >> angle;
-                            if(op == 1){
-                                for(object *o:selecteds) o->rotation_x(angle);
-                            }else if(op == 2){
-                                for(object *o:selecteds) o->rotation_y(angle);
-                            }else if(op == 3){
-                                for(object *o:selecteds) o->rotation_z(angle);
-                            }else{
+                            std::cout << "Digite o ângulo da rotação(em radianos): ";
+                            cin >> angle;
+                            if (op == 1)
+                            {
+                                for (object *o : selecteds)
+                                    o->rotation_x(angle);
+                            }
+                            else if (op == 2)
+                            {
+                                for (object *o : selecteds)
+                                    o->rotation_y(angle);
+                            }
+                            else if (op == 3)
+                            {
+                                for (object *o : selecteds)
+                                    o->rotation_z(angle);
+                            }
+                            else
+                            {
                                 // int i, j, k;
                                 // std::cout << "Digite o ponto da origem do eixo: "; cin >> i >> j >> k; vp O(i, j, k);
                                 // std::cout << "Digite o vetor direção do eixo: "; cin >> i >> j >> k; vp D(i, j, k);
-                                // choosen_object->rotate_arbitrary(O, D, angle);                             
+                                // choosen_object->rotate_arbitrary(O, D, angle);
                             }
-                        }else if(op == 3){
+                        }
+                        else if (op == 3)
+                        {
                             std::cout << " --- MENU DE ESPELHAMENTO ---\n";
                             std::cout << "(1) - Espelhamento no plano XY\n";
                             std::cout << "(2) - Espelhamento no plano XZ\n";
                             std::cout << "(3) - Espelhamento no plano YZ\n";
                             std::cout << "(4) - Espelhamento no plano arbitrário\n";
-                            cout << "Digite a sua opção: "; cin >> op;
-                            if(op == 1){
-                                for(object *o:selecteds) o->mirror_xy();
-                            }else if(op == 2){
-                                for(object *o:selecteds) o->mirror_xz();
-                            }else if(op == 3){
-                                for(object *o:selecteds) o->mirror_yz();
-                            }else{
-                                double i, j, k;
-                                std::cout << "Digite o vetor normal ao plano: "; cin >> i >> j >> k; vp n(i, j, k);
-                                std::cout << "Digite o ponto que pertencem ao plano: "; cin >> i >> j >> k; vp p(i, j, k);
-                                for(object *o:selecteds) o->mirror_arbitrary(n, p);
+                            cout << "Digite a sua opção: ";
+                            cin >> op;
+                            if (op == 1)
+                            {
+                                for (object *o : selecteds)
+                                    o->mirror_xy();
                             }
-                        }else if(op == 4){
+                            else if (op == 2)
+                            {
+                                for (object *o : selecteds)
+                                    o->mirror_xz();
+                            }
+                            else if (op == 3)
+                            {
+                                for (object *o : selecteds)
+                                    o->mirror_yz();
+                            }
+                            else
+                            {
+                                double i, j, k;
+                                std::cout << "Digite o vetor normal ao plano: ";
+                                cin >> i >> j >> k;
+                                vp n(i, j, k);
+                                std::cout << "Digite o ponto que pertencem ao plano: ";
+                                cin >> i >> j >> k;
+                                vp p(i, j, k);
+                                for (object *o : selecteds)
+                                    o->mirror_arbitrary(n, p);
+                            }
+                        }
+                        else if (op == 4)
+                        {
                             double i, j, k;
-                            std::cout << "Digite o tamanho do objeto: "; cin >> i >> j >> k; vp s(i, j, k);
-                            for(object *o:selecteds) o->scaling(s);
-                        }else if(op == 5){
+                            std::cout << "Digite o tamanho do objeto: ";
+                            cin >> i >> j >> k;
+                            vp s(i, j, k);
+                            for (object *o : selecteds)
+                                o->scaling(s);
+                        }
+                        else if (op == 5)
+                        {
                             std::cout << " --- MENU DE CISALHAMENTO ---\n";
                             std::cout << "(1) - Cisalhamento XY\n";
                             std::cout << "(2) - Cisalhamento YX\n";
@@ -351,39 +507,70 @@ int main(){
                             std::cout << "(4) - Cisalhamento ZX\n";
                             std::cout << "(5) - Cisalhamento YZ\n";
                             std::cout << "(6) - Cisalhamento ZY\n";
-                            cout << "Digite a sua opção: "; cin >> op;
+                            cout << "Digite a sua opção: ";
+                            cin >> op;
                             double angle;
-                            std::cout << "Digite o ângulo do cisalhamento(em radianos): "; cin >> angle;
-                            if(op == 1) for(object* o:selecteds) o->shear_xy(angle);                             
-                            else if(op == 2) for(object* o:selecteds) o->shear_yx(angle);                             
-                            else if(op == 3) for(object* o:selecteds) o->shear_xz(angle);                             
-                            else if(op == 4) for(object* o:selecteds) o->shear_zx(angle);                             
-                            else if(op == 5) for(object* o:selecteds) o->shear_yz(angle);                             
-                            else for(object* o:selecteds) o->shear_zy(angle);                             
-                        }else if(op == 6){
+                            std::cout << "Digite o ângulo do cisalhamento(em radianos): ";
+                            cin >> angle;
+                            if (op == 1)
+                                for (object *o : selecteds)
+                                    o->shear_xy(angle);
+                            else if (op == 2)
+                                for (object *o : selecteds)
+                                    o->shear_yx(angle);
+                            else if (op == 3)
+                                for (object *o : selecteds)
+                                    o->shear_xz(angle);
+                            else if (op == 4)
+                                for (object *o : selecteds)
+                                    o->shear_zx(angle);
+                            else if (op == 5)
+                                for (object *o : selecteds)
+                                    o->shear_yz(angle);
+                            else
+                                for (object *o : selecteds)
+                                    o->shear_zy(angle);
+                        }
+                        else if (op == 6)
+                        {
                             double i, j, k;
-                            std::cout << "Digite as intensidades do ka: "; cin >> i >> j >> k; px ka(i, j, k);
-                            std::cout << "Digite as intensidades do kd: "; cin >> i >> j >> k; px kd(i, j, k);
-                            std::cout << "Digite as intensidades do ks: "; cin >> i >> j >> k; px ks(i, j, k);
-                            for(object* o:selecteds){
-                                o->set_k_a(ka); 
+                            std::cout << "Digite as intensidades do ka: ";
+                            cin >> i >> j >> k;
+                            px ka(i, j, k);
+                            std::cout << "Digite as intensidades do kd: ";
+                            cin >> i >> j >> k;
+                            px kd(i, j, k);
+                            std::cout << "Digite as intensidades do ks: ";
+                            cin >> i >> j >> k;
+                            px ks(i, j, k);
+                            for (object *o : selecteds)
+                            {
+                                o->set_k_a(ka);
                                 o->set_k_d(kd);
                                 o->set_k_s(ks);
                             }
-                        }else if(op == 7){
-                            for(object* o:selecteds) cena.del_object(o); 
-                        }else{
-                            continue;    
+                        }
+                        else if (op == 7)
+                        {
+                            for (object *o : selecteds)
+                                cena.del_object(o);
+                        }
+                        else
+                        {
+                            continue;
                         }
                         selecteds.clear();
-
-                    } else if (op == 2) {
+                    }
+                    else if (op == 2)
+                    {
                         cena.print_lights();
-                        cout << "Digite a sua opção: "; cin >> op;
+                        cout << "Digite a sua opção: ";
+                        cin >> op;
 
                         choosen_light = cena.select_light(op);
-                        if(choosen_light == nullptr){
-                            std::cout << "NENHUMA LUZ SELECIONADA\n";  
+                        if (choosen_light == nullptr)
+                        {
+                            std::cout << "NENHUMA LUZ SELECIONADA\n";
                             continue;
                         }
 
@@ -392,22 +579,36 @@ int main(){
                         std::cout << "(2) - ACENDER\n";
                         std::cout << "(3) - MUDAR INTENSIDADE\n";
                         std::cout << "(4) - MOVER\n";
-                        cout << "Digite a sua opção: "; cin >> op;
+                        cout << "Digite a sua opção: ";
+                        cin >> op;
 
-                        if(op == 1) {
+                        if (op == 1)
+                        {
                             choosen_light->turn_off();
-                        } else if(op == 2) {
+                        }
+                        else if (op == 2)
+                        {
                             choosen_light->turn_on();
-                        } else if(op == 3) {                            
+                        }
+                        else if (op == 3)
+                        {
                             double i, j, k;
-                            std::cout << "Digite a nova intensidade da luz: "; cin >> i >> j >> k;
+                            std::cout << "Digite a nova intensidade da luz: ";
+                            cin >> i >> j >> k;
                             choosen_light->turn_on(px(i, j, k));
-                        } else if(op == 4) {
+                        }
+                        else if (op == 4)
+                        {
                             double i, j, k;
-                            std::cout << "Digite o local de translação: "; cin >> i >> j >> k;
+                            std::cout << "Digite o local de translação: ";
+                            cin >> i >> j >> k;
                             choosen_light->translation(vp(i, j, k));
-                        } else continue;    
-                    } else if (op == 3) {
+                        }
+                        else
+                            continue;
+                    }
+                    else if (op == 3)
+                    {
                         std::cout << " --- MENU DE CÂMERA ---\n";
 
                         std::cout << "(1) - MUDAR PARA CÂMERA\n";
@@ -415,39 +616,57 @@ int main(){
                         std::cout << "(3) - MUDAR VIEW (EYE, AT, UP)\n";
                         std::cout << "(4) - MUDAR TAMANHO DA JANELA\n";
                         std::cout << "(5) - MUDAR DISTÂNCIA FOCAL\n";
-                        cout << "Digite a sua opção: "; cin >> op;
+                        cout << "Digite a sua opção: ";
+                        cin >> op;
 
-
-                        if(op == 1) obs = true;
-                        else if(op == 2) obs = false;
-                        else if(op == 3) {
+                        if (op == 1)
+                            obs = true;
+                        else if (op == 2)
+                            obs = false;
+                        else if (op == 3)
+                        {
                             double i, j, k;
                             double a, b, c;
                             double l, m, n;
-                            std::cout << "Digite as coordenadas do eye: "; cin >> i >> j >> k;
-                            std::cout << "Digite as coordenadas do at: "; cin >> a >> b >> c;
-                            std::cout << "Digite as coordenadas do up: "; cin >> l >> m >> n;
+                            std::cout << "Digite as coordenadas do eye: ";
+                            cin >> i >> j >> k;
+                            std::cout << "Digite as coordenadas do at: ";
+                            cin >> a >> b >> c;
+                            std::cout << "Digite as coordenadas do up: ";
+                            cin >> l >> m >> n;
                             cena.change_view(vp(i, j, k), vp(a, b, c), vp(l, m, n));
-                        } else if(op == 4) {
-                            std::cout << "Digite as novas medidas da janela (largura, altura): "; cin >> i >> j;
+                        }
+                        else if (op == 4)
+                        {
+                            std::cout << "Digite as novas medidas da janela (largura, altura): ";
+                            cin >> i >> j;
                             cena.change_vp(i, j);
-                        } else if(op == 5)  {
-                            std::cout << "Digite a nova distância focal: "; cin >> i;
+                        }
+                        else if (op == 5)
+                        {
+                            std::cout << "Digite a nova distância focal: ";
+                            cin >> i;
                             cena.change_d(i);
                         }
                     }
-                    else if (op == 4) {
+                    else if (op == 4)
+                    {
                         std::cout << " --- MENU DE PROJEÇÕES ---\n";
                         std::cout << "(1) - PERSPECTIVA\n";
                         std::cout << "(2) - ORTOGRÁFICA\n";
-                        cout << "Digite a sua opção: "; cin >> op;
+                        cout << "Digite a sua opção: ";
+                        cin >> op;
 
-                        if(op == 1) {
+                        if (op == 1)
+                        {
                             cena.change_projection(PERSPECITVE);
-                        } else if(op == 2) {
+                        }
+                        else if (op == 2)
+                        {
                             cena.change_projection(PARALELL);
-                        } else continue; 
-
+                        }
+                        else
+                            continue;
                     }
                     cena.draw_scenario(obs);
                     sdlEngine.atualizarCanvas(cena, selecteds);
