@@ -5,7 +5,14 @@
 #include "../header/camera.hpp"
 #include "../header/plan.hpp"
 
+
+
 scene::scene(camera O, viewport vw, canvas c, PROJECTION p) : O(O), vw(vw), c(c), p(p) {
+    this->dx = 1.0*vw.get_w()/c.get_m();
+    this->dy = 1.0*vw.get_h()/c.get_n(); 
+}
+
+void scene::change_dx_dy(){
     this->dx = 1.0*vw.get_w()/c.get_m();
     this->dy = 1.0*vw.get_h()/c.get_n(); 
 }
@@ -94,6 +101,11 @@ void scene::draw_scenario(bool change_coordinates){
             c.to_color(i, j, color, choosen_object);
         }
     }
+    std::cout << (this->p == PARALELL ? "PARALELL" : "PERSPECITVE") << "\n";
+    std::tie(O, D) = ray_equation(100, 50);
+    O.print();
+    D.print();
+    std::cout << vw.get_h() << " " << vw.get_h() << " " << vw.get_d() << "\n";
     std::cout << "DESENHO CONCLUIDO\n";
 }
 
@@ -121,6 +133,7 @@ void scene::change_view(vp E, vp look_at, vp up){
 void scene::change_vp(double w, double h) {
     vw.set_w(w);
     vw.set_h(h);
+    change_dx_dy();
 }
 
 void scene::change_d(double d) {

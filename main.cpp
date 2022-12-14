@@ -240,9 +240,9 @@ scene fundo()
 {
     camera O(vp(0, 100, 0), vp(0, 100, -165), vp(0, 1050, 0)); // VISÃO DE CIMA
     // camera O(vp(-100, 900, -300), vp(0, 100, -165), vp(-100, 1050, -300)); // VISÃO DE CIMA
-    viewport vw(1000, 1000, -1);
+    viewport vw(60, 60, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
-    scene cena(O, vw, c, PROJECTION::PARALELL);
+    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
 
     cube *chao = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
     chao->scaling(vp(1000, 50, 1000));
@@ -300,7 +300,7 @@ scene teste()
 int main()
 {
     bool obs = false;
-    scene cena = teste();
+    scene cena = fundo();
     cena.draw_scenario(obs);
     cena.save_scenario("image.png");
 
@@ -330,7 +330,6 @@ int main()
         {
             if (e.type == SDL_QUIT)
                 quit = true;
-            cout << "MOSTRA ANTES DE CLICAR\n";
             if (SDL_MOUSEBUTTONDOWN == e.type)
             {
                 if (SDL_BUTTON_LEFT == e.button.button)
@@ -602,14 +601,14 @@ int main()
                             double i, j;
                             std::cout << "Digite as novas medidas da janela (largura, altura): ";
                             cin >> i >> j;
-                            cena.change_vp(60, 60);
+                            cena.change_vp(i, j);
                         }
                         else if (op == 5)
                         {
                             double i;
                             std::cout << "Digite a nova distância focal: ";
                             cin >> i;
-                            cena.change_d(-20);
+                            cena.change_d(i);
                         }
                     }
                     else if (op == 4)
@@ -622,18 +621,18 @@ int main()
 
                         if (op == 1)
                         {
-                            cena.change_projection(PERSPECITVE);
+                            cena.change_projection(PROJECTION::PERSPECITVE);
                         }
                         else if (op == 2)
                         {
-                            cena.change_projection(PARALELL);
+                            cena.change_projection(PROJECTION::PARALELL);
                         }
                         else
                             continue;
                     }
                     else if (op == 5)
                     {
-                        cena.draw_scenario(obs);
+                        cena.draw_scenario(false);
                     }
                     sdlEngine.atualizarCanvas(cena, selecteds);
                     sdlEngine.atualizarJanela();

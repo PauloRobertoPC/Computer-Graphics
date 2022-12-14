@@ -35,6 +35,7 @@ class scene{
         void transform_scenario_to_camera();
         void transform_scenario_to_world();
         
+        void change_dx_dy();
         vp xy(int i, int j); //direction of the ray from the observer to the real world passing through the pixel i,j of the canvas
     
         std::tuple<vp, vp> ray_equation(int i, int j);
