@@ -38,11 +38,13 @@ scene tarefa5()
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
 
     cena.add_object(new sphere(vp(0, 95, -200), 5, px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), 10));
-    cube *cb = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
+    
+    cube *cb = new cube("img/grass.jpg", 10);
     cb->scaling(vp(40, 40, 40));
     cb->transform();
     cb->translation(vp(0, -150, -165));
     cena.add_object(cb);
+    
     cena.add_object(new cone(vp(0, -60, -200), vp(0., 1., 0), 90, 150, px(0., 1., 0.498), px(0., 1., 0.498), px(0., 1., 0.498), 10, false));
     cena.add_object(new cilinder(vp(0, -150, -200), vp(0., 1., 0), 5, 90, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true));
 
@@ -53,8 +55,8 @@ scene tarefa5()
     cena.add_object(new plan(vp(0, 150, 0), vp(0., -1., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), 1));
 
     cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
-    // cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
-    // cena.add_light(new direction_light(px(0.3, 0.3, 0.3), vp(0, 0, 0)));
+    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
+    cena.add_light(new direction_light(px(0.3, 0.3, 0.3), vp(0, 0, 0)));
 
     return cena;
 }
@@ -300,7 +302,7 @@ scene teste()
 int main()
 {
     bool obs = false;
-    scene cena = fundo();
+    scene cena = tarefa5();
     cena.draw_scenario(obs);
     cena.save_scenario("image.png");
 

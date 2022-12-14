@@ -65,6 +65,7 @@ class mesh : public object {
 
         mesh(); 
         mesh(vp center, px k_a, px k_d, px k_s, double s);
+        mesh(vp center, const char* name, double s);
         
         std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max);
 

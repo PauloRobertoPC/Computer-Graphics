@@ -10,6 +10,10 @@ mesh::mesh(vp center, px k_a, px k_d, px k_s, double s) :
     center(center), object(k_a, k_d, k_s, s){
     invert_normal = false;
 }
+mesh::mesh(vp center, const char* name, double s):
+    center(center), object(name, s){
+    invert_normal = false;
+}
 
 std::tuple<double, vp> mesh::intersection_with_ray(vp O, vp D, double t_min, double t_max){
     double t = INF, taux; vp n, naux;
