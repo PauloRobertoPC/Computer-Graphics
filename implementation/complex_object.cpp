@@ -1,3 +1,4 @@
+#include <bits/stdc++.h>
 #include <fstream>
 #include <sstream>
 #include "../header/comparator.hpp"
@@ -45,21 +46,124 @@ complex_object::complex_object(std::string name, px k_a, px k_d, px k_s, double 
             this->faces.push_back(new face(this->vertices[v1-1], this->vertices[v2-1], this->vertices[v3-1]));
         }
     }
+    my_file.close();
+    
     this->height = Mx - mx;
     this->width = My - my;
     this->length = Mz - mz;
-    std::cout << height << " " << width << " " << length << "\n";
     this->center = vp(ax/c, ay/c, az/c);
-    my_file.close();
+    //cluster 
+    this->cluster = new cube();
+    this->cluster->scaling(vp(this->height+1, this->width+1, this->length+1));
+    this->cluster->translation(this->center);
+}
+
+std::tuple<double, vp> complex_object::intersection_with_ray(vp O, vp D, double t_min, double t_max){
+    //testing interrsection with cluster
+    double t; vp n; std::tie(t, n) = this->cluster->intersection_with_ray(O, D, t_min, t_max);
+    if(t == INF) return {t, n};
+    return this->mesh::intersection_with_ray(O, D, t_min, t_max);
 }
 
 vp complex_object::get_def_point(){ return this->center; }
 
-void complex_object::scaling(vp S){ //length, height, width
+void complex_object::scaling(vp S){
     vp P = this->get_def_point();
     vp N(S.get_x()/this->height, S.get_y()/this->width, S.get_z()/this->length);  
     this->transformations = matrix::scaling_matrix(N)*this->transformations; 
     this->transform();
     this->height = S.get_x(); this->width = S.get_y(); this->length = S.get_z();
     this->translation(P);
+    
+    this->cluster->scaling(vp(this->height+1, this->width+1, this->length+1));
+    this->cluster->translation(this->center);
+}
+
+void complex_object::translation(vp P){
+    this->mesh::translation(P);
+    this->cluster->translation(this->center);
+}
+
+void complex_object::rotation_x(double angle){
+    this->mesh::rotation_x(angle);
+    this->cluster->rotation_x(angle);
+    this->cluster->translation(this->center);
+}
+
+void complex_object::rotation_y(double angle){
+    this->mesh::rotation_y(angle);
+    this->cluster->rotation_y(angle);
+    this->cluster->translation(this->center);
+}
+
+void complex_object::rotation_z(double angle){
+    this->mesh::rotation_z(angle);
+    this->cluster->rotation_z(angle);
+    this->cluster->translation(this->center);
+}
+
+void complex_object::rotate_arbitrary(vp o, vp direction, double angle){
+    this->mesh::rotate_arbitrary(o, direction, angle);
+    this->cluster->rotate_arbitrary(o, direction, angle);
+    this->cluster->translation(this->center);
+}
+
+void complex_object::shear_xy(double angle){
+    this->mesh::shear_xy(angle);
+    this->cluster->shear_xy(angle);
+    this->cluster->translation(this->center);
+}
+
+void complex_object::shear_yx(double angle){
+    this->mesh::shear_yx(angle);
+    this->cluster->shear_yx(angle);
+    this->cluster->translation(this->center);
+}
+
+void complex_object::shear_xz(double angle){
+    this->mesh::shear_xz(angle);
+    this->cluster->shear_xz(angle);
+    this->cluster->translation(this->center);
+}
+
+void complex_object::shear_zx(double angle){
+    this->mesh::shear_zx(angle);
+    this->cluster->shear_zx(angle);
+    this->cluster->translation(this->center);
+}
+
+void complex_object::shear_yz(double angle){
+    this->mesh::shear_yz(angle);
+    this->cluster->shear_yz(angle);
+    this->cluster->translation(this->center);
+}
+
+void complex_object::shear_zy(double angle){
+    this->mesh::shear_zy(angle);
+    this->cluster->shear_zy(angle);
+    this->cluster->translation(this->center);
+}
+
+void complex_object::mirror_xy(){
+    this->mesh::mirror_xy();
+    this->cluster->mirror_xy();
+    this->cluster->translation(this->center);
+}
+
+void complex_object::mirror_xz(){
+    this->mesh::mirror_xz();
+    this->cluster->mirror_xz();
+    this->cluster->translation(this->center);
+}
+
+void complex_object::mirror_yz(){
+    this->mesh::mirror_yz();
+    this->cluster->mirror_yz();
+    this->cluster->translation(this->center);
+}
+
+void complex_object::mirror_arbitrary(vp n, vp p){
+    this->mesh::mirror_arbitrary(n, p);
+    this->cluster->mirror_arbitrary(n, p);
+    this->cluster->translation(this->center);
 }

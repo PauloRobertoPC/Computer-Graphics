@@ -300,7 +300,8 @@ scene teste()
 
 int main()
 {
-    scene cena = fundo();
+    scene cena = teste();
+    // scene cena = fundo();
     cena.draw_scenario(false);
     cena.save_scenario("image.png");
 

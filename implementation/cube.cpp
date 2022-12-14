@@ -2,7 +2,7 @@
 #include "../header/cube.hpp"
 #include "../header/matrix.hpp"
 
-cube::cube(){}
+cube::cube() : mesh(vp(0, 0, 0), px(), px(), px(), 1){ make_cube(); }
 cube::cube(px k_a, px k_d, px k_s, double s) : mesh(vp(0, 0, 0), k_a, k_d, k_s, s){
     make_cube();
 }
