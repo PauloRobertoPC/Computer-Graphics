@@ -235,113 +235,52 @@ scene cena_qualquer()
 
 scene fundo()
 {
-    camera O(vp(-700, 500, 500), vp(0, 0, -165), vp(-700, 1050, 500));
-    viewport vw(60, 60, -20);
+    camera O(vp(0, 100, 0), vp(0, 100, -165), vp(0, 1050, 0)); // VISÃO DE CIMA
+    // camera O(vp(-100, 900, -300), vp(0, 100, -165), vp(-100, 1050, -300)); // VISÃO DE CIMA
+    viewport vw(1000, 1000, -1);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
-    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
+    scene cena(O, vw, c, PROJECTION::PARALELL);
 
     cube *chao = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
     chao->scaling(vp(1000, 50, 1000));
     chao->transform();
-    chao->translation(vp(0, 0, 0));
+    chao->translation(vp(-25, 0, 0));
     chao->transform();
     cena.add_object(chao);
 
-    cube *parede_traseira = new cube(px(px::convert_rgb(126, 166, 253)), px(px::convert_rgb(126, 166, 253)), px(px::convert_rgb(126, 166, 253)), 10);
+    cube *parede_traseira = new cube(px(px::convert_rgb(92, 80, 76)), px(px::convert_rgb(92, 80, 76)), px(px::convert_rgb(92, 80, 76)), 10);
     parede_traseira->scaling(vp(1000, 600, 50));
     parede_traseira->transform();
-    parede_traseira->translation(vp(0, 300, -500));
+    parede_traseira->translation(vp(-25, 200, -475));
     parede_traseira->transform();
     cena.add_object(parede_traseira);
 
     cube *parede_direita = new cube(px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
     parede_direita->scaling(vp(50, 600, 1000));
     parede_direita->transform();
-    parede_direita->translation(vp(500, 300, 0));
+    parede_direita->translation(vp(500, 200, 0));
     parede_direita->transform();
     cena.add_object(parede_direita);
 
-    cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
-    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
-    cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
-    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 1000, 0), vp(-1, -1, -1), 3.14 / 3.0));
-
-    return cena;
-}
-
-scene mesa()
-{
-    camera O(vp(0, 200, 120), vp(0, 0, -165), vp(0, 550, 120));
-    viewport vw(60, 60, -20);
-    canvas c(500, 500, px::convert_rgb(255, 255, 255));
-    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
-
-    cena.add_object(new cilinder(vp(0, 0, 0), vp(0., 1., 0), 5, 90, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true));
-    cena.add_object(new cilinder(vp(0, 90, 0), vp(0., 1., 0), 60, 10, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true));
-    cena.add_object(new cilinder(vp(0, 0, 0), vp(0., 1., 0), 30, 10, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true));
-    cena.add_object(new cilinder(vp(0, 100, 0), vp(0., 1., 0), 4, 10, px(px::convert_rgb(135, 232, 246)), px(px::convert_rgb(135, 232, 246)), px(px::convert_rgb(135, 232, 246)), 10, true, true));
-    cena.add_object(new cilinder(vp(0, 110, 0), vp(0., 1., 0), 4, 5, px(px::convert_rgb(220, 220, 220)), px(px::convert_rgb(220, 220, 220)), px(px::convert_rgb(220, 220, 220)), 10, false, false));
+    cube *prateleira = new cube(px(px::convert_rgb(54, 40, 34)), px(px::convert_rgb(54, 40, 34)), px(px::convert_rgb(54, 40, 34)), 10);
+    prateleira->scaling(vp(600, 10, 50));
+    prateleira->transform();
+    prateleira->translation(vp(0, 250, -425));
+    prateleira->transform();
+    cena.add_object(prateleira);
 
     cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
     cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
     cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
     cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 1000, 0), vp(-1, -1, -1), 3.14 / 3.0));
-    return cena;
-}
 
-scene cadeira()
-{
-    camera O(vp(0, 600, 0), vp(0, 0, 0), vp(0, -1, 10));
-    viewport vw(60, 60, -20);
-    canvas c(500, 500, px::convert_rgb(255, 255, 255));
-    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
-
-    cube *perna1 = new cube(px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
-    perna1->scaling(vp(20, 100, 20));
-    perna1->transform();
-    perna1->translation(vp(-100, 0, 0));
-    perna1->transform();
-    cena.add_object(perna1);
-
-    cube *perna2 = new cube(px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
-    perna2->scaling(vp(20, 100, 20));
-    perna2->transform();
-    perna2->translation(vp(100, 0, 0));
-    perna2->transform();
-    cena.add_object(perna2);
-
-    cube *perna3 = new cube(px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
-    perna3->scaling(vp(20, 100, 20));
-    perna3->transform();
-    perna3->translation(vp(100, 0, 100));
-    perna3->transform();
-    cena.add_object(perna3);
-
-    cube *perna4 = new cube(px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
-    perna4->scaling(vp(20, 100, 20));
-    perna4->transform();
-    perna4->translation(vp(-100, 0, 100));
-    perna4->transform();
-    cena.add_object(perna4);
-
-    cube *banco = new cube(px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
-    banco->scaling(vp(100, 10, 100));
-    banco->transform();
-    banco->translation(vp(0, 40, 0));
-    banco->transform();
-    cena.add_object(banco);
-
-    cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
-    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
-    cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
-    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 1000, 0), vp(-1, -1, -1), 3.14 / 3.0));
     return cena;
 }
 
 int main()
 {
     bool obs = true;
-    scene cena = cadeira();
+    scene cena = fundo();
     cena.draw_scenario(obs);
     cena.save_scenario("image.png");
 
@@ -381,6 +320,7 @@ int main()
                     std::cout << "(2) - LUZES\n";
                     std::cout << "(3) - CÂMERA\n";
                     std::cout << "(4) - PROJEÇÃO\n";
+                    std::cout << "(5) - RENDERIZAR\n";
                     cout << "Digite a sua opção: ";
                     cin >> op;
 
@@ -411,7 +351,7 @@ int main()
                         cin >> op;
                         if (op == 1)
                         {
-                            int i, j, k;
+                            double i, j, k;
                             std::cout << "Digite o local de translação: ";
                             cin >> i >> j >> k;
                             for (object *o : selecteds)
@@ -638,15 +578,17 @@ int main()
                         }
                         else if (op == 4)
                         {
+                            double i, j;
                             std::cout << "Digite as novas medidas da janela (largura, altura): ";
                             cin >> i >> j;
-                            cena.change_vp(i, j);
+                            cena.change_vp(60, 60);
                         }
                         else if (op == 5)
                         {
+                            double i;
                             std::cout << "Digite a nova distância focal: ";
                             cin >> i;
-                            cena.change_d(i);
+                            cena.change_d(-20);
                         }
                     }
                     else if (op == 4)
@@ -668,7 +610,10 @@ int main()
                         else
                             continue;
                     }
-                    cena.draw_scenario(obs);
+                    else if (op == 5)
+                    {
+                        cena.draw_scenario(obs);
+                    }
                     sdlEngine.atualizarCanvas(cena, selecteds);
                     sdlEngine.atualizarJanela();
                 }
