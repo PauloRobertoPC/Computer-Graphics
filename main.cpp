@@ -287,7 +287,7 @@ scene teste()
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
 
-    complex_object *obj = new complex_object("chair-b.obj", px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
+    complex_object *obj = new complex_object("sla.obj", px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
     obj->scaling(vp(50, 50, 50));
     obj->translation(vp(0, 0, -100));
     cena.add_object(obj);
@@ -299,8 +299,8 @@ scene teste()
 
 int main()
 {
-    bool obs = true;
-    scene cena = fundo();
+    bool obs = false;
+    scene cena = teste();
     cena.draw_scenario(obs);
     cena.save_scenario("image.png");
 
