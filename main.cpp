@@ -16,6 +16,7 @@
 #include "header/cube.hpp"
 #include "header/camera.hpp"
 #include "header/SDLEngine.hpp"
+#include "header/complex_object.hpp"
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
 #include <cmath>
@@ -65,10 +66,12 @@ scene tarefa6()
     // camera O(vp(0, 0, 0), vp(0, 0, -165), vp(0, 90, -165)); // FRENTE
     // camera O(vp(600, 0, -665), vp(0, 0, -665), vp(600, 500, -665)); // SLA
     camera O(vp(665, 0, -665), vp(0, 0, -165), vp(665, 90, -665)); // DIREITA
-    viewport vw(60, 60, -20);
+    // viewport vw(60, 60, -20);
+    viewport vw(1000, 1000, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
 
-    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
+    // scene cena(O, vw, c, PROJECTION::PERSPECITVE);
+    scene cena(O, vw, c, PROJECTION::PARALELL);
 
     // teto forro
 
@@ -277,6 +280,23 @@ scene fundo()
     return cena;
 }
 
+scene teste()
+{
+    camera O(vp(500, 0, -200), vp(0, -100, -1000), vp(500, 50, -200));
+    viewport vw(60, 60, -20);
+    canvas c(500, 500, px::convert_rgb(255, 255, 255));
+    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
+
+    complex_object *obj = new complex_object("chair-b.obj", px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
+    obj->scaling(vp(50, 50, 50));
+    obj->translation(vp(0, 0, -100));
+    cena.add_object(obj);
+
+    cena.add_light(new point_light(px(0.3, 0.3, 0.3), vp(0, 0, -500)));
+
+    return cena;
+}
+
 int main()
 {
     bool obs = true;
@@ -310,6 +330,7 @@ int main()
         {
             if (e.type == SDL_QUIT)
                 quit = true;
+            cout << "MOSTRA ANTES DE CLICAR\n";
             if (SDL_MOUSEBUTTONDOWN == e.type)
             {
                 if (SDL_BUTTON_LEFT == e.button.button)
