@@ -36,6 +36,7 @@ void spot_light::translation(vp v) {
 
 void spot_light::print_light() {
     std::cout << "LUZ SPOT - (" << this->position.get_x() << ", " << this->position.get_y() << ", " << this->position.get_z() << ")";
+    std::cout << "DIREÇÃO - "; this->get_direction().print();
 }
 
 //Getters and Setters

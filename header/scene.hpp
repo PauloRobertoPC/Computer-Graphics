@@ -32,9 +32,6 @@ class scene{
         
         bool without_shade(vp P, light* l);
 
-        void transform_scenario_to_camera();
-        void transform_scenario_to_world();
-        
         void change_dx_dy();
         vp xy(int i, int j); //direction of the ray from the observer to the real world passing through the pixel i,j of the canvas
     
@@ -60,6 +57,10 @@ class scene{
 
         px get_pixel(int i, int j); 
 
+        void transform_scenario_to_camera();
+    
+        void transform_scenario_to_world();
+    
         void print_lights();
 
         void change_projection(PROJECTION p);

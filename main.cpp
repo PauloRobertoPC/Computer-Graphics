@@ -32,7 +32,7 @@ using namespace std;
 
 scene tarefa5()
 {
-    camera O(vp(600, 0, -665), vp(0, 0, -665), vp(600, 500, -665));
+    camera O(vp(0, 0, 0), vp(0, 0, -500), vp(600, 500, -665));
     viewport vw(60, 60, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
@@ -240,32 +240,11 @@ scene cena_qualquer()
 
 scene fundo()
 {
-    camera O(vp(0, 100, 0), vp(0, 100, -165), vp(0, 1050, 0)); // VISÃO DE CIMA
+    camera O(vp(0, 100, 300), vp(0, 100, -165), vp(0, 1050, 100)); // VISÃO DE FRENTE
     // camera O(vp(-100, 900, -300), vp(0, 100, -165), vp(-100, 1050, -300)); // VISÃO DE CIMA
     viewport vw(60, 60, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
-
-    cube *chao = new cube(px(1., 0.078, 0.576), px(1., 0.078, 0.576), px(1., 0.078, 0.576), 10);
-    chao->scaling(vp(1000, 50, 1000));
-    chao->transform();
-    chao->translation(vp(-25, 0, 0));
-    chao->transform();
-    cena.add_object(chao);
-
-    cube *parede_traseira = new cube(px(px::convert_rgb(92, 80, 76)), px(px::convert_rgb(92, 80, 76)), px(px::convert_rgb(92, 80, 76)), 10);
-    parede_traseira->scaling(vp(1000, 600, 50));
-    parede_traseira->transform();
-    parede_traseira->translation(vp(-25, 200, -475));
-    parede_traseira->transform();
-    cena.add_object(parede_traseira);
-
-    cube *parede_direita = new cube(px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
-    parede_direita->scaling(vp(50, 600, 1000));
-    parede_direita->transform();
-    parede_direita->translation(vp(500, 200, 0));
-    parede_direita->transform();
-    cena.add_object(parede_direita);
 
     cube *prateleira = new cube(px(px::convert_rgb(54, 40, 34)), px(px::convert_rgb(54, 40, 34)), px(px::convert_rgb(54, 40, 34)), 10);
     prateleira->scaling(vp(600, 10, 50));
@@ -273,6 +252,26 @@ scene fundo()
     prateleira->translation(vp(0, 250, -425));
     prateleira->transform();
     cena.add_object(prateleira);
+
+    // complex_object *obj = new complex_object("./objects/sla.obj", px(px::convert_rgb(8, 53, 36)), px(px::convert_rgb(8, 53, 36)), px(px::convert_rgb(8, 53, 36)), 10);
+    // obj->scaling(vp(150, 150, 150));
+    // obj->translation(vp(-150, 25, 100));
+    // cena.add_object(obj);
+
+    cone *tree = new cone(vp(-150, 130, 100), vp(0, 1, 0), 30, 70, px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), 10, true);
+    cena.add_object(tree);
+
+    cilinder *suport_tree = new cilinder(vp(-150, 90, 100), vp(0, 1, 0), 6, 40, px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), 10, true, true);
+    cena.add_object(suport_tree);
+
+    cilinder *suport_tree_table = new cilinder(vp(-150, 85, 100), vp(0, 1, 0), 15, 6, px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), 10, true, true);
+    cena.add_object(suport_tree_table);
+
+    cena.add_object(new plan(vp(0, 0, 0), vp(0, 1, 0), px(0.5, 0.5, 0.5), px(0.5, 0.5, 0.5), px(0.5, 0.5, 0.5), 1));
+    cena.add_object(new plan(vp(500, 0, 0), vp(-1., 0., 0), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), 1));
+    cena.add_object(new plan(vp(500, 0, -500), vp(0., 0., 1), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), 1));
+    cena.add_object(new plan(vp(-500, 0, 0), vp(1., 0., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(00.933, 0.933, 0.933), 1));
+    // cena.add_object(new plan(vp(0, 500, 0), vp(0., -1., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), 1));
 
     cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
     cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
@@ -301,9 +300,8 @@ scene teste()
 
 int main()
 {
-    bool obs = false;
-    scene cena = tarefa5();
-    cena.draw_scenario(obs);
+    scene cena = fundo();
+    cena.draw_scenario(false);
     cena.save_scenario("image.png");
 
     // SDL2 stuffs
@@ -582,9 +580,9 @@ int main()
                         cin >> op;
 
                         if (op == 1)
-                            obs = true;
+                            cena.transform_scenario_to_camera();
                         else if (op == 2)
-                            obs = false;
+                            cena.transform_scenario_to_world();
                         else if (op == 3)
                         {
                             double i, j, k;
