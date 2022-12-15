@@ -6,7 +6,7 @@
 class ambient_light : public light
 {
 public:
-    ambient_light(px intensity);
+    ambient_light(px intensity, char type_l = 'a');
 
     // transformations
     void to_camera(matrix M);

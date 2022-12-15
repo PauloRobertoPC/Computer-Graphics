@@ -9,7 +9,7 @@ private:
     vp direction;
 
 public:
-    direction_light(px intensity, vp direction);
+    direction_light(px intensity, vp direction, char type_l = 'd');
 
     // transformations
     void to_camera(matrix M);

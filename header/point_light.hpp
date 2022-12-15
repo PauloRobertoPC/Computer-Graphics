@@ -9,7 +9,7 @@ private:
     vp position;
 
 public:
-    point_light(px intensity, vp position);
+    point_light(px intensity, vp position, char type_l = 'p');
 
     // transformations
     void to_camera(matrix M);

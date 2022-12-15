@@ -2,7 +2,7 @@
 #include "../header/point_light.hpp"
 #include "../header/comparator.hpp"
 
-point_light::point_light(px intensity, vp position) : specular_light(intensity), position(position) {}
+point_light::point_light(px intensity, vp position, char type_l) : specular_light(intensity, type_l), position(position) {}
 
 px point_light::calculate_intensity(vp P, vp N, vp V, object *obj, bool calculate)
 {

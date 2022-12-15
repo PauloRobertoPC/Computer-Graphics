@@ -1,13 +1,13 @@
 #include "../header/direction_light.hpp"
 
-direction_light::direction_light(px intensity, vp direction) : specular_light(intensity), direction(direction) {}
+direction_light::direction_light(px intensity, vp direction, char type_l) : specular_light(intensity, type_l), direction(direction) {}
 
 px direction_light::calculate_intensity(vp P, vp N, vp V, object *obj, bool calculate)
 {
     px i(0, 0, 0);
     if (!calculate)
         return i;
-    vp L = get_direction();
+    vp L = -get_direction();
     double ndl = N * (L / ~L);
     if (ndl > 0.0)
         i = i + (obj->get_k_d() * (this->get_intensity() * ndl) / ((~N) * (~L)));

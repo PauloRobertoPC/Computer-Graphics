@@ -7,7 +7,7 @@
 class specular_light : public light
 {
 public:
-    specular_light(px intensity);
+    specular_light(px intensity, char type_l = 'c');
 
     px specular(vp N, vp L, vp V, object *obj);
     void change_angle(double a);

@@ -1,7 +1,10 @@
-# Computer Graphics
+# Computer Graphics 
 
-![Imagem Gerada](image.png "Imagem Gerada")
+Computer graphics project using ray casting.
 
+![Imagem Gerada](./img/frente.png "Imagem Gerada")
+![Imagem Gerada](./img/cima.png "Imagem Gerada")
+![Imagem Gerada](./img/cima2.png "Imagem Gerada")
 
 ## Compile and Run
 

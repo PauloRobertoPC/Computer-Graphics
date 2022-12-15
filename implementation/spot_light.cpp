@@ -2,7 +2,7 @@
 #include "../header/spot_light.hpp"
 #include "../header/comparator.hpp"
 
-spot_light::spot_light(px intensity, vp position, vp direction, double angle) : specular_light(intensity), position(position), direction(direction / (~direction)), angle(angle) {}
+spot_light::spot_light(px intensity, vp position, vp direction, double angle, char type_l) : specular_light(intensity, type_l), position(position), direction(direction / (~direction)), angle(angle) {}
 
 px spot_light::calculate_intensity(vp P, vp N, vp V, object *obj, bool calculate)
 {

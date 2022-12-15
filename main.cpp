@@ -32,7 +32,7 @@ using namespace std;
 
 scene tarefa5()
 {
-    camera O(vp(0, 0, 0), vp(0, 0, -500), vp(600, 500, -665));
+    camera O(vp(0, 0, 0), vp(0, 0, -500), vp(0, 500, 0));
     viewport vw(60, 60, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
@@ -52,11 +52,12 @@ scene tarefa5()
     cena.add_object(new plan(vp(200, -150, 0), vp(-1., 0., 0), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), 1));
     cena.add_object(new plan(vp(200, -150, -400), vp(0., 0., 1), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), 1));
     cena.add_object(new plan(vp(-200, -150, 0), vp(1., 0., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(00.933, 0.933, 0.933), 1));
-    cena.add_object(new plan(vp(0, 150, 0), vp(0., -1., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), 1));
+    // cena.add_object(new plan(vp(0, 150, 0), vp(0., -1., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), 1));
 
     cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
-    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
-    cena.add_light(new direction_light(px(0.3, 0.3, 0.3), vp(0, 0, 0)));
+    // cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
+    cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
+    // cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 150, -200), vp(0, -1, 0), 3.14 / 3.0));
 
     return cena;
 }
@@ -265,9 +266,9 @@ scene fundo()
     prateleira->transform();
     cena.add_object(prateleira);
 
-    cena.add_object(new cilinder(vp(0, 180, -150), vp(0., 1., 0), 10, 30, px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), 10, false, false));
-    cena.add_object(new cilinder(vp(190, 180, -150), vp(0., 1., 0), 10, 30, px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), 10, false, false));
-    cena.add_object(new cilinder(vp(380, 180, -150), vp(0., 1., 0), 10, 30, px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), 10, false, false));
+    cena.add_object(new cilinder(vp(0, 180, -150), vp(0., 1., 0), 10, 30, px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), 10, true, false));
+    cena.add_object(new cilinder(vp(190, 180, -150), vp(0., 1., 0), 10, 30, px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), 10, true, false));
+    cena.add_object(new cilinder(vp(380, 180, -150), vp(0., 1., 0), 10, 30, px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), 10, true, false));
 
     cube *balcao = new cube(px(px::convert_rgb(82, 58, 40)), px(px::convert_rgb(82, 58, 40)), px(px::convert_rgb(82, 58, 40)), 10);
     balcao->scaling(vp(700, 160, 50));
@@ -345,9 +346,9 @@ scene fundo()
     cena.add_object(new plan(vp(0, 500, 0), vp(0., -1., 0.), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), 1));
 
     cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
-    // cena.add_light(new point_light(px(0.6, 0.6, 0.6), vp(0, 370, 200)));
-    cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, 0, 1)));
-    // cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 300, 200), vp(0, -1, 0), 0.5));
+    cena.add_light(new point_light(px(0.6, 0.6, 0.6), vp(0, 370, 200)));
+    cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, 0, -1)));
+    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 300, 200), vp(0, -1, 0), 0.5));
 
     return cena;
 }
@@ -372,7 +373,7 @@ scene teste()
 int main()
 {
     // scene cena = teste();
-    scene cena = tarefa5();
+    scene cena = fundo();
     cena.draw_scenario(true);
     cena.save_scenario("image.png");
 
@@ -449,18 +450,22 @@ int main()
                             cout << "Digite a sua opção: ";
                             cin >> op;
                             double i, j, k;
-                            if(op == 1){
+                            if (op == 1)
+                            {
                                 std::cout << "Digite o ponto de translação: ";
                                 cin >> i >> j >> k;
                                 for (object *o : selecteds)
                                     o->translation(vp(i, j, k));
-
-                            }else if(op == 2){
+                            }
+                            else if (op == 2)
+                            {
                                 std::cout << "Digite o vetor de translação: ";
                                 cin >> i >> j >> k;
                                 for (object *o : selecteds)
                                     o->translation(vp(i, j, k), 0);
-                            }else{
+                            }
+                            else
+                            {
                                 std::cout << "Opção Inválida\n";
                             }
                         }
@@ -740,6 +745,7 @@ int main()
                     else if (op == 5)
                     {
                         cena.draw_scenario(false);
+                        cena.save_scenario("image.png");
                     }
                     sdlEngine.atualizarCanvas(cena, selecteds);
                     sdlEngine.atualizarJanela();

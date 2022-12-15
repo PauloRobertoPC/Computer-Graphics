@@ -1,6 +1,6 @@
 #include "../header/ambient_light.hpp"
 
-ambient_light::ambient_light(px intensity) : light(intensity) {}
+ambient_light::ambient_light(px intensity, char type_l) : light(intensity, type_l) {}
 
 px ambient_light::calculate_intensity(vp P, vp N, vp V, object *obj, bool calculate)
 {

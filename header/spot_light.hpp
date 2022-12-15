@@ -10,7 +10,7 @@ private:
     double angle;
 
 public:
-    spot_light(px intensity, vp position, vp direction, double angle);
+    spot_light(px intensity, vp position, vp direction, double angle, char type_l = 's');
 
     // transformations
     void to_camera(matrix M);

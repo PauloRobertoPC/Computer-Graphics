@@ -1,7 +1,7 @@
 #include <cmath>
 #include "../header/light.hpp"
 
-light::light(px intensity) : intensity(intensity), save_intensity(intensity) {}
+light::light(px intensity, char type_l) : intensity(intensity), save_intensity(intensity), type_l(type_l) {}
 
 // Getters and Setters
 px light::get_intensity() { return intensity; }

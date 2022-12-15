@@ -14,7 +14,8 @@ protected:
     matrix transformations;
 
 public:
-    light(px intensity);
+    char type_l;
+    light(px intensity, char type_l = 'g');
 
     virtual px calculate_intensity(vp P, vp N, vp V, object *obj, bool calculate) = 0;
     virtual vp get_l(vp P) = 0;

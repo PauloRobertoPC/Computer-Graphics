@@ -1,7 +1,7 @@
 #include <cmath>
 #include "../header/specular_light.hpp"
 
-specular_light::specular_light(px intensity) : light(intensity) {}
+specular_light::specular_light(px intensity, char type_l) : light(intensity, type_l) {}
 
 px specular_light::specular(vp N, vp L, vp V, object *obj)
 {
