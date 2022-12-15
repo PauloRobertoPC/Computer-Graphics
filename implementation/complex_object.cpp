@@ -81,11 +81,8 @@ complex_object::complex_object(std::string name, px k_a, px k_d, px k_s, double 
 std::tuple<double, vp> complex_object::intersection_with_ray(vp O, vp D, double t_min, double t_max)
 {
     // testing interrsection with cluster
-    double t;
-    vp n;
-    std::tie(t, n) = this->cluster->intersection_with_ray(O, D, t_min, t_max);
-    // if (t == INF)
-    //     return {t, n};
+    double t; vp n;
+    if (t == INF) return {t, n};
     return this->mesh::intersection_with_ray(O, D, t_min, t_max);
 }
 
@@ -208,4 +205,9 @@ void complex_object::mirror_arbitrary(vp n, vp p)
     this->mesh::mirror_arbitrary(n, p);
     this->cluster->mirror_arbitrary(n, p);
     this->cluster->translation(this->center);
+}
+
+void complex_object::to_camera(matrix M){
+    this->mesh::to_camera(M);
+    this->cluster->to_camera(M);
 }
