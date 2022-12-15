@@ -241,7 +241,7 @@ scene cena_qualquer()
 scene fundo()
 {
     // camera O(vp(0, 600, 0), vp(0, 0, 0), vp(0, 1050, -100)); // VISÃO DE CIMA
-    camera O(vp(0, 250, 500), vp(0, 250, 0), vp(0, 1050, 500)); // VISÃO DE FRENTE
+    camera O(vp(0, 250, 700), vp(0, 250, 0), vp(0, 1050, 700)); // VISÃO DE FRENTE
     viewport vw(60, 60, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
@@ -250,10 +250,10 @@ scene fundo()
     cena.add_object(new cilinder(vp(0, 450, 200), vp(0., 1., 0), 5, 90, px(px::convert_rgb(0, 0, 0)), px(px::convert_rgb(0, 0, 0)), px(px::convert_rgb(0, 0, 0)), 10, false, false));
     cena.add_object(new sphere(vp(0, 400, 200), 20, px(1, 1, 1), px(1, 1, 1), px(1, 1, 1), 10));
 
-    cena.add_object(new cone(vp(0, 335, -425), vp(0., 1., 0), 10, 15, px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), 10, false));
+    cena.add_object(new cone(vp(0, 330, -425), vp(0., 1., 0), 10, 15, px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), 10, false));
     cena.add_object(new cilinder(vp(0, 305, -425), vp(0., 1., 0), 10, 30, px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), 10, false, false));
 
-    cena.add_object(new cone(vp(40, 335, -425), vp(0., 1., 0), 10, 15, px(px::convert_rgb(219, 192, 32)), px(px::convert_rgb(219, 192, 32)), px(px::convert_rgb(219, 192, 32)), 10, false));
+    cena.add_object(new cone(vp(40, 330, -425), vp(0., 1., 0), 10, 15, px(px::convert_rgb(219, 192, 32)), px(px::convert_rgb(219, 192, 32)), px(px::convert_rgb(219, 192, 32)), 10, false));
     cena.add_object(new cilinder(vp(40, 305, -425), vp(0., 1., 0), 10, 30, px(px::convert_rgb(219, 192, 32)), px(px::convert_rgb(219, 192, 32)), px(px::convert_rgb(219, 192, 32)), 10, false, false));
 
     cena.add_object(new cilinder(vp(80, 305, -425), vp(0., 1., 0), 10, 30, px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), 10, false, false));
@@ -283,53 +283,59 @@ scene fundo()
     suporte_balcao->transform();
     cena.add_object(suporte_balcao);
 
+    complex_object *sofa = new complex_object("./objects/sofa.obj", px(px::convert_rgb(255, 92, 48)), px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), 10);
+    sofa->scaling(vp(200, 130, 110));
+    sofa->rotation_y(3.1415 * 3.0 / 2);
+    sofa->translation(vp(440, 65, 250));
+    cena.add_object(sofa);
+
     complex_object *banco1 = new complex_object("./objects/banco.obj", px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), 10);
-    banco1->scaling(vp(100, 110, 100));
-    banco1->translation(vp(0, 100, -10));
+    banco1->scaling(vp(100, 150, 100));
+    banco1->translation(vp(0, 75, -10));
     cena.add_object(banco1);
 
     complex_object *banco2 = new complex_object("./objects/banco.obj", px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), 10);
-    banco2->scaling(vp(100, 110, 100));
-    banco2->translation(vp(190, 100, -10));
+    banco2->scaling(vp(100, 150, 100));
+    banco2->translation(vp(190, 75, -10));
     cena.add_object(banco2);
 
     complex_object *banco3 = new complex_object("./objects/banco.obj", px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), 10);
-    banco3->scaling(vp(100, 110, 100));
-    banco3->translation(vp(380, 100, -10));
+    banco3->scaling(vp(100, 150, 100));
+    banco3->translation(vp(380, 75, -10));
     cena.add_object(banco3);
 
     cube *tv_imagem = new cube("./img/tv.jpg", 10);
     tv_imagem->scaling(vp(20, 200, 250));
     tv_imagem->transform();
-    tv_imagem->translation(vp(-499, 300, 0));
+    tv_imagem->translation(vp(-499, 300, 250));
     tv_imagem->transform();
     cena.add_object(tv_imagem);
 
     cube *tv = new cube(px(px::convert_rgb(0, 0, 0)), px(px::convert_rgb(0, 0, 0)), px(px::convert_rgb(0, 0, 0)), 10);
     tv->scaling(vp(20, 220, 270));
     tv->transform();
-    tv->translation(vp(-500, 300, 0));
+    tv->translation(vp(-500, 300, 250));
     tv->transform();
     cena.add_object(tv);
 
     complex_object *obj = new complex_object("./objects/sla.obj", px(px::convert_rgb(124, 77, 46)), px(px::convert_rgb(124, 77, 46)), px(px::convert_rgb(124, 77, 46)), 10);
     obj->scaling(vp(150, 150, 250));
-    obj->translation(vp(-425, 95, 0));
+    obj->translation(vp(-425, 75, 250));
     cena.add_object(obj);
 
     complex_object *star = new complex_object("./objects/star.obj", px(px::convert_rgb(248, 195, 10)), px(px::convert_rgb(248, 195, 10)), px(px::convert_rgb(248, 195, 10)), 10);
     star->scaling(vp(20, 10, 20));
-    star->translation(vp(400, 280, 150));
+    star->translation(vp(440, 280, 400));
     star->rotation_x(3.14 / 2);
     cena.add_object(star);
 
-    cone *tree = new cone(vp(400, 80, 150), vp(0, 1, 0), 40, 200, px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), 10, true);
+    cone *tree = new cone(vp(440, 80, 400), vp(0, 1, 0), 40, 200, px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), 10, true);
     cena.add_object(tree);
 
-    cilinder *suport_tree = new cilinder(vp(400, 10, 150), vp(0, 1, 0), 5, 80, px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), 10, true, true);
+    cilinder *suport_tree = new cilinder(vp(440, 10, 400), vp(0, 1, 0), 5, 80, px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), 10, true, true);
     cena.add_object(suport_tree);
 
-    cilinder *suport_tree_table = new cilinder(vp(400, 0, 150), vp(0, 1, 0), 20, 10, px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), 10, true, true);
+    cilinder *suport_tree_table = new cilinder(vp(440, 0, 400), vp(0, 1, 0), 20, 10, px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), 10, true, true);
     cena.add_object(suport_tree_table);
 
     cena.add_object(new plan(vp(0, 0, 0), vp(0, 1, 0), "./img/floor.jpg", 1));
@@ -453,7 +459,7 @@ int main()
                             cout << "Digite a sua opção: ";
                             cin >> op;
                             double angle;
-                            std::cout << "Digite o ângulo da rotação(em radianos): ";
+                            std::cout << "Digite o ângulo da rotação(em graus): ";
                             cin >> angle;
                             if (op == 1)
                             {
@@ -536,7 +542,7 @@ int main()
                             cout << "Digite a sua opção: ";
                             cin >> op;
                             double angle;
-                            std::cout << "Digite o ângulo do cisalhamento(em radianos): ";
+                            std::cout << "Digite o ângulo do cisalhamento(em graus): ";
                             cin >> angle;
                             if (op == 1)
                                 for (object *o : selecteds)
