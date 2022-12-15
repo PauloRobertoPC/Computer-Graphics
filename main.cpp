@@ -248,7 +248,7 @@ scene fundo()
 
     cena.add_object(new cone(vp(0, 400, 200), vp(0., 1., 0), 20, 50, px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), 10, false));
     cena.add_object(new cilinder(vp(0, 450, 200), vp(0., 1., 0), 5, 90, px(px::convert_rgb(0, 0, 0)), px(px::convert_rgb(0, 0, 0)), px(px::convert_rgb(0, 0, 0)), 10, false, false));
-    cena.add_object(new sphere(vp(0, 400, 200), 15, px(1, 1, 1), px(1, 1, 1), px(1, 1, 1), 10));
+    cena.add_object(new sphere(vp(0, 400, 200), 20, px(1, 1, 1), px(1, 1, 1), px(1, 1, 1), 10));
 
     cena.add_object(new cone(vp(0, 335, -425), vp(0., 1., 0), 10, 15, px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), 10, false));
     cena.add_object(new cilinder(vp(0, 305, -425), vp(0., 1., 0), 10, 30, px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), 10, false, false));
