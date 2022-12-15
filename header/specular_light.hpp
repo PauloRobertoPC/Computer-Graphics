@@ -4,11 +4,14 @@
 #include "vp.hpp"
 #include "light.hpp"
 
-class specular_light : public light{
-    public:
-        specular_light(px intensity);
-    
-        px specular(vp N, vp L, vp V, object* obj);
+class specular_light : public light
+{
+public:
+    specular_light(px intensity);
+
+    px specular(vp N, vp L, vp V, object *obj);
+    void change_angle(double a);
+    void change_direction(vp d);
 };
 
 #endif

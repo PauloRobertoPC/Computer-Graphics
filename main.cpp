@@ -38,13 +38,13 @@ scene tarefa5()
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
 
     cena.add_object(new sphere(vp(0, 95, -200), 5, px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), px(0.854, 0.647, 0.125), 10));
-    
+
     cube *cb = new cube("img/grass.jpg", 10);
     cb->scaling(vp(40, 40, 40));
     cb->transform();
     cb->translation(vp(0, -150, -165));
     cena.add_object(cb);
-    
+
     cena.add_object(new cone(vp(0, -60, -200), vp(0., 1., 0), 90, 150, px(0., 1., 0.498), px(0., 1., 0.498), px(0., 1., 0.498), 10, false));
     cena.add_object(new cilinder(vp(0, -150, -200), vp(0., 1., 0), 5, 90, px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), px(0.824, 0.706, 0.549), 10, true, true));
 
@@ -240,8 +240,8 @@ scene cena_qualquer()
 
 scene fundo()
 {
-    camera O(vp(0, 100, 300), vp(0, 100, -165), vp(0, 1050, 100)); // VISÃO DE FRENTE
-    // camera O(vp(-100, 900, -300), vp(0, 100, -165), vp(-100, 1050, -300)); // VISÃO DE CIMA
+    // camera O(vp(0, 600, 0), vp(0, 0, 0), vp(0, 1050, -100)); // VISÃO DE CIMA
+    camera O(vp(0, 300, 500), vp(0, 100, 0), vp(0, 1050, 0)); // VISÃO DE FRENTE
     viewport vw(60, 60, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
@@ -249,34 +249,83 @@ scene fundo()
     cube *prateleira = new cube(px(px::convert_rgb(54, 40, 34)), px(px::convert_rgb(54, 40, 34)), px(px::convert_rgb(54, 40, 34)), 10);
     prateleira->scaling(vp(600, 10, 50));
     prateleira->transform();
-    prateleira->translation(vp(0, 250, -425));
+    prateleira->translation(vp(0, 300, -425));
     prateleira->transform();
     cena.add_object(prateleira);
 
-    // complex_object *obj = new complex_object("./objects/sla.obj", px(px::convert_rgb(8, 53, 36)), px(px::convert_rgb(8, 53, 36)), px(px::convert_rgb(8, 53, 36)), 10);
+    cube *balcao = new cube(px(px::convert_rgb(82, 58, 40)), px(px::convert_rgb(82, 58, 40)), px(px::convert_rgb(82, 58, 40)), 10);
+    balcao->scaling(vp(700, 160, 50));
+    balcao->transform();
+    balcao->translation(vp(200, 80, -150));
+    balcao->transform();
+    cena.add_object(balcao);
+
+    cube *suporte_balcao = new cube(px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), 10);
+    suporte_balcao->scaling(vp(700, 20, 100));
+    suporte_balcao->transform();
+    suporte_balcao->translation(vp(200, 170, -150));
+    suporte_balcao->transform();
+    cena.add_object(suporte_balcao);
+
+    complex_object *banco1 = new complex_object("./objects/banco.obj", px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), 10);
+    banco1->scaling(vp(100, 110, 100));
+    banco1->translation(vp(0, 100, -10));
+    cena.add_object(banco1);
+
+    complex_object *banco2 = new complex_object("./objects/banco.obj", px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), 10);
+    banco2->scaling(vp(100, 110, 100));
+    banco2->translation(vp(190, 100, -10));
+    cena.add_object(banco2);
+
+    complex_object *banco3 = new complex_object("./objects/banco.obj", px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), px(px::convert_rgb(206, 179, 158)), 10);
+    banco3->scaling(vp(100, 110, 100));
+    banco3->translation(vp(380, 100, -10));
+    cena.add_object(banco3);
+
+    cube *tv_imagem = new cube("./img/tv.jpg", 10);
+    tv_imagem->scaling(vp(20, 200, 250));
+    tv_imagem->transform();
+    tv_imagem->translation(vp(-499, 300, 0));
+    tv_imagem->transform();
+    cena.add_object(tv_imagem);
+
+    cube *tv = new cube(px(px::convert_rgb(0, 0, 0)), px(px::convert_rgb(0, 0, 0)), px(px::convert_rgb(0, 0, 0)), 10);
+    tv->scaling(vp(20, 220, 270));
+    tv->transform();
+    tv->translation(vp(-500, 300, 0));
+    tv->transform();
+    cena.add_object(tv);
+
+    // // complex_object *obj_chair = new complex_object("./objects/chair.obj", px(px::convert_rgb(116, 64, 0)), px(px::convert_rgb(116, 64, 0)), px(px::convert_rgb(116, 64, 0)), 10);
+    // // obj_chair->scaling(vp(200, 200, 200));
+    // // obj_chair->translation(vp(-340, 100, 150));
+    // // obj_chair->rotation_y(3.14 / 2);
+    // // cena.add_object(obj_chair);
+
+    // complex_object *obj = new complex_object("./objects/sla.obj", px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
     // obj->scaling(vp(150, 150, 150));
-    // obj->translation(vp(-150, 25, 100));
+    // obj->translation(vp(-100, 0, -100));
     // cena.add_object(obj);
 
-    cone *tree = new cone(vp(-150, 130, 100), vp(0, 1, 0), 30, 70, px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), 10, true);
-    cena.add_object(tree);
+    // cone *tree = new cone(vp(-150, 110, 150), vp(0, 1, 0), 30, 70, px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), 10, true);
+    // cena.add_object(tree);
 
-    cilinder *suport_tree = new cilinder(vp(-150, 90, 100), vp(0, 1, 0), 6, 40, px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), 10, true, true);
-    cena.add_object(suport_tree);
+    // cilinder *suport_tree = new cilinder(vp(-150, 90, 150), vp(0, 1, 0), 3, 20, px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), 10, true, true);
+    // cena.add_object(suport_tree);
 
-    cilinder *suport_tree_table = new cilinder(vp(-150, 85, 100), vp(0, 1, 0), 15, 6, px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), 10, true, true);
-    cena.add_object(suport_tree_table);
+    // cilinder *suport_tree_table = new cilinder(vp(-150, 85, 150), vp(0, 1, 0), 15, 6, px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), 10, true, true);
+    // cena.add_object(suport_tree_table);
 
-    cena.add_object(new plan(vp(0, 0, 0), vp(0, 1, 0), px(0.5, 0.5, 0.5), px(0.5, 0.5, 0.5), px(0.5, 0.5, 0.5), 1));
-    cena.add_object(new plan(vp(500, 0, 0), vp(-1., 0., 0), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), 1));
-    cena.add_object(new plan(vp(500, 0, -500), vp(0., 0., 1), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), px(0.686, 0.933, 0.933), 1));
-    cena.add_object(new plan(vp(-500, 0, 0), vp(1., 0., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(00.933, 0.933, 0.933), 1));
-    // cena.add_object(new plan(vp(0, 500, 0), vp(0., -1., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), 1));
+    cena.add_object(new plan(vp(0, 0, 0), vp(0, 1, 0), "./img/floor.jpg", 1));
+    cena.add_object(new plan(vp(500, 0, 0), vp(-1., 0., 0), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), 1));
+    cena.add_object(new plan(vp(500, 0, -500), vp(0., 0., 1), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), 1));
+    cena.add_object(new plan(vp(-500, 0, 0), vp(1., 0., 0.), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), 1));
+    cena.add_object(new plan(vp(0, 500, 0), vp(0., -1., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), 1));
 
     cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
-    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(-100, 140, -20)));
+    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(0, 400, 0)));
     cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
-    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 1000, 0), vp(-1, -1, -1), 3.14 / 3.0));
+    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 400, 0), vp(0, -1, 0), 3.14 / 3.0));
 
     return cena;
 }
@@ -288,9 +337,9 @@ scene teste()
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
 
-    complex_object *obj = new complex_object("sla.obj", px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
-    obj->scaling(vp(50, 50, 50));
-    obj->translation(vp(0, 0, -100));
+    complex_object *obj = new complex_object("./objects/sla.obj", px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
+    obj->scaling(vp(150, 150, 150));
+    obj->translation(vp(0, 0, -500));
     cena.add_object(obj);
 
     cena.add_light(new point_light(px(0.3, 0.3, 0.3), vp(0, 0, -500)));
@@ -300,9 +349,9 @@ scene teste()
 
 int main()
 {
-    scene cena = teste();
-    // scene cena = fundo();
-    cena.draw_scenario(false);
+    // scene cena = teste();
+    scene cena = fundo();
+    cena.draw_scenario(true);
     cena.save_scenario("image.png");
 
     // SDL2 stuffs
@@ -539,7 +588,10 @@ int main()
                         std::cout << "(1) - APAGAR\n";
                         std::cout << "(2) - ACENDER\n";
                         std::cout << "(3) - MUDAR INTENSIDADE\n";
-                        std::cout << "(4) - MOVER\n";
+                        std::cout << "(4) - MUDAR POSIÇÃO\n";
+                        std::cout << "(5) - MUDAR ÂNGULO\n";
+                        std::cout << "(6) - MUDAR DIREÇÃO\n";
+
                         cout << "Digite a sua opção: ";
                         cin >> op;
 
@@ -561,9 +613,23 @@ int main()
                         else if (op == 4)
                         {
                             double i, j, k;
-                            std::cout << "Digite o local de translação: ";
+                            std::cout << "Digite a nova posição: ";
                             cin >> i >> j >> k;
                             choosen_light->translation(vp(i, j, k));
+                        }
+                        else if (op == 5)
+                        {
+                            double angle;
+                            std::cout << "Digite o novo ângulo: ";
+                            cin >> angle;
+                            choosen_light->change_angle(angle);
+                        }
+                        else if (op == 6)
+                        {
+                            double i, j, k;
+                            std::cout << "Digite a nova direção: ";
+                            cin >> i >> j >> k;
+                            choosen_light->change_direction(vp(i, j, k));
                         }
                         else
                             continue;

@@ -3,18 +3,22 @@
 
 #include "light.hpp"
 
-class ambient_light : public light {
-    public:
-        ambient_light(px intensity);
-    
-        //transformations
-        void to_camera(matrix M);
-    
-        px calculate_intensity(vp P, vp N, vp V, object *obj, bool calculate);
-        vp get_l(vp P);
+class ambient_light : public light
+{
+public:
+    ambient_light(px intensity);
 
-        void translation(vp v);
-        void print_light();
+    // transformations
+    void to_camera(matrix M);
+
+    px calculate_intensity(vp P, vp N, vp V, object *obj, bool calculate);
+    vp get_l(vp P);
+
+    void translation(vp v);
+    void print_light();
+
+    void change_angle(double a);
+    void change_direction(vp d);
 };
 
 #endif
