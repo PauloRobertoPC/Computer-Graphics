@@ -8,7 +8,7 @@ px direction_light::calculate_intensity(vp P, vp N, vp V, object *obj, bool calc
     if (!calculate)
         return i;
     vp L = get_direction();
-    double ndl = N * L;
+    double ndl = N * (L / ~L);
     if (ndl > 0.0)
         i = i + (obj->get_k_d() * (this->get_intensity() * ndl) / ((~N) * (~L)));
     i = i + specular(N, L, V, obj);

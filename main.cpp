@@ -345,9 +345,9 @@ scene fundo()
     cena.add_object(new plan(vp(0, 500, 0), vp(0., -1., 0.), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), 1));
 
     cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
-    cena.add_light(new point_light(px(0.6, 0.6, 0.6), vp(0, 370, 200)));
-    cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, 1, 0)));
-    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 300, 200), vp(0, -1, 0), 0.5));
+    // cena.add_light(new point_light(px(0.6, 0.6, 0.6), vp(0, 370, 200)));
+    cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, 0, 1)));
+    // cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 300, 200), vp(0, -1, 0), 0.5));
 
     return cena;
 }
@@ -461,6 +461,7 @@ int main()
                             double angle;
                             std::cout << "Digite o ângulo da rotação(em graus): ";
                             cin >> angle;
+                            angle = (angle * 3.141592) / 180;
                             if (op == 1)
                             {
                                 for (object *o : selecteds)
@@ -544,6 +545,7 @@ int main()
                             double angle;
                             std::cout << "Digite o ângulo do cisalhamento(em graus): ";
                             cin >> angle;
+                            angle = (angle * 3.141592) / 180;
                             if (op == 1)
                                 for (object *o : selecteds)
                                     o->shear_xy(angle);
@@ -644,6 +646,7 @@ int main()
                             double angle;
                             std::cout << "Digite o novo ângulo: ";
                             cin >> angle;
+                            angle = (angle * 3.141592) / 180;
                             choosen_light->change_angle(angle);
                         }
                         else if (op == 6)
