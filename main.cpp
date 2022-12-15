@@ -241,7 +241,7 @@ scene cena_qualquer()
 scene fundo()
 {
     // camera O(vp(0, 600, 0), vp(0, 0, 0), vp(0, 1050, -100)); // VISÃO DE CIMA
-    camera O(vp(0, 300, 500), vp(0, 300, -425), vp(0, 1050, 0)); // VISÃO DE FRENTE
+    camera O(vp(0, 250, 500), vp(0, 250, 0), vp(0, 1050, 500)); // VISÃO DE FRENTE
     viewport vw(60, 60, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
@@ -312,25 +312,25 @@ scene fundo()
     tv->transform();
     cena.add_object(tv);
 
-    // complex_object *obj_chair = new complex_object("./objects/chair.obj", px(px::convert_rgb(116, 64, 0)), px(px::convert_rgb(116, 64, 0)), px(px::convert_rgb(116, 64, 0)), 10);
-    // obj_chair->scaling(vp(200, 200, 200));
-    // obj_chair->translation(vp(-340, 100, 150));
-    // obj_chair->rotation_y(3.14 / 2);
-    // cena.add_object(obj_chair);
-
     complex_object *obj = new complex_object("./objects/sla.obj", px(px::convert_rgb(124, 77, 46)), px(px::convert_rgb(124, 77, 46)), px(px::convert_rgb(124, 77, 46)), 10);
     obj->scaling(vp(150, 150, 250));
     obj->translation(vp(-425, 95, 0));
     cena.add_object(obj);
 
-    // cone *tree = new cone(vp(-150, 110, 150), vp(0, 1, 0), 30, 70, px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), 10, true);
-    // cena.add_object(tree);
+    complex_object *star = new complex_object("./objects/star.obj", px(px::convert_rgb(248, 195, 10)), px(px::convert_rgb(248, 195, 10)), px(px::convert_rgb(248, 195, 10)), 10);
+    star->scaling(vp(20, 10, 20));
+    star->translation(vp(400, 280, 150));
+    star->rotation_x(3.14 / 2);
+    cena.add_object(star);
 
-    // cilinder *suport_tree = new cilinder(vp(-150, 90, 150), vp(0, 1, 0), 3, 20, px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), 10, true, true);
-    // cena.add_object(suport_tree);
+    cone *tree = new cone(vp(400, 80, 150), vp(0, 1, 0), 40, 200, px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), 10, true);
+    cena.add_object(tree);
 
-    // cilinder *suport_tree_table = new cilinder(vp(-150, 85, 150), vp(0, 1, 0), 15, 6, px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), 10, true, true);
-    // cena.add_object(suport_tree_table);
+    cilinder *suport_tree = new cilinder(vp(400, 10, 150), vp(0, 1, 0), 5, 80, px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), px(px::convert_rgb(92, 79, 69)), 10, true, true);
+    cena.add_object(suport_tree);
+
+    cilinder *suport_tree_table = new cilinder(vp(400, 0, 150), vp(0, 1, 0), 20, 10, px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), px(px::convert_rgb(92, 63, 41)), 10, true, true);
+    cena.add_object(suport_tree_table);
 
     cena.add_object(new plan(vp(0, 0, 0), vp(0, 1, 0), "./img/floor.jpg", 1));
     cena.add_object(new plan(vp(500, 0, 0), vp(-1., 0., 0), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), 1));
@@ -340,8 +340,7 @@ scene fundo()
 
     cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
     cena.add_light(new point_light(px(0.6, 0.6, 0.6), vp(0, 370, 200)));
-    // cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
-    // cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 400, 150), vp(0, -1, 0), 0.7));
+    cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, 1, 0)));
     cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 300, 200), vp(0, -1, 0), 0.5));
 
     return cena;
