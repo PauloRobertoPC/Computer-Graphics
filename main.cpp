@@ -241,17 +241,33 @@ scene cena_qualquer()
 scene fundo()
 {
     // camera O(vp(0, 600, 0), vp(0, 0, 0), vp(0, 1050, -100)); // VISÃO DE CIMA
-    camera O(vp(0, 300, 500), vp(0, 100, 0), vp(0, 1050, 0)); // VISÃO DE FRENTE
+    camera O(vp(0, 300, 500), vp(0, 300, -425), vp(0, 1050, 0)); // VISÃO DE FRENTE
     viewport vw(60, 60, -20);
     canvas c(500, 500, px::convert_rgb(255, 255, 255));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
 
+    cena.add_object(new cone(vp(0, 400, 200), vp(0., 1., 0), 20, 50, px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), 10, false));
+    cena.add_object(new cilinder(vp(0, 450, 200), vp(0., 1., 0), 5, 90, px(px::convert_rgb(0, 0, 0)), px(px::convert_rgb(0, 0, 0)), px(px::convert_rgb(0, 0, 0)), 10, false, false));
+    cena.add_object(new sphere(vp(0, 400, 200), 20, px(1, 1, 1), px(1, 1, 1), px(1, 1, 1), 10));
+
+    cena.add_object(new cone(vp(0, 335, -425), vp(0., 1., 0), 10, 15, px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), 10, false));
+    cena.add_object(new cilinder(vp(0, 305, -425), vp(0., 1., 0), 10, 30, px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), px(px::convert_rgb(206, 33, 35)), 10, false, false));
+
+    cena.add_object(new cone(vp(40, 335, -425), vp(0., 1., 0), 10, 15, px(px::convert_rgb(219, 192, 32)), px(px::convert_rgb(219, 192, 32)), px(px::convert_rgb(219, 192, 32)), 10, false));
+    cena.add_object(new cilinder(vp(40, 305, -425), vp(0., 1., 0), 10, 30, px(px::convert_rgb(219, 192, 32)), px(px::convert_rgb(219, 192, 32)), px(px::convert_rgb(219, 192, 32)), 10, false, false));
+
+    cena.add_object(new cilinder(vp(80, 305, -425), vp(0., 1., 0), 10, 30, px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), 10, false, false));
+
     cube *prateleira = new cube(px(px::convert_rgb(54, 40, 34)), px(px::convert_rgb(54, 40, 34)), px(px::convert_rgb(54, 40, 34)), 10);
-    prateleira->scaling(vp(600, 10, 50));
+    prateleira->scaling(vp(500, 10, 50));
     prateleira->transform();
     prateleira->translation(vp(0, 300, -425));
     prateleira->transform();
     cena.add_object(prateleira);
+
+    cena.add_object(new cilinder(vp(0, 180, -150), vp(0., 1., 0), 10, 30, px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), 10, false, false));
+    cena.add_object(new cilinder(vp(190, 180, -150), vp(0., 1., 0), 10, 30, px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), 10, false, false));
+    cena.add_object(new cilinder(vp(380, 180, -150), vp(0., 1., 0), 10, 30, px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), px(px::convert_rgb(78, 105, 26)), 10, false, false));
 
     cube *balcao = new cube(px(px::convert_rgb(82, 58, 40)), px(px::convert_rgb(82, 58, 40)), px(px::convert_rgb(82, 58, 40)), 10);
     balcao->scaling(vp(700, 160, 50));
@@ -296,16 +312,16 @@ scene fundo()
     tv->transform();
     cena.add_object(tv);
 
-    // // complex_object *obj_chair = new complex_object("./objects/chair.obj", px(px::convert_rgb(116, 64, 0)), px(px::convert_rgb(116, 64, 0)), px(px::convert_rgb(116, 64, 0)), 10);
-    // // obj_chair->scaling(vp(200, 200, 200));
-    // // obj_chair->translation(vp(-340, 100, 150));
-    // // obj_chair->rotation_y(3.14 / 2);
-    // // cena.add_object(obj_chair);
+    // complex_object *obj_chair = new complex_object("./objects/chair.obj", px(px::convert_rgb(116, 64, 0)), px(px::convert_rgb(116, 64, 0)), px(px::convert_rgb(116, 64, 0)), 10);
+    // obj_chair->scaling(vp(200, 200, 200));
+    // obj_chair->translation(vp(-340, 100, 150));
+    // obj_chair->rotation_y(3.14 / 2);
+    // cena.add_object(obj_chair);
 
-    // complex_object *obj = new complex_object("./objects/sla.obj", px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), px(px::convert_rgb(255, 160, 20)), 10);
-    // obj->scaling(vp(150, 150, 150));
-    // obj->translation(vp(-100, 0, -100));
-    // cena.add_object(obj);
+    complex_object *obj = new complex_object("./objects/sla.obj", px(px::convert_rgb(124, 77, 46)), px(px::convert_rgb(124, 77, 46)), px(px::convert_rgb(124, 77, 46)), 10);
+    obj->scaling(vp(150, 150, 250));
+    obj->translation(vp(-425, 95, 0));
+    cena.add_object(obj);
 
     // cone *tree = new cone(vp(-150, 110, 150), vp(0, 1, 0), 30, 70, px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), px(px::convert_rgb(33, 112, 48)), 10, true);
     // cena.add_object(tree);
@@ -320,12 +336,13 @@ scene fundo()
     cena.add_object(new plan(vp(500, 0, 0), vp(-1., 0., 0), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), 1));
     cena.add_object(new plan(vp(500, 0, -500), vp(0., 0., 1), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), 1));
     cena.add_object(new plan(vp(-500, 0, 0), vp(1., 0., 0.), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), 1));
-    cena.add_object(new plan(vp(0, 500, 0), vp(0., -1., 0.), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), px(0.933, 0.933, 0.933), 1));
+    cena.add_object(new plan(vp(0, 500, 0), vp(0., -1., 0.), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), px(px::convert_rgb(78, 53, 36)), 1));
 
     cena.add_light(new ambient_light(px(0.3, 0.3, 0.3)));
-    cena.add_light(new point_light(px(0.7, 0.7, 0.7), vp(0, 400, 0)));
-    cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
-    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 400, 0), vp(0, -1, 0), 3.14 / 3.0));
+    cena.add_light(new point_light(px(0.6, 0.6, 0.6), vp(0, 370, 200)));
+    // cena.add_light(new direction_light(px(0.7, 0.7, 0.7), vp(0, -1, 0)));
+    // cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 400, 150), vp(0, -1, 0), 0.7));
+    cena.add_light(new spot_light(px(0.7, 0.7, 0.7), vp(0, 300, 200), vp(0, -1, 0), 0.5));
 
     return cena;
 }
