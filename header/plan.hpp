@@ -22,7 +22,7 @@ class plan : public object{
 
         //transformations
         void to_camera(matrix M);
-        void translation(vp P);
+        void translation(vp P, bool point = true);
         void rotation_x(double angle);
         void rotation_y(double angle);
         void rotation_z(double angle);

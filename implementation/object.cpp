@@ -30,8 +30,8 @@ object::object(const char* name, double s){
 }
 
 //transformations
-void object::translation(vp P){
-    vp t = P - this->get_def_point();
+void object::translation(vp P, bool point){
+    vp t = ((point) ? (P - this->get_def_point()) : P);
     matrix T = matrix::translation_matrix(t); 
     this->transformations = T*this->transformations; 
     this->transform();

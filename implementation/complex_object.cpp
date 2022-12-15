@@ -103,10 +103,10 @@ void complex_object::scaling(vp S)
     this->cluster->translation(this->center);
 }
 
-void complex_object::translation(vp P)
+void complex_object::translation(vp P, bool point)
 {
-    this->mesh::translation(P);
-    this->cluster->translation(this->center);
+    this->mesh::translation(P, point);
+    this->cluster->translation((point ? this->center : P), point);
 }
 
 void complex_object::rotation_x(double angle)

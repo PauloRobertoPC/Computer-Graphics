@@ -33,7 +33,7 @@ class object{
         //transformations 
         virtual void to_camera(matrix M) = 0;
         virtual void transform() = 0;
-        virtual void translation(vp P);
+        virtual void translation(vp P, bool point = true);
         virtual void rotation_x(double angle);
         virtual void rotation_y(double angle);
         virtual void rotation_z(double angle);
