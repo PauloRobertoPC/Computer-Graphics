@@ -18,6 +18,7 @@ class complex_object : public mesh {
         std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max);
 
         // transformations 
+        void to_camera(matrix M);
         void scaling(vp S);
         void translation(vp P);
         void rotation_x(double angle);
