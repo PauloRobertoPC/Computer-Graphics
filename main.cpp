@@ -372,7 +372,7 @@ scene teste()
 int main()
 {
     // scene cena = teste();
-    scene cena = fundo();
+    scene cena = tarefa5();
     cena.draw_scenario(true);
     cena.save_scenario("image.png");
 
@@ -443,11 +443,26 @@ int main()
                         cin >> op;
                         if (op == 1)
                         {
+                            std::cout << " --- MENU DE TRANSLAÇÕES ---\n";
+                            std::cout << "(1) - Translação Ponto\n";
+                            std::cout << "(2) - Translação Vetor\n";
+                            cout << "Digite a sua opção: ";
+                            cin >> op;
                             double i, j, k;
-                            std::cout << "Digite o local de translação: ";
-                            cin >> i >> j >> k;
-                            for (object *o : selecteds)
-                                o->translation(vp(i, j, k));
+                            if(op == 1){
+                                std::cout << "Digite o ponto de translação: ";
+                                cin >> i >> j >> k;
+                                for (object *o : selecteds)
+                                    o->translation(vp(i, j, k));
+
+                            }else if(op == 2){
+                                std::cout << "Digite o vetor de translação: ";
+                                cin >> i >> j >> k;
+                                for (object *o : selecteds)
+                                    o->translation(vp(i, j, k), 0);
+                            }else{
+                                std::cout << "Opção Inválida\n";
+                            }
                         }
                         else if (op == 2)
                         {

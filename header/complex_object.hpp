@@ -20,7 +20,7 @@ class complex_object : public mesh {
         // transformations 
         void to_camera(matrix M);
         void scaling(vp S);
-        void translation(vp P);
+        void translation(vp P, bool point = true);
         void rotation_x(double angle);
         void rotation_y(double angle);
         void rotation_z(double angle);

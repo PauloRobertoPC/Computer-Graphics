@@ -27,7 +27,7 @@ void plan::transform(){
     transformations = matrix::identity(4);
 }
 
-void plan::translation(vp P){}
+void plan::translation(vp P, bool point){}
 void plan::rotation_x(double angle){}
 void plan::rotation_y(double angle){}
 void plan::rotation_z(double angle){}
