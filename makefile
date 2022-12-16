@@ -2,7 +2,7 @@ clear: compile
 	rm *.o
 
 compile: object
-	g++ -o  main *.o -lSDL2 && ./main
+	g++ main.cpp implementation/*.cpp -Ofast -flto -pipe -lSDL2 -o main 
 	
 object:
 	g++ -c  main.cpp implementation/*.cpp 
