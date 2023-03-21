@@ -39,6 +39,11 @@ bool scene::without_shade(vp P, light *l)
     return (closest >= (~L));
 }
 
+vp scene::reflection_ray(vp R, vp N)
+{
+    return N * 2.0 * (N * R) - R;
+}
+
 px scene::compute_lighting(vp P, vp N, vp V, object *obj)
 {
     px i(0, 0, 0);
@@ -47,7 +52,7 @@ px scene::compute_lighting(vp P, vp N, vp V, object *obj)
     return i;
 }
 
-std::tuple<px, object *> scene::trace_ray(vp O, vp D, double t_min, double t_max, int i, int j)
+std::tuple<px, object *> scene::trace_ray(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth)
 {
     object *closest_object = nullptr;
     bool nulo = true;
@@ -72,7 +77,19 @@ std::tuple<px, object *> scene::trace_ray(vp O, vp D, double t_min, double t_max
     vp P = O + D * closest;
     if (comparator::g(D * n, 0))
         n = -n;
-    return {compute_lighting(P, n, -D, closest_object), closest_object};
+
+    px local_color = compute_lighting(P, n, -D, closest_object);
+
+    // reflective
+    double reflex = closest_object->get_reflective();
+    if (recursion_depth <= 0 || reflex <= 0)
+        return {local_color, closest_object};
+
+    px reflected_color;
+    object *reflected_obj;
+    vp R = reflection_ray(-D, n);
+    std::tie(reflected_color, reflected_obj) = this->trace_ray(P, R, 0.001, INF, i, j, recursion_depth - 1);
+    return {local_color * (1 - reflex) + reflected_color * reflex, closest_object};
 }
 
 vp scene::xy(int i, int j)

@@ -19,4 +19,3 @@ Computer graphics project using ray casting.
 ```bash
     ./main
 ```
-
