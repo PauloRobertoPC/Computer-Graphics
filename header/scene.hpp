@@ -30,7 +30,7 @@ private:
 
     px compute_lighting(vp P, vp N, vp V, object *obj); // calculate all the light in an specific point
 
-    std::tuple<px, object *> trace_ray(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth = 1); // trace rays of from observer to direction D
+    std::tuple<px, object *> trace_ray(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth); // trace rays of from observer to direction D
     vp reflection_ray(vp r, vp n);
 
     bool without_shade(vp P, light *l);
@@ -38,6 +38,7 @@ private:
     void change_dx_dy();
     vp xy(int i, int j); // direction of the ray from the observer to the real world passing through the pixel i,j of the canvas
 
+    double rd(double min_max);
     std::tuple<vp, vp> ray_equation(int i, int j);
 
 public:
@@ -46,7 +47,7 @@ public:
     void add_object(object *o);
     void add_light(light *l);
 
-    void draw_scenario(bool change_coordinates);
+    void draw_scenario(bool change_coordinates, int recursion_depth = 0, int qnt_samples = 1);
 
     void save_scenario(const char *image_name);
 

@@ -116,9 +116,27 @@ void scene::transform_scenario_to_world()
         l->to_camera(O.get_c2w());
 }
 
+double scene::rd(double min_max){
+    const double lower_bound = -min_max;
+    const double upper_bound = min_max;
+    std::uniform_real_distribution<double> unif(lower_bound, upper_bound);
+    
+    std::random_device rand_dev;          // Use random_device to get a random seed.
+    // std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());
+
+    std::mt19937 rand_engine(rand_dev()); // mt19937 is a good pseudo-random number 
+                                          // generator.
+
+    double x = unif(rand_engine);
+    return x;
+}
+
+
 std::tuple<vp, vp> scene::ray_equation(int i, int j)
 {
     vp D = xy(i, j);
+    D.set_x(D.get_x()+rd(this->dx));
+    D.set_y(D.get_y()+rd(this->dy));
     switch (this->p)
     {
     case PERSPECITVE:
@@ -136,7 +154,7 @@ void scene::change_projection(PROJECTION p)
     this->p = p;
 }
 
-void scene::draw_scenario(bool change_coordinates)
+void scene::draw_scenario(bool change_coordinates, int recursion_depth, int qnt_samples)
 {
     if (change_coordinates)
         transform_scenario_to_camera();
@@ -147,9 +165,14 @@ void scene::draw_scenario(bool change_coordinates)
     {
         for (int j = 0; j < c.get_m(); j++)
         {
-            std::tie(O, D) = ray_equation(i, j);
-            std::tie(color, choosen_object) = trace_ray(O, D, 1.0, INF, i, j);
-            c.to_color(i, j, color, choosen_object);
+            px acm = px(0, 0, 0);
+            color = px(0, 0, 0);
+            for(int k = 0; k < qnt_samples; k++){
+                std::tie(O, D) = ray_equation(i, j);
+                std::tie(color, choosen_object) = trace_ray(O, D, 1.0, INF, i, j, recursion_depth);
+                acm = acm+color;
+            }
+            c.to_color(i, j, acm/qnt_samples, choosen_object);
         }
     }
     std::cout << "DESENHO CONCLUIDO\n";

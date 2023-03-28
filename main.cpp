@@ -52,8 +52,9 @@ scene ball_reflection()
 int main()
 {
     // scene cena = teste();
+    int recursion_depth = 0, qnt_samples = 1;
     scene cena = ball_reflection();
-    cena.draw_scenario(true);
+    cena.draw_scenario(true, recursion_depth, qnt_samples);
     cena.save_scenario("image.png");
 
     // SDL2 stuffs
@@ -72,6 +73,7 @@ int main()
     set<object *> selecteds;
 
     int press = 0, x, y, i, j;
+
 
     sdlEngine.atualizarCanvas(cena, selecteds);
     sdlEngine.atualizarJanela();
@@ -92,7 +94,8 @@ int main()
                     std::cout << "(2) - LUZES\n";
                     std::cout << "(3) - CÂMERA\n";
                     std::cout << "(4) - PROJEÇÃO\n";
-                    std::cout << "(5) - RENDERIZAR\n";
+                    std::cout << "(5) - AJUSTES\n";
+                    std::cout << "(6) - RENDERIZAR\n";
                     cout << "Digite a sua opção: ";
                     cin >> op;
 
@@ -423,9 +426,31 @@ int main()
                     }
                     else if (op == 5)
                     {
-                        cena.draw_scenario(false);
+                        std::cout << " --- MENU DE AJUSTES ---\n";
+                        std::cout << "(1) - PROFUNDIDADE DA RECURSÃO\n";
+                        std::cout << "(2) - SAMPLES POR PIXEL\n";
+                        cout << "Digite a sua opção: ";
+                        cin >> op;
+
+                        if (op == 1)
+                        {
+                            std::cout << "Digite a nova profundidade de recursão: ";
+                            cin >> recursion_depth;
+                        }
+                        else if (op == 2)
+                        {
+                            std::cout << "Digite a nova quantidade de samples por pixel: ";
+                            cin >> qnt_samples;
+                        }
+                        else
+                            continue;
+                    }
+                    else if (op == 6)
+                    {
+                        cena.draw_scenario(false, recursion_depth, qnt_samples);
                         cena.save_scenario("image.png");
                     }
+
                     sdlEngine.atualizarCanvas(cena, selecteds);
                     sdlEngine.atualizarJanela();
                 }
