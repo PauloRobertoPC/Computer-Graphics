@@ -2,13 +2,13 @@
 #include "../header/cube.hpp"
 #include "../header/matrix.hpp"
 
-cube::cube() : mesh(vp(0, 0, 0), px(), px(), px(), 1, 0) { make_cube(); }
-cube::cube(px k_a, px k_d, px k_s, double s, double reflective) : mesh(vp(0, 0, 0), k_a, k_d, k_s, s, reflective)
+cube::cube() : mesh(vp(0, 0, 0), px(), px(), px(), 1, 0, 0, 0) { make_cube(); }
+cube::cube(px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni) : mesh(vp(0, 0, 0), k_a, k_d, k_s, s, reflective, transparency, ni)
 {
     make_cube();
 }
 
-cube::cube(const char *name, double s, double reflective) : mesh(vp(0, 0, 0), name, s, reflective)
+cube::cube(const char *name, double s, double reflective, double transparency, double ni) : mesh(vp(0, 0, 0), name, s, reflective, transparency, ni)
 {
     make_cube();
 }

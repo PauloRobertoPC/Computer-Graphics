@@ -3,7 +3,7 @@
 #include "../header/comparator.hpp"
 
 sphere::sphere() {}
-sphere::sphere(vp center, double r, px k_a, px k_d, px k_s, double s, double reflective) : center(center), radio(r), object(k_a, k_d, k_s, s, reflective) {}
+sphere::sphere(vp center, double r, px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni) : center(center), radio(r), object(k_a, k_d, k_s, s, reflective, transparency, ni) {}
 
 vp sphere::get_def_point() { return this->center; }
 

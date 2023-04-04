@@ -14,7 +14,7 @@ private:
 
 public:
     sphere();
-    sphere(vp center, double r, px k_a, px k_d, px k_s, double s, double reflective);
+    sphere(vp center, double r, px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni);
 
     vp get_def_point();
 

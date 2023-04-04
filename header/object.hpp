@@ -12,7 +12,7 @@ private:
     px k_a, k_d, k_s; // intensity of ambient, difuse ans specular light_reflection
     double specular;  // object's shineness
     double reflective;
-
+    double transparency, ni;
     void rotation_auxiliar(matrix M);
 
 protected:
@@ -24,8 +24,8 @@ protected:
 
 public:
     object();
-    object(px k_a, px k_d, px k_s, double specular, double reflective);
-    object(const char *, double specular, double reflective);
+    object(px k_a, px k_d, px k_s, double specular, double reflective, double transparency, double ni);
+    object(const char *, double specular, double reflective, double transparency, double ni);
 
     virtual vp get_def_point() = 0;
 
@@ -65,6 +65,10 @@ public:
     void set_specular(double specular);
     double get_reflective();
     void set_reflective(double reflective);
+    double get_transparency();
+    void set_transparency(double transparency);
+    double get_ni();
+    void set_ni(double ni);
 };
 
 #endif

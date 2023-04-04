@@ -20,8 +20,8 @@ private:
 
 public:
     cilinder();
-    cilinder(vp center, vp direction, double r, double heigth, px k_a, px k_d, px k_s, double s, double reflective, bool has_base, bool has_top);
-    cilinder(vp center, vp top, double r, px k_a, px k_d, px k_s, double s, double reflective, bool has_base, bool has_top);
+    cilinder(vp center, vp direction, double r, double heigth, px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni, bool has_base, bool has_top);
+    cilinder(vp center, vp top, double r, px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni, bool has_base, bool has_top);
 
     vp get_def_point();
 

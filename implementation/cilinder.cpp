@@ -7,13 +7,13 @@
 
 cilinder::cilinder() {}
 
-cilinder::cilinder(vp center, vp direction, double r, double heigth, px k_a, px k_d, px k_s, double s, double reflective, bool has_base, bool has_top) : center(center), direction((direction / (~direction))), radio(r), heigth(heigth), object(k_a, k_d, k_s, s, reflective), has_base(has_base), has_top(has_top)
+cilinder::cilinder(vp center, vp direction, double r, double heigth, px k_a, px k_d, px k_s, double s, double reflective, double transparerncy, double ni, bool has_base, bool has_top) : center(center), direction((direction / (~direction))), radio(r), heigth(heigth), object(k_a, k_d, k_s, s, reflective, transparerncy, ni), has_base(has_base), has_top(has_top)
 {
     direction = direction / ~direction;
     this->top = center + direction * heigth;
 }
 
-cilinder::cilinder(vp center, vp top, double r, px k_a, px k_d, px k_s, double s, double reflective, bool has_base, bool has_top) : center(center), direction((top - center) / (~(top - center))), heigth(~(top - center)), radio(r), object(k_a, k_d, k_s, s, reflective), has_base(has_base), has_top(has_top), top(top) {}
+cilinder::cilinder(vp center, vp top, double r, px k_a, px k_d, px k_s, double s, double reflective, double transparerncy, double ni, bool has_base, bool has_top) : center(center), direction((top - center) / (~(top - center))), heigth(~(top - center)), radio(r), object(k_a, k_d, k_s, s, reflective, transparerncy, ni), has_base(has_base), has_top(has_top), top(top) {}
 
 vp cilinder::get_def_point() { return this->center; }
 

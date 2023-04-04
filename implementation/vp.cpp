@@ -40,6 +40,10 @@ vp vp::operator%(vp v){
     );
 }
 
+bool vp::operator!=(vp v){
+    return (this->x != v.x || this->y != v.y || this->z != v.z);
+}
+
 void vp::print(){
     std::cout << this->x << " " << this->y << " " << this->z << "\n";
 }

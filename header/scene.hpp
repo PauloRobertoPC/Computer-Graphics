@@ -30,8 +30,9 @@ private:
 
     px compute_lighting(vp P, vp N, vp V, object *obj); // calculate all the light in an specific point
 
-    std::tuple<px, object *> trace_ray(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth); // trace rays of from observer to direction D
+    std::tuple<px, object *> trace_ray(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth, double ni); // trace rays of from observer to direction D
     vp reflection_ray(vp r, vp n);
+    vp refracted_ray(vp I, vp N, double ni, double nt);
 
     bool without_shade(vp P, light *l);
 

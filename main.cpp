@@ -37,10 +37,10 @@ scene ball_reflection()
     canvas c(500, 500, px::convert_rgb(0, 0, 0));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
 
-    cena.add_object(new sphere(vp(0, -1, 3), 1, px(px::convert_rgb(255, 0, 0)), px(px::convert_rgb(255, 0, 0)), px(px::convert_rgb(255, 0, 0)), 500, 0.2));
-    cena.add_object(new sphere(vp(2, 0, 4), 1, px(px::convert_rgb(0, 255, 0)), px(px::convert_rgb(0, 255, 0)), px(px::convert_rgb(0, 255, 0)), 10, 0.4));
-    cena.add_object(new sphere(vp(-2, 0, 4), 1, px(px::convert_rgb(0, 0, 255)), px(px::convert_rgb(0, 0, 255)), px(px::convert_rgb(0, 0, 255)), 500, 0.3));
-    cena.add_object(new sphere(vp(0, -5001, 0), 5000, px(px::convert_rgb(255, 255, 0)), px(px::convert_rgb(255, 255, 0)), px(px::convert_rgb(255, 255, 0)), 1000, 0.5));
+    // cena.add_object(new sphere(vp(0, -1, 3), 1, px(px::convert_rgb(255, 0, 0)), px(px::convert_rgb(255, 0, 0)), px(px::convert_rgb(255, 0, 0)), 500, 0.2, 1.0, 1.5));
+    cena.add_object(new sphere(vp(0, 0, 3), 1, px(px::convert_rgb(0, 255, 0)), px(px::convert_rgb(0, 255, 0)), px(px::convert_rgb(0, 255, 0)), 10, 0.4, 0.5, 1.5));
+    cena.add_object(new sphere(vp(-1.0, 0, 4), 1, px(px::convert_rgb(0, 0, 255)), px(px::convert_rgb(0, 0, 255)), px(px::convert_rgb(0, 0, 255)), 500, 0.3, 0.0, 1.5));
+    cena.add_object(new sphere(vp(0, -5001, 0), 5000, px(px::convert_rgb(255, 255, 0)), px(px::convert_rgb(255, 255, 0)), px(px::convert_rgb(255, 255, 0)), 1000, 0.5, 0.0, 1.5));
 
     cena.add_light(new ambient_light(px(0.2, 0.2, 0.2)));
     cena.add_light(new point_light(px(0.6, 0.6, 0.6), vp(2, 1, 0)));

@@ -14,7 +14,7 @@ private:
 
 public:
     complex_object();
-    complex_object(std::string name, px k_a, px k_d, px k_s, double s, double reflective);
+    complex_object(std::string name, px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni);
 
     std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max);
 

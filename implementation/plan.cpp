@@ -2,8 +2,8 @@
 
 plan::plan() {}
 plan::plan(vp p_pi, vp n) : p_pi(p_pi), n(n), object() {}
-plan::plan(vp p_pi, vp n, px k_a, px k_d, px k_s, double s, double reflective) : p_pi(p_pi), n(n), object(k_a, k_d, k_s, s, reflective) {}
-plan::plan(vp p_pi, vp n, const char *name, double s, double reflective) : p_pi(p_pi), n(n), object(name, s, reflective) {}
+plan::plan(vp p_pi, vp n, px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni) : p_pi(p_pi), n(n), object(k_a, k_d, k_s, s, reflective, transparency, ni) {}
+plan::plan(vp p_pi, vp n, const char *name, double s, double reflective, double transparency, double ni) : p_pi(p_pi), n(n), object(name, s, reflective, transparency, ni) {}
 
 vp plan::get_def_point() { return this->p_pi; }
 

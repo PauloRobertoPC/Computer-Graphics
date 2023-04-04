@@ -12,8 +12,8 @@ private:
 
 public:
     cube();
-    cube(px k_a, px k_d, px k_s, double s, double reflective);
-    cube(const char *name, double s, double reflective);
+    cube(px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni);
+    cube(const char *name, double s, double reflective, double transparency, double ni);
 
     // transformations
     void scaling(vp S); // length, height, width

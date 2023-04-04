@@ -6,13 +6,13 @@
 
 cone::cone() {}
 
-cone::cone(vp center, vp direction, double r, double heigth, px k_a, px k_d, px k_s, double s, double reflective, bool has_base) : center(center), direction((direction / (~direction))), radio(r), heigth(heigth), object(k_a, k_d, k_s, s, reflective), has_base(has_base)
+cone::cone(vp center, vp direction, double r, double heigth, px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni, bool has_base) : center(center), direction((direction / (~direction))), radio(r), heigth(heigth), object(k_a, k_d, k_s, s, reflective, transparency, ni), has_base(has_base)
 {
     direction = direction / ~direction;
     this->top = center + direction * heigth;
 }
 
-cone::cone(vp center, vp top, double r, px k_a, px k_d, px k_s, double s, double reflective, bool has_base) : center(center), direction((top - center) / (~(top - center))), heigth(~(top - center)), radio(r), object(k_a, k_d, k_s, s, reflective), has_base(has_base), top(top) {}
+cone::cone(vp center, vp top, double r, px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni, bool has_base) : center(center), direction((top - center) / (~(top - center))), heigth(~(top - center)), radio(r), object(k_a, k_d, k_s, s, reflective, transparency, ni), has_base(has_base), top(top) {}
 
 vp cone::get_def_point() { return this->center; }
 

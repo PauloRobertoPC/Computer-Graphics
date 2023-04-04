@@ -14,8 +14,8 @@ private:
 public:
     plan();
     plan(vp p_pi, vp n);
-    plan(vp p_pi, vp n, px k_a, px k_d, px k_s, double s, double reflective);
-    plan(vp p_pi, vp n, const char *name, double s, double reflective);
+    plan(vp p_pi, vp n, px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni);
+    plan(vp p_pi, vp n, const char *name, double s, double reflective, double transparency, double ni);
 
     vp get_def_point();
 

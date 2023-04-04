@@ -35,7 +35,7 @@ std::tuple<int, int, int> read_face2(std::string &s)
     return {a, b, c};
 }
 
-complex_object::complex_object(std::string name, px k_a, px k_d, px k_s, double s, double reflective) : mesh(vp(0, 0, 0), k_a, k_d, k_s, s, reflective)
+complex_object::complex_object(std::string name, px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni) : mesh(vp(0, 0, 0), k_a, k_d, k_s, s, reflective, transparency, ni)
 {
     std::fstream my_file(name);
     std::string line;

@@ -6,11 +6,11 @@
 #include "../header/mesh.hpp"
 
 mesh::mesh() {}
-mesh::mesh(vp center, px k_a, px k_d, px k_s, double s, double reflective) : center(center), object(k_a, k_d, k_s, s, reflective)
+mesh::mesh(vp center, px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni) : center(center), object(k_a, k_d, k_s, s, reflective, transparency, ni)
 {
     invert_normal = false;
 }
-mesh::mesh(vp center, const char *name, double s, double reflective) : center(center), object(name, s, reflective)
+mesh::mesh(vp center, const char *name, double s, double reflective, double transparency, double ni) : center(center), object(name, s, reflective, transparency, ni)
 {
     invert_normal = false;
 }

@@ -69,8 +69,8 @@ protected:
 
 public:
     mesh();
-    mesh(vp center, px k_a, px k_d, px k_s, double s, double reflective);
-    mesh(vp center, const char *name, double s, double reflective);
+    mesh(vp center, px k_a, px k_d, px k_s, double s, double reflective, double transparency, double ni);
+    mesh(vp center, const char *name, double s, double reflective, double transparency, double ni);
 
     virtual std::tuple<double, vp> intersection_with_ray(vp O, vp D, double t_min, double t_max);
 

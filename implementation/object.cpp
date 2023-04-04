@@ -3,18 +3,20 @@
 #include "../header/stb_image_write.hpp"
 
 object::object() {}
-object::object(px k_a, px k_d, px k_s, double specular, double reflective) : k_a(k_a), k_d(k_d), k_s(k_s), specular(specular), reflective(reflective)
+object::object(px k_a, px k_d, px k_s, double specular, double reflective, double transparency, double ni) : k_a(k_a), k_d(k_d), k_s(k_s), specular(specular), reflective(reflective), transparency(transparency), ni(ni)
 {
     this->has_image = false;
     this->transformations = matrix::identity(4);
 }
 
-object::object(const char *name, double s, double reflective)
+object::object(const char *name, double s, double reflective, double transparency, double ni)
 {
     this->transformations = matrix::identity(4);
     this->has_image = true;
     this->specular = s;
     this->reflective = reflective;
+    this->transparency = transparency;
+    this->ni = ni;
     int chanel;
     int8 *imageR = stbi_load(name, &this->width, &this->height, &chanel, 0);
     if (imageR == NULL)
@@ -99,3 +101,9 @@ void object::set_specular(double specular) { this->specular = specular; }
 
 double object::get_reflective() { return this->reflective; }
 void object::set_reflective(double reflective) { this->reflective = reflective; }
+
+double object::get_transparency() { return this->transparency;; }
+void object::set_transparency(double transparency) { this->transparency = transparency; }
+
+double object::get_ni() { return this->ni;; }
+void object::set_ni(double ni) { this->ni = ni; }
