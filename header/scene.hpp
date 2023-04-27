@@ -41,6 +41,8 @@ private:
 
     double rd(double min_max);
     std::tuple<vp, vp> ray_equation(int i, int j);
+    bool fresnel(vp D, vp n, object *obj, double & kr);
+    vp refractRay(vp D, vp P, vp n, object *obj);
 
 public:
     scene(camera O, viewport vw, canvas c, PROJECTION p);

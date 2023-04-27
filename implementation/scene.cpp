@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include <cmath>
 #include "../header/scene.hpp"
+#include "../header/plan.hpp"
 #include "../header/comparator.hpp"
 #include "../header/camera.hpp"
 #include "../header/plan.hpp"
@@ -61,6 +62,35 @@ px scene::compute_lighting(vp P, vp N, vp V, object *obj)
     return i;
 }
 
+double mix(double a, double b, double mix)
+{
+    return b * mix + a * (1 - mix);
+}
+
+vp scene::refractRay(vp D, vp P, vp n, object *obj){
+    vp refN = n;
+    double etaT = obj->get_ni();
+    //std::cout<<etaT<<std::endl;
+    double etaI = 1.0;
+    double i_dot_n = D*n;
+    if(i_dot_n<0){
+        i_dot_n = -i_dot_n;
+    }else{
+        refN = n * -1;
+        etaT = 1.0;
+        etaI = obj->get_ni();
+    }
+    double eta = etaI/etaT;
+    double k = 1.0 - (eta*eta) * (1 - i_dot_n * i_dot_n);
+    if(k < 0)
+        return vp(0,0,0);
+    vp refractVec3Ray =  (D + (refN*i_dot_n))*eta - refN*sqrt(k);
+    refractVec3Ray = refractVec3Ray/(~refractVec3Ray); 
+    vp refractedRay = P+refractVec3Ray*0.01 - P+refractVec3Ray;
+    refractedRay = refractedRay/(~refractedRay);
+    return refractedRay;
+}
+
 std::tuple<px, object *> scene::trace_ray(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth, double ni)
 {
     object *closest_object = nullptr;
@@ -78,37 +108,40 @@ std::tuple<px, object *> scene::trace_ray(vp O, vp D, double t_min, double t_max
             nulo = false;
         }
     }
+
     if (nulo)
         return {c.get_background_color(), closest_object};
     if (closest_object->get_has_image())
         closest_object->set_pixel_image(i, j);
+
     vp P = O + D * closest;
+    bool inside = false;
     if (comparator::g(D * n, 0))
-        n = -n;
+        n = -n, inside = true;
 
     px local_color = compute_lighting(P, n, -D, closest_object);
 
-    // reflective
-    double reflex = closest_object->get_reflective();
-    if (recursion_depth <= 0 || reflex <= 0)
+    // Difuse Object
+    if(recursion_depth <= 0 || (comparator::eq(closest_object->get_reflective(), 0.0) && comparator::eq(closest_object->get_transparency(), 0.0)))
         return {local_color, closest_object};
 
-    //refracted
-    vp T = refracted_ray(-D, n, ni, closest_object->get_ni());
-    px c_refracted(0, 0, 0);
-    if(T != vp(0, 0, 0)){
-        px refracted_color; object *refracted_obj;
-        std::tie(refracted_color, refracted_obj) = this->trace_ray(P, T, 0.001, INF, i, j, recursion_depth - 1, closest_object->get_ni());
-        c_refracted = refracted_color*closest_object->get_transparency();
-    }
+    vp refle_ray = reflection_ray(-D, n);
+    vp refra_ray = refracted_ray(-D, n, ni, closest_object->get_ni());
+    // vp refra_ray = refractRay(D, P, n, closest_object);
+    px refle_color(0, 0, 0), refra_color(0, 0, 0), final_color(0, 0, 0);
+    object *aux_object;
 
+    std::tie(refle_color, aux_object) = trace_ray(P, refle_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
+    std::tie(refra_color, aux_object) = trace_ray(P, refra_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
 
-    px reflected_color;
-    object *reflected_obj;
-    vp R = reflection_ray(-D, n);
-    std::tie(reflected_color, reflected_obj) = this->trace_ray(P, R, 0.001, INF, i, j, recursion_depth - 1, 1.0003);
-    px c_reflected = local_color * (1 - reflex) + reflected_color * reflex;
-    return {c_reflected + c_refracted, closest_object};
+    // Fresnel Effect
+    double facingratio = -D*n;
+    double fr = mix(pow(1 - facingratio, 3), 1, 0.1);
+
+    final_color =  refra_color*(1-fr) + refle_color*fr;
+    final_color = final_color + local_color*(1-closest_object->get_transparency());
+
+    return {final_color, closest_object};
 }
 
 vp scene::xy(int i, int j)
@@ -188,7 +221,7 @@ void scene::draw_scenario(bool change_coordinates, int recursion_depth, int qnt_
             color = px(0, 0, 0);
             for(int k = 0; k < qnt_samples; k++){
                 std::tie(O, D) = ray_equation(i, j);
-                std::tie(color, choosen_object) = trace_ray(O, D, 1.0, INF, i, j, recursion_depth, 1.0003);
+                std::tie(color, choosen_object) = trace_ray(O, D, 0.001, INF, i, j, recursion_depth, 1.0003);
                 acm = acm+color;
             }
             c.to_color(i, j, acm/qnt_samples, choosen_object);
