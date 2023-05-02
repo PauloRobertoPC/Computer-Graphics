@@ -67,30 +67,6 @@ double mix(double a, double b, double mix)
     return b * mix + a * (1 - mix);
 }
 
-vp scene::refractRay(vp D, vp P, vp n, object *obj){
-    vp refN = n;
-    double etaT = obj->get_ni();
-    //std::cout<<etaT<<std::endl;
-    double etaI = 1.0;
-    double i_dot_n = D*n;
-    if(i_dot_n<0){
-        i_dot_n = -i_dot_n;
-    }else{
-        refN = n * -1;
-        etaT = 1.0;
-        etaI = obj->get_ni();
-    }
-    double eta = etaI/etaT;
-    double k = 1.0 - (eta*eta) * (1 - i_dot_n * i_dot_n);
-    if(k < 0)
-        return vp(0,0,0);
-    vp refractVec3Ray =  (D + (refN*i_dot_n))*eta - refN*sqrt(k);
-    refractVec3Ray = refractVec3Ray/(~refractVec3Ray); 
-    vp refractedRay = P+refractVec3Ray*0.01 - P+refractVec3Ray;
-    refractedRay = refractedRay/(~refractedRay);
-    return refractedRay;
-}
-
 std::tuple<px, object *> scene::trace_ray(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth, double ni)
 {
     object *closest_object = nullptr;
@@ -131,15 +107,25 @@ std::tuple<px, object *> scene::trace_ray(vp O, vp D, double t_min, double t_max
     px refle_color(0, 0, 0), refra_color(0, 0, 0), final_color(0, 0, 0);
     object *aux_object;
 
-    std::tie(refle_color, aux_object) = trace_ray(P, refle_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
-    std::tie(refra_color, aux_object) = trace_ray(P, refra_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
+    if(comparator::neq(closest_object->get_reflective(), 0.0) && comparator::neq(closest_object->get_transparency(), 0)){
+        std::tie(refle_color, aux_object) = trace_ray(P, refle_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
+        std::tie(refra_color, aux_object) = trace_ray(P, refra_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
 
-    // Fresnel Effect
-    double facingratio = -D*n;
-    double fr = mix(pow(1 - facingratio, 3), 1, 0.1);
+        // Fresnel Effect
+        double facingratio = -D*n;
+        double fr = mix(pow(1 - facingratio, 3), 1, 0.1);
 
-    final_color =  refra_color*(1-fr) + refle_color*fr;
-    final_color = final_color + local_color*(1-closest_object->get_transparency());
+        final_color =  refra_color*(1-fr) + refle_color*fr;
+        final_color = final_color + local_color*(1-closest_object->get_transparency());
+    }else if(comparator::neq(closest_object->get_reflective(), 0.0)) {
+        std::tie(refle_color, aux_object) = trace_ray(P, refle_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
+        final_color = (local_color)*(1-closest_object->get_reflective()) + refle_color*closest_object->get_reflective();
+    }else if(comparator::neq(closest_object->get_transparency(), 0)){
+        std::tie(refra_color, aux_object) = trace_ray(P, refra_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
+        final_color = local_color*(1-closest_object->get_transparency()) + refra_color*closest_object->get_transparency();
+    }else{
+        final_color = local_color;
+    }
 
     return {final_color, closest_object};
 }
