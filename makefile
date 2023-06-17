@@ -7,6 +7,7 @@ compile: object
 		implementation/objects/*.cpp \
 		implementation/lights/*.cpp \
 		implementation/cameras/*.cpp \
+		implementation/samplers/*.cpp \
 		implementation/world/*.cpp \
 		implementation/SDL/*.cpp \
 		-Ofast -flto -pipe -lSDL2 -o main
@@ -17,5 +18,6 @@ object:
 		implementation/objects/*.cpp \
 		implementation/lights/*.cpp \
 		implementation/cameras/*.cpp \
+		implementation/samplers/*.cpp \
 		implementation/world/*.cpp \
 		implementation/SDL/*.cpp
