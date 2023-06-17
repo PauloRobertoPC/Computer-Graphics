@@ -1,22 +1,22 @@
-#include "header/vp.hpp"
-#include "header/px.hpp"
-#include "header/viewport.hpp"
-#include "header/canvas.hpp"
-#include "header/sphere.hpp"
-#include "header/scene.hpp"
-#include "header/ambient_light.hpp"
-#include "header/point_light.hpp"
-#include "header/direction_light.hpp"
-#include "header/spot_light.hpp"
-#include "header/plan.hpp"
-#include "header/matrix.hpp"
-#include "header/cilinder.hpp"
-#include "header/cone.hpp"
-#include "header/mesh.hpp"
-#include "header/cube.hpp"
-#include "header/camera.hpp"
-#include "header/SDLEngine.hpp"
-#include "header/complex_object.hpp"
+#include "header/utils/vp.hpp"
+#include "header/utils/px.hpp"
+#include "header/world/viewport.hpp"
+#include "header/world/canvas.hpp"
+#include "header/objects/sphere.hpp"
+#include "header/world/scene.hpp"
+#include "header/lights/ambient_light.hpp"
+#include "header/lights/point_light.hpp"
+#include "header/lights/direction_light.hpp"
+#include "header/lights/spot_light.hpp"
+#include "header/objects/plan.hpp"
+#include "header/utils/matrix.hpp"
+#include "header/objects/cilinder.hpp"
+#include "header/objects/cone.hpp"
+#include "header/objects/mesh.hpp"
+#include "header/objects/cube.hpp"
+#include "header/cameras/camera.hpp"
+#include "header/SDL/SDLEngine.hpp"
+#include "header/objects/complex_object.hpp"
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
 #include <cmath>
@@ -94,7 +94,7 @@ int main()
     // scene cena = teste();
     int recursion_depth = 3, qnt_samples = 1;
     // scene cena = ball_reflection();
-    scene cena = cena_doida();
+    scene cena = ball_reflection();
     cena.draw_scenario(true, recursion_depth, qnt_samples);
     cena.save_scenario("image.png");
 
