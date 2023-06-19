@@ -19,7 +19,7 @@
 #include "header/objects/complex_object.hpp"
 #include "header/samplers/sampler.hpp"
 #include "header/samplers/n_rooks.hpp"
-#include "header/samplers/regular.hpp"
+#include "header/samplers/regulars.hpp"
 #include "header/samplers/jittered.hpp"
 #include "header/samplers/multi_jittered.hpp"
 #include <SDL2/SDL_events.h>
@@ -32,14 +32,20 @@
 #define ALTURA_TELA 500
 #define LARGURA_CANVAS 500
 #define ALTURA_CANVAS 500
+#define QNT_SAMPLES 10
+#define QNT_SET 50
+int RECURSION_DEPTH = 3;
 
 using namespace std;
 
 scene ball_reflection()
 {
     camera O(vp(0, 0, 0), vp(0, 0, 4), vp(0, 50, 0));
-    viewport vw(60, 60, -40, new multi_jittered(1, 50));
     canvas c(500, 500, px::convert_rgb(0, 0, 0));
+    // viewport vw(60, 60, -40, c, new regulars(QNT_SAMPLES, QNT_SET));
+    // viewport vw(60, 60, -40, c, new n_rooks(QNT_SAMPLES, QNT_SET));
+    // viewport vw(60, 60, -40, c, new jittered(QNT_SAMPLES, QNT_SET));
+    viewport vw(60, 60, -40, c, new multi_jittered(QNT_SAMPLES, QNT_SET));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
 
     cena.add_object(new sphere(vp(0, -1, 3), 1, px(px::convert_rgb(255, 0, 0)), px(px::convert_rgb(255, 0, 0)), px(px::convert_rgb(255, 0, 0)), 500, 0.2, 0.0, 1.5));
@@ -57,8 +63,8 @@ scene ball_reflection()
 scene ball_isa()
 {
     camera O(vp(0, 5, 0), vp(0, 0, 4), vp(0, 50, 0));
-    viewport vw(60, 60, -60, new multi_jittered(1, 50));
     canvas c(500, 500, px::convert_rgb(0, 0, 0));
+    viewport vw(60, 60, -60, c, new multi_jittered(QNT_SAMPLES, QNT_SET));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
 
     cena.add_object(new plan(vp(0, 1, 0), vp(0, 1, 0), px(px::convert_rgb(0, 0, 255)), px(px::convert_rgb(0, 0, 255)), px(px::convert_rgb(0, 0, 255)), 10, 0.2, 0.6, 1.003));
@@ -77,8 +83,8 @@ scene ball_isa()
 
 scene cena_doida(){
     camera O(vp(0, 0, 0), vp(0, 0, -1), vp(0, 1, -1));
-    viewport vw(60, 60, -60, new multi_jittered());
     canvas c(500, 500, px::convert_rgb(0, 0, 0));
+    viewport vw(60, 60, -60, c, new multi_jittered(QNT_SAMPLES, QNT_SET));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
 
     cena.add_object(new sphere(vp(0, 0, -10), 1, px(px::convert_rgb(255, 0, 0)), px(px::convert_rgb(255, 0, 0)), px(px::convert_rgb(255, 0, 0)), 500, 0, 0.5, 1.3));
@@ -96,12 +102,10 @@ scene cena_doida(){
 
 int main()
 {
-    jittered *sp = new jittered(1, 50);
     // scene cena = teste();
-    int recursion_depth = 3, qnt_samples = 1;
     // scene cena = ball_reflection();
     scene cena = ball_reflection();
-    cena.draw_scenario(true, recursion_depth, qnt_samples);
+    cena.draw_scenario(true, RECURSION_DEPTH);
     cena.save_scenario("image.png");
 
     // SDL2 stuffs
@@ -482,19 +486,19 @@ int main()
                         if (op == 1)
                         {
                             std::cout << "Digite a nova profundidade de recursão: ";
-                            cin >> recursion_depth;
+                            cin >> RECURSION_DEPTH;
                         }
                         else if (op == 2)
                         {
-                            std::cout << "Digite a nova quantidade de samples por pixel: ";
-                            cin >> qnt_samples;
+                            // std::cout << "Digite a nova quantidade de samples por pixel: ";
+                            // cin >> qnt_samples;
                         }
                         else
                             continue;
                     }
                     else if (op == 6)
                     {
-                        cena.draw_scenario(false, recursion_depth, qnt_samples);
+                        cena.draw_scenario(false, RECURSION_DEPTH);
                         cena.save_scenario("image.png");
                     }
 

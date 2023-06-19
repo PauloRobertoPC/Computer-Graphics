@@ -26,7 +26,6 @@ private:
     PROJECTION p;                // projection used
     std::set<object *> objects;  // objects who are in the scene
     std::vector<light *> lights; // lights whoa are in the scene
-    double dx, dy;               // width and heigth of each pixel of canvas in real world
 
     px compute_lighting(vp P, vp N, vp V, object *obj); // calculate all the light in an specific point
 
@@ -36,7 +35,6 @@ private:
 
     bool without_shade(vp P, light *l);
 
-    void change_dx_dy();
     vp xy(int i, int j); // direction of the ray from the observer to the real world passing through the pixel i,j of the canvas
 
     double rd(double min_max);
@@ -50,7 +48,7 @@ public:
     void add_object(object *o);
     void add_light(light *l);
 
-    void draw_scenario(bool change_coordinates, int recursion_depth = 0, int qnt_samples = 1);
+    void draw_scenario(bool change_coordinates, int recursion_depth = 0);
 
     void save_scenario(const char *image_name);
 

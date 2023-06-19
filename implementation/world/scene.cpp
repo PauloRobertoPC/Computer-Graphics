@@ -6,17 +6,7 @@
 #include "../../header/cameras/camera.hpp"
 #include "../../header/objects/plan.hpp"
 
-scene::scene(camera O, viewport vw, canvas c, PROJECTION p) : O(O), vw(vw), c(c), p(p)
-{
-    this->dx = 1.0 * vw.get_w() / c.get_m();
-    this->dy = 1.0 * vw.get_h() / c.get_n();
-}
-
-void scene::change_dx_dy()
-{
-    this->dx = 1.0 * vw.get_w() / c.get_m();
-    this->dy = 1.0 * vw.get_h() / c.get_n();
-}
+scene::scene(camera O, viewport vw, canvas c, PROJECTION p) : O(O), vw(vw), c(c), p(p){}
 
 bool scene::without_shade(vp P, light *l)
 {
@@ -132,7 +122,7 @@ std::tuple<px, object *> scene::trace_ray(vp O, vp D, double t_min, double t_max
 
 vp scene::xy(int i, int j)
 {
-    return vp(-vw.get_w() / 2.0 + dx / 2.0 + j * dx, vw.get_h() / 2.0 - dy / 2.0 - i * dy, vw.get_d());
+    return vp(-vw.get_w() / 2.0 + vw.get_dx() / 2.0 + j * vw.get_dx(), vw.get_h() / 2.0 - vw.get_dy() / 2.0 - i * vw.get_dy(), vw.get_d());
 }
 
 void scene::add_object(object *o) { objects.insert(o); }
@@ -173,8 +163,11 @@ double scene::rd(double min_max){
 std::tuple<vp, vp> scene::ray_equation(int i, int j)
 {
     vp D = xy(i, j);
-    D.set_x(D.get_x()+rd(this->dx/2.0));
-    D.set_y(D.get_y()+rd(this->dy/2.0));
+
+    point_2D p2d = vw.sample_square();
+    D.set_x(D.get_x()+p2d.x);
+    D.set_y(D.get_y()+p2d.y);
+
     switch (this->p)
     {
     case PERSPECITVE:
@@ -192,7 +185,7 @@ void scene::change_projection(PROJECTION p)
     this->p = p;
 }
 
-void scene::draw_scenario(bool change_coordinates, int recursion_depth, int qnt_samples)
+void scene::draw_scenario(bool change_coordinates, int recursion_depth)
 {
     if (change_coordinates)
         transform_scenario_to_camera();
@@ -205,12 +198,12 @@ void scene::draw_scenario(bool change_coordinates, int recursion_depth, int qnt_
         {
             px acm = px(0, 0, 0);
             color = px(0, 0, 0);
-            for(int k = 0; k < qnt_samples; k++){
+            for(int k = 0; k < vw.qnt_samples(); k++){
                 std::tie(O, D) = ray_equation(i, j);
                 std::tie(color, choosen_object) = trace_ray(O, D, 0.001, INF, i, j, recursion_depth, 1.0003);
                 acm = acm+color;
             }
-            c.to_color(i, j, acm/qnt_samples, choosen_object);
+            c.to_color(i, j, acm/vw.qnt_samples(), choosen_object);
         }
     }
     std::cout << "DESENHO CONCLUIDO\n";
@@ -248,9 +241,7 @@ void scene::change_view(vp E, vp look_at, vp up)
 
 void scene::change_vp(double w, double h)
 {
-    vw.set_w(w);
-    vw.set_h(h);
-    change_dx_dy();
+    vw.set_wh(w, h);
 }
 
 void scene::change_d(double d)

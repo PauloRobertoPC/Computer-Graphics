@@ -1,15 +1,15 @@
-#include "../../header/samplers/regular.hpp"
+#include "../../header/samplers/regulars.hpp"
 
-regular::regular(int samples, int sets) :
+regulars::regulars(int samples, int sets) :
     sampler(samples, sets) {
 	generate_samples();
 }
 
-sampler* regular::clone() const {
-    return (new regular(*this));
+sampler* regulars::clone() const {
+    return (new regulars(*this));
 }
 
-void regular::generate_samples(){
+void regulars::generate_samples(){
 	int n = (int) sqrt(num_samples);
 	for (int j = 0; j < num_sets; j++)
 		for (int p = 0; p < n; p++)		
