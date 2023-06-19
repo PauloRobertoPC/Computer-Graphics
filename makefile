@@ -10,10 +10,10 @@ compile: object
 		implementation/samplers/*.cpp \
 		implementation/world/*.cpp \
 		implementation/SDL/*.cpp \
-		-Ofast -flto -pipe -lSDL2 -o main
+		-std=c++20 -Ofast -flto -pipe -lSDL2 -o main
 	
 object:
-	g++ -c  main.cpp \
+	g++ -c -std=c++20 main.cpp \
 		implementation/utils/*.cpp \
 		implementation/objects/*.cpp \
 		implementation/lights/*.cpp \
