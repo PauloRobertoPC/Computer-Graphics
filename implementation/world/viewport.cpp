@@ -1,7 +1,7 @@
 #include "../../header/world/viewport.hpp"
 
-viewport::viewport(){ h = w = d = 0; }
-viewport::viewport(double h, double w, double d) : h(h), w(w), d(d){}
+viewport::viewport(){ h = w = d = 0; sp = nullptr;}
+viewport::viewport(double h, double w, double d, sampler *sp) : h(h), w(w), d(d), sp(sp){}
 
 //Getters and Setters
 double viewport::get_h(){ return this->h; }

@@ -17,6 +17,11 @@
 #include "header/cameras/camera.hpp"
 #include "header/SDL/SDLEngine.hpp"
 #include "header/objects/complex_object.hpp"
+#include "header/samplers/sampler.hpp"
+#include "header/samplers/n_rooks.hpp"
+#include "header/samplers/regular.hpp"
+#include "header/samplers/jittered.hpp"
+#include "header/samplers/multi_jittered.hpp"
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
 #include <cmath>
@@ -33,7 +38,7 @@ using namespace std;
 scene ball_reflection()
 {
     camera O(vp(0, 0, 0), vp(0, 0, 4), vp(0, 50, 0));
-    viewport vw(60, 60, -40);
+    viewport vw(60, 60, -40, new multi_jittered(1, 50));
     canvas c(500, 500, px::convert_rgb(0, 0, 0));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
 
@@ -52,7 +57,7 @@ scene ball_reflection()
 scene ball_isa()
 {
     camera O(vp(0, 5, 0), vp(0, 0, 4), vp(0, 50, 0));
-    viewport vw(60, 60, -60);
+    viewport vw(60, 60, -60, new multi_jittered(1, 50));
     canvas c(500, 500, px::convert_rgb(0, 0, 0));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
 
@@ -72,7 +77,7 @@ scene ball_isa()
 
 scene cena_doida(){
     camera O(vp(0, 0, 0), vp(0, 0, -1), vp(0, 1, -1));
-    viewport vw(60, 60, -60);
+    viewport vw(60, 60, -60, new multi_jittered());
     canvas c(500, 500, px::convert_rgb(0, 0, 0));
     scene cena(O, vw, c, PROJECTION::PERSPECITVE);
 
@@ -91,6 +96,7 @@ scene cena_doida(){
 
 int main()
 {
+    jittered *sp = new jittered(1, 50);
     // scene cena = teste();
     int recursion_depth = 3, qnt_samples = 1;
     // scene cena = ball_reflection();
