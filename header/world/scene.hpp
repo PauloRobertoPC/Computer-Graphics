@@ -37,7 +37,6 @@ private:
 
     vp xy(int i, int j); // direction of the ray from the observer to the real world passing through the pixel i,j of the canvas
 
-    double rd(double min_max);
     std::tuple<vp, vp> ray_equation(int i, int j);
     bool fresnel(vp D, vp n, object *obj, double & kr);
     vp refractRay(vp D, vp P, vp n, object *obj);

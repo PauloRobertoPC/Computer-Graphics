@@ -144,22 +144,6 @@ void scene::transform_scenario_to_world()
         l->to_camera(O.get_c2w());
 }
 
-double scene::rd(double min_max){
-    const double lower_bound = -min_max;
-    const double upper_bound = min_max;
-    std::uniform_real_distribution<double> unif(lower_bound, upper_bound);
-    
-    std::random_device rand_dev;          // Use random_device to get a random seed.
-    // std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());
-
-    std::mt19937 rand_engine(rand_dev()); // mt19937 is a good pseudo-random number 
-                                          // generator.
-
-    double x = unif(rand_engine);
-    return x;
-}
-
-
 std::tuple<vp, vp> scene::ray_equation(int i, int j)
 {
     vp D = xy(i, j);
