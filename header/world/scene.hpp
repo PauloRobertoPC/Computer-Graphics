@@ -4,6 +4,7 @@
 #include "../objects/object.hpp"
 #include "../utils/vp.hpp"
 #include "../utils/px.hpp"
+#include "../utils/hit_info.hpp"
 #include "viewport.hpp"
 #include "canvas.hpp"
 #include "../objects/sphere.hpp"
@@ -25,10 +26,11 @@ private:
     canvas c;                    // canvas
     PROJECTION p;                // projection used
     std::set<object *> objects;  // objects who are in the scene
-    std::vector<light *> lights; // lights whoa are in the scene
+    std::vector<light *> lights; // lights who are in the scene
 
     px compute_lighting(vp P, vp N, vp V, object *obj); // calculate all the light in an specific point
 
+    hit_info hit_objects(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth, double ni);
     std::tuple<px, object *> trace_ray(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth, double ni); // trace rays of from observer to direction D
     vp reflection_ray(vp r, vp n);
     vp refracted_ray(vp I, vp N, double ni, double nt);

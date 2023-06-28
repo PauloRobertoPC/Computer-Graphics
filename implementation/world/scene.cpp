@@ -57,67 +57,78 @@ double mix(double a, double b, double mix)
     return b * mix + a * (1 - mix);
 }
 
-std::tuple<px, object *> scene::trace_ray(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth, double ni)
+hit_info scene::hit_objects(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth, double ni)
 {
-    object *closest_object = nullptr;
-    bool nulo = true;
-    double t, closest = INF;
-    vp aux, n;
+    hit_info hi;
+    hi.O = O; hi.D = D; hi.depth = recursion_depth;
+
+    double t = INF;
+    vp normal;
     for (object *o : objects)
     {
-        std::tie(t, aux) = o->intersection_with_ray(O, D, t_min, t_max);
-        if (comparator::g(t, t_min) && comparator::l(t, t_max) && comparator::l(t, closest))
+        std::tie(t, normal) = o->intersection_with_ray(O, D, t_min, t_max);
+        if (comparator::g(t, t_min) && comparator::l(t, t_max) && comparator::l(t, hi.t))
         {
-            closest = t;
-            n = aux;
-            closest_object = o;
-            nulo = false;
+            hi.t = t;
+            hi.normal = normal;
+            hi.closest_object = o;
+            hi.hit_an_object = true;
         }
     }
 
-    if (nulo)
-        return {c.get_background_color(), closest_object};
-    if (closest_object->get_has_image())
-        closest_object->set_pixel_image(i, j);
+    if (!hi.hit_an_object)
+        return hi;
+    if (hi.closest_object->get_has_image())
+        hi.closest_object->set_pixel_image(i, j);
 
-    vp P = O + D * closest;
-    bool inside = false;
-    if (comparator::g(D * n, 0))
-        n = -n, inside = true;
+    hi.hit_point = O + D * hi.t;
+    if (comparator::g(D * hi.normal, 0))
+        hi.normal = -hi.normal;
 
-    px local_color = compute_lighting(P, n, -D, closest_object);
+    return hi;
+}
+
+std::tuple<px, object *> scene::trace_ray(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth, double ni)
+
+{
+    hit_info hi = hit_objects(O, D, t_min, t_max, i, j, recursion_depth, ni);
+
+    if(!hi.hit_an_object)
+        return {c.get_background_color(), hi.closest_object};
+
+    px local_color = compute_lighting(hi.hit_point, hi.normal, -D, hi.closest_object);
 
     // Difuse Object
-    if(recursion_depth <= 0 || (comparator::eq(closest_object->get_reflective(), 0.0) && comparator::eq(closest_object->get_transparency(), 0.0)))
-        return {local_color, closest_object};
+    if(recursion_depth <= 0 || (comparator::eq(hi.closest_object->get_reflective(), 0.0) && comparator::eq(hi.closest_object->get_transparency(), 0.0)))
+        return {local_color, hi.closest_object};
 
-    vp refle_ray = reflection_ray(-D, n);
-    vp refra_ray = refracted_ray(-D, n, ni, closest_object->get_ni());
+    vp refle_ray = reflection_ray(-D, hi.normal);
+    vp refra_ray = refracted_ray(-D, hi.normal, ni, hi.closest_object->get_ni());
     // vp refra_ray = refractRay(D, P, n, closest_object);
     px refle_color(0, 0, 0), refra_color(0, 0, 0), final_color(0, 0, 0);
     object *aux_object;
 
-    if(comparator::neq(closest_object->get_reflective(), 0.0) && comparator::neq(closest_object->get_transparency(), 0)){
-        std::tie(refle_color, aux_object) = trace_ray(P, refle_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
-        std::tie(refra_color, aux_object) = trace_ray(P, refra_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
+    if(comparator::neq(hi.closest_object->get_reflective(), 0.0) && comparator::neq(hi.closest_object->get_transparency(), 0)){
+        std::tie(refle_color, aux_object) = trace_ray(hi.hit_point, refle_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
+        std::tie(refra_color, aux_object) = trace_ray(hi.hit_point, refra_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
 
         // Fresnel Effect
-        double facingratio = -D*n;
+        double facingratio = -D*hi.normal;
         double fr = mix(pow(1 - facingratio, 3), 1, 0.1);
 
         final_color =  refra_color*(1-fr) + refle_color*fr;
-        final_color = final_color + local_color*(1-closest_object->get_transparency());
-    }else if(comparator::neq(closest_object->get_reflective(), 0.0)) {
-        std::tie(refle_color, aux_object) = trace_ray(P, refle_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
-        final_color = (local_color)*(1-closest_object->get_reflective()) + refle_color*closest_object->get_reflective();
-    }else if(comparator::neq(closest_object->get_transparency(), 0)){
-        std::tie(refra_color, aux_object) = trace_ray(P, refra_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
-        final_color = local_color*(1-closest_object->get_transparency()) + refra_color*closest_object->get_transparency();
+        final_color = final_color + local_color*(1-hi.closest_object->get_transparency());
+    }else if(comparator::neq(hi.closest_object->get_reflective(), 0.0)) {
+        std::tie(refle_color, aux_object) = trace_ray(hi.hit_point, refle_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
+        final_color = (local_color)*(1-hi.closest_object->get_reflective()) + refle_color*hi.closest_object->get_reflective();
+    }else if(comparator::neq(hi.closest_object->get_transparency(), 0)){
+        std::tie(refra_color, aux_object) = trace_ray(hi.hit_point, refra_ray, t_min, t_max, i, j, recursion_depth-1, 1.0003);
+        final_color = local_color*(1-hi.closest_object->get_transparency()) + refra_color*hi.closest_object->get_transparency();
     }else{
         final_color = local_color;
     }
 
-    return {final_color, closest_object};
+    return {final_color, hi.closest_object};
 }
 
 vp scene::xy(int i, int j)
