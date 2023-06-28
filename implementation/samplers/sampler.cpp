@@ -16,16 +16,18 @@ sampler::sampler(const sampler& samp):
     //this->samples.reserve(num_samples*num_sets);
 }
 
-sampler& sampler::operator=(const sampler& rhs){
-    if(this == &rhs){
-        return (*this);
-    }
-    this->samples.clear();
-    num_samples = rhs.num_samples;
-    num_sets = rhs.num_sets;
-    count = rhs.count;
-    jump = rhs.jump;
-    //this->samples.reserve(num_samples*num_sets);  
+sampler& sampler::operator=(const sampler& s) {
+    num_samples = s.num_samples;
+    num_sets = s.num_sets;
+    samples = s.samples;
+    shuffled_indices = s.shuffled_indices;
+    disk_samples = s.disk_samples;
+    hemisphere_samples = s.hemisphere_samples;
+    // sphere_samples = s.sphere_samples;
+    count = s.count;
+    jump = s.jump;
+
+    return *this;
 }
 
 sampler::~sampler(){
