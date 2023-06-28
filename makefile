@@ -9,6 +9,7 @@ compile: object
 		implementation/cameras/*.cpp \
 		implementation/samplers/*.cpp \
 		implementation/tracers/*.cpp \
+		implementation/brdfs/*.cpp \
 		implementation/world/*.cpp \
 		implementation/SDL/*.cpp \
 		-std=c++20 -Ofast -flto -pipe -lSDL2 -o main
@@ -21,5 +22,6 @@ object:
 		implementation/cameras/*.cpp \
 		implementation/samplers/*.cpp \
 		implementation/tracers/*.cpp \
+		implementation/brdfs/*.cpp \
 		implementation/world/*.cpp \
 		implementation/SDL/*.cpp

@@ -18,6 +18,7 @@ class vp{
         vp operator*(double alp); //vector multiplicaton by a scalar
         vp operator/(double alp); //vector division by a scalar
         double operator~(); //vector module/size
+        vp operator!(); //normalize vector
         vp operator%(vp v); //cross product
         bool operator!=(vp v);
         void print();
