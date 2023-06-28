@@ -4,6 +4,7 @@
 #include "../objects/object.hpp"
 #include "../utils/vp.hpp"
 #include "../utils/px.hpp"
+#include "../utils/ray.hpp"
 #include "../utils/hit_info.hpp"
 #include "viewport.hpp"
 #include "canvas.hpp"
@@ -18,36 +19,36 @@ enum PROJECTION
     PARALELL
 };
 
+class tracer;
+
 class scene
 {
-private:
+public:
     camera O;                    // camera
     viewport vw;                 // viewport
     canvas c;                    // canvas
+    tracer *tr;                  // tracer
     PROJECTION p;                // projection used
     std::set<object *> objects;  // objects who are in the scene
     std::vector<light *> lights; // lights who are in the scene
 
     px compute_lighting(vp P, vp N, vp V, object *obj); // calculate all the light in an specific point
 
-    hit_info hit_objects(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth, double ni);
-    std::tuple<px, object *> trace_ray(vp O, vp D, double t_min, double t_max, int i, int j, int recursion_depth, double ni); // trace rays of from observer to direction D
-    vp reflection_ray(vp r, vp n);
-    vp refracted_ray(vp I, vp N, double ni, double nt);
 
     bool without_shade(vp P, light *l);
 
     vp xy(int i, int j); // direction of the ray from the observer to the real world passing through the pixel i,j of the canvas
 
-    std::tuple<vp, vp> ray_equation(int i, int j);
-    bool fresnel(vp D, vp n, object *obj, double & kr);
+    ray ray_equation(int i, int j);
     vp refractRay(vp D, vp P, vp n, object *obj);
 
 public:
-    scene(camera O, viewport vw, canvas c, PROJECTION p);
+    scene(camera O, viewport vw, canvas c, PROJECTION p, tracer* t);
 
     void add_object(object *o);
     void add_light(light *l);
+
+    hit_info hit_objects(ray r, double t_min, int recursion_depth);
 
     void draw_scenario(bool change_coordinates, int recursion_depth = 0);
 

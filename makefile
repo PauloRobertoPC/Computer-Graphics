@@ -8,6 +8,7 @@ compile: object
 		implementation/lights/*.cpp \
 		implementation/cameras/*.cpp \
 		implementation/samplers/*.cpp \
+		implementation/tracers/*.cpp \
 		implementation/world/*.cpp \
 		implementation/SDL/*.cpp \
 		-std=c++20 -Ofast -flto -pipe -lSDL2 -o main
@@ -19,5 +20,6 @@ object:
 		implementation/lights/*.cpp \
 		implementation/cameras/*.cpp \
 		implementation/samplers/*.cpp \
+		implementation/tracers/*.cpp \
 		implementation/world/*.cpp \
 		implementation/SDL/*.cpp

@@ -22,6 +22,8 @@
 #include "header/samplers/regulars.hpp"
 #include "header/samplers/jittered.hpp"
 #include "header/samplers/multi_jittered.hpp"
+#include "header/tracers/tracer.hpp"
+#include "header/tracers/ray_tracer.hpp"
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
 #include <cmath>
@@ -46,7 +48,7 @@ scene ball_reflection()
     // viewport vw(60, 60, -40, c, new n_rooks(QNT_SAMPLES, QNT_SET));
     // viewport vw(60, 60, -40, c, new jittered(QNT_SAMPLES, QNT_SET));
     viewport vw(60, 60, -40, c, new multi_jittered(QNT_SAMPLES, QNT_SET));
-    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
+    scene cena(O, vw, c, PROJECTION::PERSPECITVE, new ray_tracer());
 
     cena.add_object(new sphere(vp(0, -1, 3), 1, px(px::convert_rgb(255, 0, 0)), px(px::convert_rgb(255, 0, 0)), px(px::convert_rgb(255, 0, 0)), 500, 0.2, 0.0, 1.5));
     cena.add_object(new sphere(vp(-2, 1, 3), 1, px(px::convert_rgb(0, 0, 255)), px(px::convert_rgb(0, 0, 255)), px(px::convert_rgb(0, 0, 255)), 500, 0.3, 0.0, 1.5));
@@ -65,7 +67,7 @@ scene ball_isa()
     camera O(vp(0, 5, 0), vp(0, 0, 4), vp(0, 50, 0));
     canvas c(500, 500, px::convert_rgb(0, 0, 0));
     viewport vw(60, 60, -60, c, new multi_jittered(QNT_SAMPLES, QNT_SET));
-    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
+    scene cena(O, vw, c, PROJECTION::PERSPECITVE, new ray_tracer());
 
     cena.add_object(new plan(vp(0, 1, 0), vp(0, 1, 0), px(px::convert_rgb(0, 0, 255)), px(px::convert_rgb(0, 0, 255)), px(px::convert_rgb(0, 0, 255)), 10, 0.2, 0.6, 1.003));
     cena.add_object(new plan(vp(0, -1, 0), vp(0, 1, 0), px(px::convert_rgb(0, 255, 0)), px(px::convert_rgb(0, 255, 0)), px(px::convert_rgb(0, 255, 0)), 10, 0, 0, 0));
@@ -85,7 +87,7 @@ scene cena_doida(){
     camera O(vp(0, 0, 0), vp(0, 0, -1), vp(0, 1, -1));
     canvas c(500, 500, px::convert_rgb(0, 0, 0));
     viewport vw(60, 60, -60, c, new multi_jittered(QNT_SAMPLES, QNT_SET));
-    scene cena(O, vw, c, PROJECTION::PERSPECITVE);
+    scene cena(O, vw, c, PROJECTION::PERSPECITVE, new ray_tracer());
 
     cena.add_object(new sphere(vp(0, 0, -10), 1, px(px::convert_rgb(255, 0, 0)), px(px::convert_rgb(255, 0, 0)), px(px::convert_rgb(255, 0, 0)), 500, 0, 0.5, 1.3));
     cena.add_object(new sphere(vp(-1, 0.7, -12), 1, px(px::convert_rgb(255, 255, 0)), px(px::convert_rgb(255, 255, 0)), px(px::convert_rgb(255, 255, 0)), 500, 0.5, 0, 1.003));

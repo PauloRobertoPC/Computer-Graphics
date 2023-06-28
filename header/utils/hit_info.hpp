@@ -4,6 +4,7 @@
 #include "vp.hpp"
 #include "px.hpp"
 #include "../objects/object.hpp"
+#include "../utils/ray.hpp"
 
 class hit_info{
 
@@ -14,7 +15,7 @@ public:
     vp local_hit_point;
     vp normal;
     px color;
-    vp O, D; //ray
+    ray r; //ray
     int depth;
     vp dir; //direction light
     object* closest_object;
