@@ -10,6 +10,7 @@ compile: object
 		implementation/samplers/*.cpp \
 		implementation/tracers/*.cpp \
 		implementation/brdfs/*.cpp \
+		implementation/materials/*.cpp \
 		implementation/world/*.cpp \
 		implementation/SDL/*.cpp \
 		-std=c++20 -Ofast -flto -pipe -lSDL2 -o main
@@ -23,5 +24,6 @@ object:
 		implementation/samplers/*.cpp \
 		implementation/tracers/*.cpp \
 		implementation/brdfs/*.cpp \
+		implementation/materials/*.cpp \
 		implementation/world/*.cpp \
 		implementation/SDL/*.cpp
